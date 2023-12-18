@@ -14,18 +14,16 @@ import React, {useEffect, useState} from "react";
 import AppTree from "./layout/AppTree";
 import Footer from "./layout/Footer";
 import Sidebar from "./layout/Sidebar";
-// import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import AppButtons from "./layout/AppButtons";
-import MDContainer from "./components/MDContainer";
 import {pages} from "./pages/pages";
 import {isBrowser} from "react-device-detect";
-import path from "path";
 
 interface Page {
     index: number;
     name: string;
     route: string;
-    visible: boolean;
+    group: string;
+    content: React.ReactNode;
 }
 
 // function initVisiblePageIndexs(pages: Page[]) {

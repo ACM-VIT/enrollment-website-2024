@@ -1,18 +1,21 @@
-'use client';
-
 import {Button, Box, Paper} from "@mui/material";
 import React from "react";
 import {VscMarkdown, VscChromeClose} from "react-icons/vsc";
-// import {useNavigate} from "react-router-dom";
 import {useTheme} from "@mui/material/styles";
 import {Container} from "@mui/system";
 import {useRouter} from "next/navigation";
+
+
+interface Page {
+    index: number;
+    name: string;
+    route: string;
+    group: string;
+    content: React.ReactNode;
+}
+
 interface Props {
-    pages: {
-        index: number;
-        name: string;
-        route: string;
-    }[];
+    pages: Page[];
     selectedIndex: number;
     setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
     currentComponent: string;
@@ -184,8 +187,8 @@ export default function AppButtons({
                 //   },
             }}
         >
-            {pages.map(({index, name, route}) =>
-                renderPageButton(index, name, route)
+            {pages.map(({index, name, route, group}) =>
+                renderPageButton(index, name, `/${group}/${route}`)
             )}
         </Container>
     );

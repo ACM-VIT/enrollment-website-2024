@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -13,15 +11,12 @@ interface Page {
     index: number;
     name: string;
     route: string;
+    group: string;
+    content: React.ReactNode;
 }
 
 interface Props {
-    pages: {
-        index: number;
-        name: string;
-        route: string;
-        group: string;
-    }[];
+    pages: Page[];
     selectedIndex: number;
     setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
     currentComponent: string;
@@ -29,6 +24,14 @@ interface Props {
     visiblePageIndexs: number[];
     setVisiblePageIndexs: React.Dispatch<React.SetStateAction<number[]>>;
 }
+
+const groupBy = function (xs: any[], key: string | number | Function) {
+    return xs.reduce(function (rv, x) {
+        let v = key instanceof Function ? key(x) : x[key];
+        (rv[v] = rv[v] || []).push(x);
+        return rv;
+    }, {});
+};
 
 export default function AppTree({
                                     pages,
@@ -44,7 +47,7 @@ export default function AppTree({
     // const [selectedIndex, setSelectedIndex] = useState(-1);
     let pathname = usePathname();
 
-    const page: Page = pages.find((x) => x.route === pathname)!;
+    const page = pages.find((x) => `${x.group}/${x.route}` === pathname)!;
 
     useEffect(() => {
         if (page) {
@@ -77,77 +80,46 @@ export default function AppTree({
             defaultExpandIcon={<ChevronRightIcon/>}
             sx={{minWidth: 220}}
             defaultExpanded={["-1"]}
-
             // sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
         >
-            <TreeItem
-                nodeId="-1"
-                label="Page"
-                color="#bdc3cf"
-                onClick={() => {
-                    router.push("/");
-                    setSelectedIndex(-1);
-                }}
-            >
-                {pages.filter(i => i.group === 'Page').map(({index, name, route}) => (
-                    <TreeItem
-                        key={index}
-                        nodeId={index.toString()}
-                        label={name}
-                        sx={{
-                            color: renderTreeItemColor(index),
-                            backgroundColor: renderTreeItemBgColor(index),
-                            "&& .Mui-selected": {
+
+            {Object.keys(groupBy(pages, 'group')).map((group) => (
+                <TreeItem
+                    key={group}
+                    nodeId={group}
+                    label={group}
+                    color="#bdc3cf"
+                    onClick={() => {
+                        router.push('/');
+                        setSelectedIndex(-1);
+                    }}
+                >
+                    {pages.filter(i => i.group === group).map(({index, name, route}) => (
+                        <TreeItem
+                            key={index}
+                            nodeId={index.toString()}
+                            label={name}
+                            sx={{
+                                color: renderTreeItemColor(index),
                                 backgroundColor: renderTreeItemBgColor(index),
-                            },
-                        }}
-                        icon={<VscMarkdown color="#6997d5"/>}
-                        onClick={() => {
-                            if (!visiblePageIndexs.includes(index)) {
-                                const newIndexs = [...visiblePageIndexs, index];
-                                setVisiblePageIndexs(newIndexs);
-                            }
-                            router.push(route);
-                            setSelectedIndex(index);
-                            setCurrentComponent("tree");
-                        }}
-                    />
-                ))}
-            </TreeItem>
-            <TreeItem
-                nodeId="-2"
-                label="Extras"
-                color="#bdc3cf"
-                onClick={() => {
-                    router.push('/');
-                    setSelectedIndex(-2);
-                }}
-            >
-                {pages.filter(i => i.group === 'Extras').map(({index, name, route}) => (
-                    <TreeItem
-                        key={index}
-                        nodeId={index.toString()}
-                        label={name}
-                        sx={{
-                            color: renderTreeItemColor(index),
-                            backgroundColor: renderTreeItemBgColor(index),
-                            "&& .Mui-selected": {
-                                backgroundColor: renderTreeItemBgColor(index),
-                            },
-                        }}
-                        icon={<VscMarkdown color="#6997d5"/>}
-                        onClick={() => {
-                            if (!visiblePageIndexs.includes(index)) {
-                                const newIndexs = [...visiblePageIndexs, index];
-                                setVisiblePageIndexs(newIndexs);
-                            }
-                            router.push(route);
-                            setSelectedIndex(index);
-                            setCurrentComponent("tree");
-                        }}
-                    />
-                ))}
-            </TreeItem>
+                                "&& .Mui-selected": {
+                                    backgroundColor: renderTreeItemBgColor(index),
+                                },
+                            }}
+                            icon={<VscMarkdown color="#6997d5"/>}
+                            onClick={() => {
+                                if (!visiblePageIndexs.includes(index)) {
+                                    const newIndexs = [...visiblePageIndexs, index];
+                                    setVisiblePageIndexs(newIndexs);
+                                }
+                                router.push(`/${group}/${route}`);
+                                setSelectedIndex(index);
+                                setCurrentComponent("tree");
+                            }}
+                        />
+                    ))}
+                </TreeItem>
+            ))}
         </TreeView>
     );
 }
