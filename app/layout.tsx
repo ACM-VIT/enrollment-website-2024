@@ -17,6 +17,7 @@ import Sidebar from "./layout/Sidebar";
 import AppButtons from "./layout/AppButtons";
 import {pages} from "./pages/pages";
 import {isBrowser} from "react-device-detect";
+import {usePathname, useRouter} from "next/navigation";
 
 interface Page {
     index: number;
@@ -66,6 +67,8 @@ function App({children}: { children: React.ReactNode }) {
             },
         },
     });
+    const router = useRouter();
+    const pathname = usePathname();
 
     function handleThemeChange() {
         setDarkMode(!darkMode);
@@ -78,12 +81,13 @@ function App({children}: { children: React.ReactNode }) {
         else setDarkMode(currentTheme === "dark");
     }, []);
 
-    const deletedIndex = visiblePages.find(
-        (x) => !visiblePageIndexs.includes(x.index)
-    )?.index;
 
     useEffect(() => {
         const newPages = [];
+        const deletedIndex = visiblePages.find(
+            (x) => !visiblePageIndexs.includes(x.index)
+        )?.index;
+        const deletedPosition = visiblePages.findIndex((x) => x.index === deletedIndex);
 
         for (const index of visiblePageIndexs) {
             const page = pages.find((x) => x.index === index);
@@ -91,32 +95,23 @@ function App({children}: { children: React.ReactNode }) {
         }
         setVisiblePages(newPages);
 
+
         if (visiblePageIndexs.length === 0) {
             setSelectedIndex(-1);
-            // navigate("/");
+            router.push("/");
         } else if (
-            deletedIndex === selectedIndex &&
-            deletedIndex > Math.max(...visiblePageIndexs)
+            deletedIndex === selectedIndex
         ) {
-            setSelectedIndex(Math.max(...visiblePageIndexs));
-            const page = pages.find(
-                (x) => x.index === Math.max(...visiblePageIndexs)
-            );
-            // if (page) navigate(page.route);
-        } else if (
-            deletedIndex === selectedIndex &&
-            deletedIndex < Math.max(...visiblePageIndexs)
-        ) {
-            setSelectedIndex(Math.min(...visiblePageIndexs));
-            const page = pages.find(
-                (x) => x.index === Math.min(...visiblePageIndexs)
-            );
-            // if (page) navigate(page.route);
+            if(deletedIndex === 0) {
+                setSelectedIndex(visiblePageIndexs[0]);
+                router.push(pages[visiblePageIndexs[0]].route);
+            } else {
+                setSelectedIndex(visiblePageIndexs[deletedPosition-1]);
+                router.push(pages[visiblePageIndexs[deletedPosition-1]].route);
+            }
         } else {
         }
-    }, [visiblePageIndexs,
-        // navigate,
-        deletedIndex, selectedIndex]);
+    }, [visiblePageIndexs, selectedIndex]);
 
     return (
         <ThemeProvider theme={theme}>
