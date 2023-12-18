@@ -25,7 +25,6 @@ export default function Sidebar({
                                     handleThemeChange,
                                     setSelectedIndex,
                                 }: Props) {
-    // const navigate = useNavigate();
     const router = useRouter();
     return (
         <Box

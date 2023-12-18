@@ -17,7 +17,7 @@ import Sidebar from "./layout/Sidebar";
 import AppButtons from "./layout/AppButtons";
 import {pages} from "./pages/pages";
 import {isBrowser} from "react-device-detect";
-import {usePathname, useRouter} from "next/navigation";
+import {useRouter} from "next/navigation";
 
 interface Page {
     index: number;
@@ -37,7 +37,6 @@ interface Page {
 // }
 
 function App({children}: { children: React.ReactNode }) {
-    // const navigate = useNavigate();
     const [expanded, setExpanded] = useState(isBrowser);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [currentComponent, setCurrentComponent] = useState("");
@@ -68,7 +67,6 @@ function App({children}: { children: React.ReactNode }) {
         },
     });
     const router = useRouter();
-    const pathname = usePathname();
 
     function handleThemeChange() {
         setDarkMode(!darkMode);
@@ -102,12 +100,12 @@ function App({children}: { children: React.ReactNode }) {
         } else if (
             deletedIndex === selectedIndex
         ) {
-            if(deletedIndex === 0) {
+            if (deletedIndex === 0) {
                 setSelectedIndex(visiblePageIndexs[0]);
                 router.push(pages[visiblePageIndexs[0]].route);
             } else {
-                setSelectedIndex(visiblePageIndexs[deletedPosition-1]);
-                router.push(pages[visiblePageIndexs[deletedPosition-1]].route);
+                setSelectedIndex(visiblePageIndexs[deletedPosition - 1]);
+                router.push(pages[visiblePageIndexs[deletedPosition - 1]].route);
             }
         } else {
         }
@@ -187,25 +185,6 @@ function App({children}: { children: React.ReactNode }) {
                                     height: `calc(100vh - 20px - 33px)`,
                                 }}
                             >
-                                {/*<Routes>*/}
-                                {/*  */}
-                                {/*  <Route*/}
-                                {/*    path="/"*/}
-                                {/*    element={<Page setSelectedIndex={setSelectedIndex} />}*/}
-                                {/*  />*/}
-                                {/*  {pages.map(({ index, name, route }) => (*/}
-                                {/*    <Route*/}
-                                {/*      key={index}*/}
-                                {/*      path={route}*/}
-                                {/*      element={<MDContainer path={`./pages/${name}`} />}*/}
-                                {/*    />*/}
-                                {/*  ))}*/}
-                                {/*  <Route*/}
-                                {/*    path="/docs"*/}
-                                {/*    element={<MDContainer path={`./pages/docs.md`} />}*/}
-                                {/*  />*/}
-                                {/*  <Route path="*" element={<Navigate to="/" replace />} />*/}
-                                {/*</Routes>*/}
                                 {children}
                             </Grid>
                         </Grid>
@@ -215,7 +194,6 @@ function App({children}: { children: React.ReactNode }) {
                     </Grid>
                 </Grid>
             </Container>
-            {/* </Router> */}
         </ThemeProvider>
     );
 }
