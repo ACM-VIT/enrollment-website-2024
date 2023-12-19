@@ -10,17 +10,11 @@ import {
     Typography,
 } from "@mui/material";
 import React, {useEffect} from "react";
-import {links} from "./pages/links";
+import {links} from "../pages/links";
 import Image from 'next/image';
-import {usePathname} from "next/navigation";
 
 export default function Page(
 ) {
-    const pathname = usePathname();
-
-    useEffect(() => {
-        document.title = process.env.REACT_APP_NAME!;
-    }, [pathname]);
 
     return (
         <Grid
@@ -34,7 +28,7 @@ export default function Page(
             <Grid item xs={3}>
                 <Stack direction={{xs: "column", sm: "row-reverse"}} spacing={2}>
                     <Box display="flex" sx={{justifyContent: "center"}}>
-                        <Image src='/Acm%20logo.png' width={150} alt="logo"/>
+                        <Image src='/Acm%20logo.png' width={150} height={150} alt="logo"/>
                     </Box>
                     <Box>
                         <Grid
