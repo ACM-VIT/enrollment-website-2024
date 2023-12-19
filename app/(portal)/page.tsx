@@ -10,27 +10,11 @@ import {
     Typography,
 } from "@mui/material";
 import React, {useEffect} from "react";
-import logo from "../../static/favicon.png";
-// import { useLocation } from "react-router-dom";
-import {links} from "./pages/links";
-import {usePathname} from "next/navigation";
+import {links} from "../pages/links";
+import Image from 'next/image';
 
-// interface Props {
-//   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
-// }
-
-// TODO: Fix this
 export default function Page(
-    // { setSelectedIndex }: Props
 ) {
-    const pathname = usePathname();
-    // useEffect(() => {
-    //   setSelectedIndex(-1);
-    // }, [setSelectedIndex]);
-
-    useEffect(() => {
-        document.title = process.env.REACT_APP_NAME!;
-    }, [pathname]);
 
     return (
         <Grid
@@ -44,7 +28,7 @@ export default function Page(
             <Grid item xs={3}>
                 <Stack direction={{xs: "column", sm: "row-reverse"}} spacing={2}>
                     <Box display="flex" sx={{justifyContent: "center"}}>
-                        <img src='/Acm%20logo.png' width="150px" alt="logo"/>
+                        <Image src='/Acm%20logo.png' width={150} height={150} alt="logo"/>
                     </Box>
                     <Box>
                         <Grid

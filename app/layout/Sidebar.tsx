@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Link, Paper, Tooltip} from "@mui/material";
+import {Box, Link, Paper, Popover, Tooltip} from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -7,8 +7,8 @@ import {VscFiles, VscSettingsGear} from "react-icons/vsc";
 import {BiGitBranch} from "react-icons/bi";
 import Divider from "@mui/material/Divider";
 import {links} from "../pages/links";
-// import { useNavigate } from "react-router-dom";
-import {useRouter} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
+import {signOutAction} from "@/app/components/AuthButtons";
 
 interface Props {
     expanded: boolean;
@@ -25,8 +25,8 @@ export default function Sidebar({
                                     handleThemeChange,
                                     setSelectedIndex,
                                 }: Props) {
-    // const navigate = useNavigate();
     const router = useRouter();
+    const [profileOpen, setProfileOpen] = React.useState(false);
     return (
         <Box
             sx={{
@@ -204,7 +204,8 @@ export default function Sidebar({
                     <Link
                         onClick={() => {
                             setSelectedIndex(-1);
-                            router.push("/docs");
+                            // router.push("/");
+                            setProfileOpen(!profileOpen);
                         }}
                         underline="none"
                         color="inherit"
@@ -228,6 +229,24 @@ export default function Sidebar({
                                 <VscSettingsGear/>
                             </Box>
                         </Box>
+
+                        <Popover
+                            anchorOrigin={{
+                                vertical: 'center',
+                                horizontal: 'right',
+                            }}
+                            transformOrigin={{
+                                vertical: 'center',
+                                horizontal: 'left',
+                            }}
+                            open={profileOpen}>
+                            <form action={signOutAction}>
+                                <button>
+                                    Sign Out
+                                </button>
+                            </form>
+
+                        </Popover>
                     </Link>
                 </Tooltip>
             </Box>

@@ -28,7 +28,6 @@ export default function AppButtons({
                                        pages,
                                        selectedIndex,
                                        setSelectedIndex,
-                                       currentComponent,
                                        setCurrentComponent,
                                        visiblePageIndexs,
                                        setVisiblePageIndexs,
