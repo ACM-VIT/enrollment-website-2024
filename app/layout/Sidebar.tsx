@@ -50,7 +50,7 @@ export default function Sidebar({
   };
 
   const handleLogout = async () => {
-    await signOut({ redirect: true, callbackUrl: "/landing" });
+    signOut({ redirect: true, callbackUrl: "/landing" });
   };
 
   return (
