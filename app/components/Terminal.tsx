@@ -1,79 +1,88 @@
-'use client'
-import React, { useState } from 'react';
-import {Container} from "@mui/system";
+"use client";
+import { useRef } from 'react';
+import React, { useState } from "react";
+import { Container } from "@mui/system";
 
 const terminalText = "[user@acm-mainframe]~$ ";
 
 interface TerminalWindow {
-    domain: string;
-    content: string[];
+  domain: string;
+  content: string[];
 }
 
-function Confirmation({setTerminalWindows, terminalWindows, currentIndex, setCurrentIndex}) {
-    const [inputHistory, setInputHistory] = useState<String[]>([]);
-    const domain = terminalWindows[currentIndex].domain;
+function Terminal({ showTerminal, setShowTerminal }: { showTerminal: boolean, setShowTerminal: Function }) {
+  const [consoleHistory, setConsoleHistory] = useState<String[]>([
+    "Welcome to the ACM Terminal!",
+  ]);
+  // const terminalContainer = useRef<HTMLElement>(null);
 
-    return (
-        <>
-        {inputHistory.map((input) => <><pre>Do you wish to initiate registration for {domain} domain (y/n?)</pre><pre>{input}</pre><pre>Invalid input.</pre></>)}
-            <pre>Do you wish to initiate registration for {domain} domain (y/n?)</pre>
-            <pre>{terminalText}<input type="text" name="input" autoFocus onKeyPress={
-            (event) => {
-                if (event.key === 'Enter') {
-                    const input = event.target.value;
-                    if (input === 'y') {
-                        let x = [...terminalWindows];
-                        x[currentIndex].content.push(`Do you wish to initiate registration for ${domain} domain (y/n?)`);
-                        x[currentIndex].content.push(`y`);
-                        x[currentIndex].content.push(`Registration for ${domain} domain initiated.`);
-                        setTerminalWindows([...terminalWindows, {domain: domain, content: []}]);
-                        // TODO: Trigger server action or make api call
-                    } else if (input === 'n') {
-                        let x = [...terminalWindows];
-                        x.splice(currentIndex, 1);
-                        setTerminalWindows(x);
-                    } else {
-                        event.target.value = '';
-                        setInputHistory([...inputHistory, input]);
-                    }
-                }
+  return (
+    <Container
+      // ref={terminalContainer}
+      sx={{
+        height: "40%",
+        width: "100%",
+        // backgroundColor: "#181818",
+        color: "inherit",
+        // overflow: 'auto',
+        // border: '3px solid #181818',
+      }}
+    >
+      {consoleHistory.map((line, index) => (
+        <pre key={index}>{line}</pre>
+      ))}
+      <pre>
+        {terminalText}
+        <input
+          type="text"
+          name="input"
+          autoFocus
+          onKeyPress={(event) => {
+            if (event.key === "Enter") {
+              const temp = [
+                ...consoleHistory,
+                `${terminalText}${(event.target as HTMLInputElement).value}`,
+              ];
+              const input = (event.target as HTMLInputElement).value;
+              switch (input) {
+                case "help":
+                  setConsoleHistory([
+                    ...temp,
+                    "help - displays this message",
+                    "clear - clears the terminal",
+                    "exit - exits the terminal",
+                  ]);
+                  break;
+                case "clear":
+                  setConsoleHistory([]);
+                  break;
+                case "exit":
+                  setConsoleHistory([...temp, "Goodbye!"]);
+                  setTimeout(() => {
+                    setShowTerminal(false);
+                  }, 1000);
+                  break;
+                default:
+                  setConsoleHistory([
+                    ...temp,
+                    `${input} is not a valid command`,
+                  ]);
+                  break;
+              }
+              (event.target as HTMLInputElement).value = "";
+              // terminalContainer.current!.scrollTop = terminalContainer.current!.scrollHeight;
             }
-        } style={{ border: 'none', outline:'none', color:'inherit', backgroundColor:'#272727',}}/></pre>
-        </>
-    );
+          }}
+          style={{
+            border: "none",
+            outline: "none",
+            color: "inherit",
+            backgroundColor: "#272727",
+          }}
+        />
+      </pre>
+    </Container>
+  );
 }
-
-function Terminal({showTerminal}){
-    // const [showTerminal, setShowTerminal] = useState(true);
-    const [terminalWindows, setTerminalWindows] = useState<TerminalWindow[]>([{domain: 'x', content: []}]);
-    const [currentIndex, setCurrentIndex] = useState(0);
-
-
-    if (showTerminal) {
-        // TODO: Make this responsive
-        return (
-            <Container
-                sx={{
-                    height: '40%', 
-                    width: '100%',
-                    // backgroundColor: "#181818",  
-                    color: 'inherit',
-                    // overflow: 'auto',
-                    // border: '3px solid #181818',
-                    
-                }}
-            >
-                {
-                    terminalWindows[currentIndex].content.length == 0 ?
-                    <Confirmation setCurrentIndex={setCurrentIndex} setTerminalWindows={setTerminalWindows} terminalWindows={terminalWindows} currentIndex={currentIndex}/> :
-                    terminalWindows[currentIndex].content.map((line) => {
-                        return <pre>{line}</pre>
-                    })
-                }
-            </Container>
-        )
-    }
-    return <></>;
-};
 
 export default Terminal;
