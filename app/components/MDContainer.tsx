@@ -1,4 +1,3 @@
-import fs from "fs";
 import {Container, TableBody, TableFooter, TableHead} from "@mui/material";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -20,12 +19,12 @@ import {
 } from "./md";
 
 interface Props {
-    path: string;
+    content: string;
 }
 
-export default function MDContainer({path}: Props) {
+export default function MDContainer({content}: Props) {
 
-    const content = fs.readFileSync(path, "utf-8");
+    // const content = fs.readFileSync(path, "utf-8");
     return (
         <Container>
             <ReactMarkdown
