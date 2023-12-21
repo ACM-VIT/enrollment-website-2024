@@ -19,6 +19,7 @@ import { links } from "../pages/links";
 // import { useNavigate } from "react-router-dom";
 import { useRouter } from "next/navigation";
 import { Logout } from "@mui/icons-material";
+import { signOut } from "next-auth/react";
 
 interface Props {
   expanded: boolean;
@@ -37,7 +38,6 @@ export default function Sidebar({
 }: Props) {
   // const navigate = useNavigate();
 
-  const signOut = () => {};
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
@@ -47,6 +47,10 @@ export default function Sidebar({
   };
   const handleProfileMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleLogout = async () => {
+    await signOut({ redirect: true, callbackUrl: "/landing" });
   };
 
   return (
@@ -268,7 +272,7 @@ export default function Sidebar({
             color="inherit"
             disableRipple
             style={{ backgroundColor: "transparent" }}
-            onClick={signOut}
+            onClick={handleLogout}
             sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
           >
             Logout
