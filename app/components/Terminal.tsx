@@ -1,9 +1,10 @@
 "use client";
-import { useRef } from 'react';
 import React, { useState } from "react";
 import { Container } from "@mui/system";
+import { Grid, Box, Paper } from "@mui/material";
 
 const terminalText = "[user@acm-mainframe]~$ ";
+
 
 interface TerminalWindow {
   domain: string;
@@ -17,23 +18,61 @@ function Terminal({ showTerminal, setShowTerminal }: { showTerminal: boolean, se
   // const terminalContainer = useRef<HTMLElement>(null);
 
   return (
-    <Container
-      // ref={terminalContainer}
-      sx={{
-        height: "40%",
+    <>
+      
+      <Box sx={{
+          height: "10%",
+          marginTop: "4px",
+          marginBottom: "14px",
+          textDecoration: "underline #0078d4",
+          textUnderlineOffset: "5px",
+          paddingLeft: "28px",
+          paddingTop: "12px",
+        }}>
+          <span style={{
+            fontSize: "75%",
+            fontFamily: "inherit",
+            textTransform: "uppercase",
+          cursor: "context-menu",
+          }}>Terminal</span>
+      </Box>
+      <Container
+        sx={{
+        height: "85%",
+        marginLeft: "0px",
+        // height: "40%",
         width: "100%",
         // backgroundColor: "#181818",
         color: "inherit",
-        // overflow: 'auto',
-        // border: '3px solid #181818',
-      }}
+        overflow: 'auto',
+        marginRight: "0px",
+        }}
+        maxWidth={false}
     >
-      {consoleHistory.map((line, index) => (
-        <pre key={index}>{line}</pre>
+      
+      <Box
+        sx={{
+            // height:"90%"
+          width: "100%",
+        }}
+      >
+        {consoleHistory.map((line, index) => (
+        <pre key={index} style={{
+          marginBottom: "12px",
+          marginTop: "12px",
+        }}>{line}</pre>
       ))}
-      <pre>
-        {terminalText}
-        <input
+      <pre style={{
+        marginBottom: "12px",
+        marginTop: "12px",
+      }}>
+            <span style={{
+              fontWeight: "bold",
+              color: "#c353c3",
+            }}>
+          {terminalText}
+        </span>
+            <input
           type="text"
           name="input"
           autoFocus
@@ -70,18 +109,25 @@ function Terminal({ showTerminal, setShowTerminal }: { showTerminal: boolean, se
                   break;
               }
               (event.target as HTMLInputElement).value = "";
-              // terminalContainer.current!.scrollTop = terminalContainer.current!.scrollHeight;
+              // terminalContainer.current!.scrollTop = terminalContainer.current!.scrollHeight; 
             }
           }}
-          style={{
+              style={{
             border: "none",
             outline: "none",
-            color: "inherit",
-            backgroundColor: "#272727",
+            // backgroundColor: ()?"#272727" : "none",
+            backgroundColor: "inherit",
+            fontFamily: "inherit",
+            fontSize: "inherit",
           }}
         />
       </pre>
+        </Box>
+      
+      
     </Container>
+    </>
+    
   );
 }
 
