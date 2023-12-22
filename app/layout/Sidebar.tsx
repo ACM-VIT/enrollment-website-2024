@@ -12,12 +12,10 @@ import {
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { VscFiles, VscSettingsGear,VscTerminalPowershell } from "react-icons/vsc";
+import { VscFiles, VscTerminalPowershell } from "react-icons/vsc";
 import { BiGitBranch } from "react-icons/bi";
 import Divider from "@mui/material/Divider";
 import { links } from "../pages/links";
-// import { useNavigate } from "react-router-dom";
-import { useRouter } from "next/navigation";
 import { Logout } from "@mui/icons-material";
 
 interface Props {
@@ -25,7 +23,6 @@ interface Props {
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
   darkMode: boolean;
   handleThemeChange: () => void;
-  setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
   showTerminal: boolean;
   setShowTerminal: Function;
 }
@@ -35,14 +32,11 @@ export default function Sidebar({
   setExpanded,
   darkMode,
   handleThemeChange,
-  setSelectedIndex,
   showTerminal,
   setShowTerminal,
 }: Props) {
-  // const navigate = useNavigate();
 
   const signOut = () => {};
-  const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const openProfileMenu = Boolean(anchorEl);
@@ -198,7 +192,7 @@ export default function Sidebar({
             </Box>
           </Box>
           </Tooltip>
-          
+
           <Tooltip
             title={darkMode ? "Turn on the light" : "Turn off the light"}
             placement="right"
