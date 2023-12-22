@@ -197,20 +197,24 @@ export default function App({ children }: { children: React.ReactNode }) {
                                 {showTerminal==true?<>
                                         <Box
                                             sx={{
-                                                height: "65%",
+                                                height: "64%",
                                                 overflow: "auto",
                                             }}
                                         >
                                             {children}
-                                        </Box>
+                                    </Box>
+                                        <Box
+                                            sx={{
+                                                height: "0.5px",
+                                                backgroundColor: "#323233",
+                                        }}
+                                        />
                                         <Box
                                             component={Paper}
-                                            sx={{
+                                        sx={{
                                                 height: "35%",
-                                                overflow: "auto",
-                                                
-                                            }}
-                                            elevation={4}
+                                                }}
+                                            elevation={1}
                                         >
                                             <Terminal showTerminal={showTerminal} setShowTerminal={setShowTerminal}></Terminal>
                                         </Box>
