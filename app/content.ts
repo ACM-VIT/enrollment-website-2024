@@ -3,7 +3,8 @@ export default {
         app: `# 📖 App`,
         cc: `# 📖 Competitive Coding`,
         design: `# 📖 Design`,
-        research: `## Summary
+    research: `# 📖 Research
+## Summary
 Senior Software Developer specializing in web application development. Experienced with all stages of the development cycle for dynamic web projects. Well-versed in numerous programming languages including C# .NET, Python and JavaScript/TypeScript. Strong background in both accounting/auditing and software development. Mitigated the gap between end users and developers, co-designed and built scalable solutions.
 
 ## Experience
