@@ -215,7 +215,7 @@ export default function App({ children }: { children: React.ReactNode }) {
                                                 }}
                                             elevation={1}
                                         >
-                                            <Terminal showTerminal={showTerminal} setShowTerminal={setShowTerminal}></Terminal>
+                                            <Terminal setShowTerminal={setShowTerminal}></Terminal>
                                         </Box>
                                         </>
                                 : children
