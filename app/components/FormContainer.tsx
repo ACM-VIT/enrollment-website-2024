@@ -9,6 +9,15 @@ async function FormContainer({domain}: { domain: Domain }) {
     const questions = await prisma.question.findMany({
         where: {
             domain: domain,
+        },
+        include: {
+            responses: {
+                where: {
+                    registration: {
+                        domain: domain,
+                    },
+                }
+            }
         }
     });
     return (
