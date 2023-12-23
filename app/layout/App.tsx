@@ -1,4 +1,8 @@
 'use client';
+import Box from '@mui/material/Box';
+import Terminal from "@/app/components/Terminal";
+import Paper from '@mui/material/Paper';
+
 
 import {
     Container,
@@ -36,7 +40,8 @@ interface Page {
 //     return tabs;
 // }
 
-export default function App({children}: { children: React.ReactNode }) {
+export default function App({ children }: { children: React.ReactNode }) {
+    const [showTerminal, setShowTerminal] = useState(false);
     const [expanded, setExpanded] = useState(isBrowser);
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const [currentComponent, setCurrentComponent] = useState("");
@@ -44,6 +49,7 @@ export default function App({children}: { children: React.ReactNode }) {
     const [darkMode, setDarkMode] = useState(false);
     const [visiblePages, setVisiblePages] = useState<Page[]>([]);
     const paletteType = darkMode ? "dark" : "light";
+    
     const theme = createTheme({
         palette: {
             mode: paletteType,
@@ -128,6 +134,8 @@ export default function App({children}: { children: React.ReactNode }) {
                                 darkMode={darkMode}
                                 handleThemeChange={handleThemeChange}
                                 setSelectedIndex={setSelectedIndex}
+                                showTerminal={showTerminal}
+                                setShowTerminal={setShowTerminal}
                             />
                         </Grid>
                         {expanded && (
@@ -185,7 +193,34 @@ export default function App({children}: { children: React.ReactNode }) {
                                     height: `calc(100vh - 20px - 33px)`,
                                 }}
                             >
-                                {children}
+                                {/* {children} */}
+                                {showTerminal==true?<>
+                                        <Box
+                                            sx={{
+                                                height: "64%",
+                                                overflow: "auto",
+                                            }}
+                                        >
+                                            {children}
+                                    </Box>
+                                        <Box
+                                            sx={{
+                                                height: "0.5px",
+                                                backgroundColor: "#323233",
+                                        }}
+                                        />
+                                        <Box
+                                            component={Paper}
+                                        sx={{
+                                                height: "35%",
+                                                }}
+                                            elevation={1}
+                                        >
+                                            <Terminal showTerminal={showTerminal} setShowTerminal={setShowTerminal}></Terminal>
+                                        </Box>
+                                        </>
+                                : children
+                                }
                             </Grid>
                         </Grid>
                     </Grid>

@@ -12,7 +12,7 @@ import {
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { VscFiles, VscSettingsGear } from "react-icons/vsc";
+import { VscFiles, VscSettingsGear,VscTerminalPowershell } from "react-icons/vsc";
 import { BiGitBranch } from "react-icons/bi";
 import Divider from "@mui/material/Divider";
 import { links } from "../pages/links";
@@ -26,6 +26,8 @@ interface Props {
   darkMode: boolean;
   handleThemeChange: () => void;
   setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
+  showTerminal: boolean;
+  setShowTerminal: Function;
 }
 
 export default function Sidebar({
@@ -34,6 +36,8 @@ export default function Sidebar({
   darkMode,
   handleThemeChange,
   setSelectedIndex,
+  showTerminal,
+  setShowTerminal,
 }: Props) {
   // const navigate = useNavigate();
 
@@ -101,7 +105,7 @@ export default function Sidebar({
           <Tooltip title="Source of this project" arrow placement="right">
             <Link
               target="_blank"
-              href={"https://github.com/Supratim69/react-vscode-portfolio"}
+              href={"https://github.com/ACM-VIT/enrollment-website-2024"}
               underline="none"
               color="inherit"
               sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
@@ -169,6 +173,11 @@ export default function Sidebar({
           justifyContent="center"
           flexDirection="column"
         >
+          <Tooltip
+            title="Profile"
+            placement="right"
+            arrow
+          >
           <Box
             sx={{
               flexGrow: 0,
@@ -188,6 +197,8 @@ export default function Sidebar({
               <AccountCircleIcon />
             </Box>
           </Box>
+          </Tooltip>
+          
           <Tooltip
             title={darkMode ? "Turn on the light" : "Turn off the light"}
             placement="right"
@@ -219,16 +230,13 @@ export default function Sidebar({
               )}
             </Box>
           </Tooltip>
-          <Tooltip title="Markdown syntax" arrow placement="right">
-            <Link
-              onClick={() => {
-                setSelectedIndex(-1);
-                router.push("/docs");
-              }}
+          <Tooltip title="Terminal" arrow placement="right">
+            {/* <Link
+              
               underline="none"
               color="inherit"
               sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
-            >
+            > */}
               <Box
                 sx={{
                   flexGrow: 0,
@@ -242,12 +250,13 @@ export default function Sidebar({
                 }}
                 display="flex"
                 justifyContent="center"
+                onClick={()=>setShowTerminal(!showTerminal)}
               >
-                <Box mt={0.7}>
-                  <VscSettingsGear />
-                </Box>
+                  <Box mt={0.7}>
+                    <VscTerminalPowershell />
+                  </Box>
               </Box>
-            </Link>
+            {/* </Link> */}
           </Tooltip>
         </Box>
       </Box>
