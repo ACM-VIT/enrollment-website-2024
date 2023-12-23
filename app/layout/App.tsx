@@ -133,7 +133,6 @@ export default function App({ children }: { children: React.ReactNode }) {
                                 expanded={expanded}
                                 darkMode={darkMode}
                                 handleThemeChange={handleThemeChange}
-                                setSelectedIndex={setSelectedIndex}
                                 showTerminal={showTerminal}
                                 setShowTerminal={setShowTerminal}
                             />
@@ -194,7 +193,7 @@ export default function App({ children }: { children: React.ReactNode }) {
                                 }}
                             >
                                 {/* {children} */}
-                                {showTerminal==true?<>
+                                {showTerminal?<>
                                         <Box
                                             sx={{
                                                 height: "64%",
@@ -216,7 +215,7 @@ export default function App({ children }: { children: React.ReactNode }) {
                                                 }}
                                             elevation={1}
                                         >
-                                            <Terminal showTerminal={showTerminal} setShowTerminal={setShowTerminal}></Terminal>
+                                            <Terminal setShowTerminal={setShowTerminal}></Terminal>
                                         </Box>
                                         </>
                                 : children

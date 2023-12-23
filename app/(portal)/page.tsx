@@ -9,13 +9,11 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
-import React, {useEffect} from "react";
+import React from "react";
 import {links} from "../pages/links";
 import Image from 'next/image';
 
-export default function Page(
-) {
-
+export default function Page() {
     return (
         <Grid
             container

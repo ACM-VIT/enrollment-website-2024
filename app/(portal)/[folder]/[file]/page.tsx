@@ -1,4 +1,3 @@
-'use client';
 import { notFound } from "next/navigation";
 import { pages } from "@/app/pages/pages";
 
