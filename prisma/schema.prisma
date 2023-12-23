@@ -45,7 +45,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Registration  Registration[]
+  registrations Registration[]
 }
 
 enum Domain {
@@ -58,23 +58,23 @@ enum Domain {
 }
 
 model Registration {
-  id                 String               @id @default(cuid())
-  domain             Domain
-  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId             String
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  RegistrationStatus RegistrationStatus[]
-  Response           Response[]
+  id        String               @id @default(cuid())
+  domain    Domain
+  user      User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  status    RegistrationStatus[]
+  responses Response[]
 
   @@unique([domain, userId])
 }
 
 enum Status {
   // TODO: Replace with actual statuses
-  PENDING
-  APPROVED
-  REJECTED
+  init
+  form_submitted
+  round1_result_updated
 }
 
 model RegistrationStatus {
@@ -95,13 +95,14 @@ model Question {
   type      Type
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
-  Response  Response[]
+  responses Response[]
 }
 
 enum Type {
-  TEXT
-  MULTIPLE_CHOICE
-  SINGLE_CHOICE
+  st
+  lt
+  scq
+  mcq
 }
 
 model Response {
