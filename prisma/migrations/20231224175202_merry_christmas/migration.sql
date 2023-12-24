@@ -1,11 +1,21 @@
 -- CreateEnum
-CREATE TYPE "Domain" AS ENUM ('CC', 'WEB', 'APP', 'RESEARCH', 'MANAGEMENT', 'DESIGN');
+CREATE TYPE "ConfigKeys" AS ENUM ('accept_form_responses', 'round1_results_announced');
 
 -- CreateEnum
-CREATE TYPE "Status" AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
+CREATE TYPE "Domain" AS ENUM ('cc', 'web', 'app', 'research', 'management', 'design');
 
 -- CreateEnum
-CREATE TYPE "Type" AS ENUM ('TEXT', 'MULTIPLE_CHOICE', 'SINGLE_CHOICE');
+CREATE TYPE "Type" AS ENUM ('stq', 'ltq', 'scq', 'mcq');
+
+-- CreateTable
+CREATE TABLE "Config" (
+    "id" STRING NOT NULL,
+    "value" BOOL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Config_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -53,19 +63,9 @@ CREATE TABLE "Registration" (
     "userId" STRING NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "formSubmittedAt" TIMESTAMP(3),
 
     CONSTRAINT "Registration_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "RegistrationStatus" (
-    "id" STRING NOT NULL,
-    "status" "Status" NOT NULL,
-    "registrationId" STRING NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "RegistrationStatus_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -74,6 +74,7 @@ CREATE TABLE "Question" (
     "question" STRING NOT NULL,
     "domain" "Domain" NOT NULL,
     "type" "Type" NOT NULL,
+    "varName" STRING NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -104,6 +105,9 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 -- CreateIndex
 CREATE UNIQUE INDEX "Registration_domain_userId_key" ON "Registration"("domain", "userId");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Response_questionId_registrationId_key" ON "Response"("questionId", "registrationId");
+
 -- AddForeignKey
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -112,9 +116,6 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 
 -- AddForeignKey
 ALTER TABLE "Registration" ADD CONSTRAINT "Registration_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "RegistrationStatus" ADD CONSTRAINT "RegistrationStatus_registrationId_fkey" FOREIGN KEY ("registrationId") REFERENCES "Registration"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Response" ADD CONSTRAINT "Response_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE CASCADE ON UPDATE CASCADE;

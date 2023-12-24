@@ -4,13 +4,12 @@ import {PrismaAdapter} from "@auth/prisma-adapter";
 
 import {PrismaClient} from "@prisma/client";
 
-const prisma = new PrismaClient();
-
 
 export const authConfig = {
     secret: process.env.AUTH_SECRET,
     pages: {
         signIn: '/landing',
+        newUser: '/onboarding',
     },
     providers: [
         GoogleProvider({
@@ -29,5 +28,5 @@ export const authConfig = {
     //     //     return auth?.user?.email?.endsWith('@vitstudent.ac.in');
     //     // }
     // },
-    adapter: PrismaAdapter(prisma),
+    adapter: PrismaAdapter(new PrismaClient()),
 } satisfies NextAuthConfig;

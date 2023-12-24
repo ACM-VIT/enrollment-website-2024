@@ -84,15 +84,16 @@ export default function AppTree({
         >
 
             {Object.keys(groupBy(pages, 'group')).map((group) => (
+                pages.filter(i => i.group === group).length > 0 &&
                 <TreeItem
                     key={group}
                     nodeId={group}
                     label={group}
                     color="#bdc3cf"
-                    onClick={() => {
-                        router.push('/');
-                        setSelectedIndex(-1);
-                    }}
+                    // onClick={() => {
+                    //     router.push('/');
+                    //     setSelectedIndex(-1);
+                    // }}
                 >
                     {pages.filter(i => i.group === group).map(({index, name, route}) => (
                         <TreeItem

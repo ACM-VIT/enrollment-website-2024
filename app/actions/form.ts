@@ -2,12 +2,10 @@
 
 import {PrismaClient, Domain} from '@prisma/client';
 import {auth} from "@/lib/auth";
-import {revalidateTag} from 'next/cache';
 
 const prisma = new PrismaClient();
 
 const saveForm = async (domain: Domain, formData: FormData) => {
-    console.log((await auth())!.user)
     const registrationId = (await prisma.registration.findUnique({
         where: {
             domain_userId: {
@@ -49,10 +47,6 @@ const saveForm = async (domain: Domain, formData: FormData) => {
 
         }
     )
-    console.log(formData.get('clqh2xpct00009m3abe6p3eqw'))
-    // setTimeout(() => {
-    //     revalidateTag(`/form/${domain}`);
-    // }, 1000)
 }
 
 export default saveForm;

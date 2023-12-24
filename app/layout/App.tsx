@@ -19,9 +19,10 @@ import AppTree from "./AppTree";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import AppButtons from "./AppButtons";
-import {pages} from "../pages/pages";
+import {pages as pagesGenerator} from "../pages/pages";
 import {isBrowser} from "react-device-detect";
 import {useRouter} from "next/navigation";
+import {Registration} from "@prisma/client";
 
 interface Page {
     index: number;
@@ -40,7 +41,8 @@ interface Page {
 //     return tabs;
 // }
 
-export default function App({ children }: { children: React.ReactNode }) {
+export default function App({ registrations, children }: { registrations: Registration[] ,children: React.ReactNode }) {
+    const pages: Page[] = pagesGenerator(registrations);
     const [showTerminal, setShowTerminal] = useState(false);
     const [expanded, setExpanded] = useState(isBrowser);
     const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -49,7 +51,7 @@ export default function App({ children }: { children: React.ReactNode }) {
     const [darkMode, setDarkMode] = useState(false);
     const [visiblePages, setVisiblePages] = useState<Page[]>([]);
     const paletteType = darkMode ? "dark" : "light";
-    
+
     const theme = createTheme({
         palette: {
             mode: paletteType,
@@ -161,7 +163,7 @@ export default function App({ children }: { children: React.ReactNode }) {
                                         setCurrentComponent={setCurrentComponent}
                                         visiblePageIndexs={visiblePageIndexs}
                                         setVisiblePageIndexs={setVisiblePageIndexs}
-                                    />
+                                    /> 
                                 </Stack>
                             </Grid>
                         )}
@@ -196,7 +198,7 @@ export default function App({ children }: { children: React.ReactNode }) {
                                 {showTerminal?<>
                                         <Box
                                             sx={{
-                                                height: "64%",
+                                                height: "64.4%",
                                                 overflow: "auto",
                                             }}
                                         >
