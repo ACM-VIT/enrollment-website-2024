@@ -3,8 +3,6 @@ import {
   Box,
   Link,
   ListItemIcon,
-  Menu,
-  MenuItem,
   Paper,
   Tooltip,
   Button,
@@ -17,6 +15,12 @@ import { BiGitBranch } from "react-icons/bi";
 import Divider from "@mui/material/Divider";
 import { links } from "../pages/links";
 import { Logout } from "@mui/icons-material";
+import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
+import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
+import { Dropdown } from "@mui/base/Dropdown";
+import { Menu } from "@mui/base/Menu";
+import { styled, css } from "@mui/system";
+
 
 interface Props {
   expanded: boolean;
@@ -172,25 +176,16 @@ export default function Sidebar({
             placement="right"
             arrow
           >
-          <Box
-            sx={{
-              flexGrow: 0,
-              fontSize: 24,
-              color: "#858585",
-              cursor: "pointer",
-              "&:hover": {
-                color: "white",
-              },
-              WebkitTapHighlightColor: "rgba(0,0,0,0)",
-            }}
-            display="flex"
-            justifyContent="center"
-            onClick={handleProfileClick}
-          >
-            <Box mt={0.7}>
-              <AccountCircleIcon />
-            </Box>
-          </Box>
+          <Link>
+                <Dropdown>
+                    <MenuButton ><AccountCircleIcon/></MenuButton>
+                    <Menu slots={{ listbox: Listbox }}>
+                        <MenuItem >Edit Profile</MenuItem>
+                        <Divider sx={{ paddingY: 0}} />
+                        <MenuItem >Sign out</MenuItem>
+                    </Menu>
+                </Dropdown>
+            </Link>
           </Tooltip>
 
           <Tooltip
@@ -254,7 +249,7 @@ export default function Sidebar({
           </Tooltip>
         </Box>
       </Box>
-      <Menu
+      {/* <Menu
         anchorEl={anchorEl}
         id="account-menu"
         open={openProfileMenu}
@@ -277,7 +272,88 @@ export default function Sidebar({
             Logout
           </Button>
         </MenuItem>
-      </Menu>
+      </Menu> */}
     </React.Fragment>
   );
 }
+
+const Listbox = styled("ul")(
+    ({ theme }) => `
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.8rem;
+    text-align: left;
+    text-indent: 2em;
+    transform-origin: top right;
+    padding-left: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 2px;
+    box-sizing: border-box;
+    min-width: 150px;
+    border-radius: 8px;
+    overflow: auto;
+    outline: 0px;
+    background: ${theme.palette.mode === "dark" ? "#1e1e1e" : "#D1D1D1"};
+    // border: 0.5px solid ${theme.palette.mode === "dark" ? "#1f1f1f" : "#1e1e1e"};
+    color: ${theme.palette.mode === "dark" ? "#BDC3CF" : "#474747"};
+    box-shadow: 0px 4px 4px ${
+      theme.palette.mode === "dark" ? "rgba(0,0,0, 0.25)" : "rgba(0,0,0, 0.25)"
+    };
+    z-index: 3;
+    margin-left: 26px;
+    position: fixed;
+    transform: translateY(-100%);
+    `
+  );
+  
+  const MenuItem = styled(BaseMenuItem)(
+    ({ theme }) => `
+    list-style: none;
+    padding: 8px 4px 4px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+  
+    &:last-of-type {
+      border-bottom: none;
+    }
+
+    &.${menuItemClasses.disabled} {
+      color: ${theme.palette.mode === "dark" ? "#BDC3CF":"#1f1f1f"};
+    }
+  
+    &:hover:not(.${menuItemClasses.disabled}) {
+      background-color: ${theme.palette.mode === "dark" ? "#6997D5":"#6997D5"};
+      color: ${theme.palette.mode === "dark" ? "#1e1e1e":"#1f1f1f"};
+    }
+    `
+  );
+  
+
+  
+  const MenuButton = styled(BaseMenuButton)(
+    ({ theme }) => css`
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      padding: 10px 10px 6px 14px;
+      transition: all 150ms ease;
+      cursor: pointer;
+      background: ${theme.palette.mode === 'dark' ? "#333333" : '#333333'};
+      border: 0px;
+      
+      border-top-width: 2px;
+      color: ${theme.palette.mode === 'dark' ? "#858585":"#858585"};
+      box-shadow: 0 0 0 0;
+      
+  
+      &:hover {
+        background: ${theme.palette.mode === 'dark' ? "#333333":"#333333"};
+        color: ${theme.palette.mode === 'dark' ? "#ffffff":"#ffffff"};
+      }
+  
+      &:active {
+        background: ${theme.palette.mode === 'dark' ? "#333333":"#333333"};
+      }`,
+  );
