@@ -1,12 +1,11 @@
-import { notFound } from "next/navigation";
-import { pages } from "@/app/pages/pages";
+import {pages as pagesGenerator} from "@/app/pages/pages";
+import Wrapper from "@/app/(portal)/[folder]/[file]/Wrapper";
 
 
+async function Page({params}: { params: { file: string, folder: string } }) {
+    const page = pagesGenerator().find((x) => x.group === params.folder && x.route === params.file)!;
 
-
-function Page({params}: {params: { file: string, folder: string }}) {
-    const page = pages.find((x) => x.group === params.folder && x.route === params.file)!;
-
-    return page?.content ?? notFound();
+    return  <Wrapper page={page}>{page?.content}</Wrapper>;
 }
+
 export default Page;

@@ -1,87 +1,63 @@
 import {Button, Box, Paper} from "@mui/material";
-import React from "react";
+import React, {useContext} from "react";
 import {VscMarkdown, VscChromeClose} from "react-icons/vsc";
 import {useTheme} from "@mui/material/styles";
 import {Container} from "@mui/system";
 import {useRouter} from "next/navigation";
+import PagesContext from "@/lib/PagesContext";
 
 
-interface Page {
-    index: number;
-    name: string;
-    route: string;
-    group: string;
-    content: React.ReactNode;
-}
-
-interface Props {
-    pages: Page[];
-    selectedIndex: number;
-    setSelectedIndex: React.Dispatch<React.SetStateAction<number>>;
-    currentComponent: string;
-    setCurrentComponent: React.Dispatch<React.SetStateAction<string>>;
-    visiblePageIndexs: number[];
-    setVisiblePageIndexs: React.Dispatch<React.SetStateAction<number[]>>;
-}
-
-export default function AppButtons({
-                                       pages,
-                                       selectedIndex,
-                                       setSelectedIndex,
-                                       setCurrentComponent,
-                                       visiblePageIndexs,
-                                       setVisiblePageIndexs,
-                                   }: Props) {
-    // const navigate = useNavigate();
+export default function AppButtons() {
+    const {currentPage, openPages, setOpenPages} = useContext(PagesContext)
     const theme = useTheme();
     const router = useRouter();
 
     // const [selectedIndex, setSelectedIndex] = useState(-1);
     function renderButtonBgColor(index: number) {
         if (theme.palette.mode === "dark") {
-            return selectedIndex === index ? "#1e1e1e" : "#2d2d2d";
+            return currentPage?.index === index ? "#1e1e1e" : "#2d2d2d";
         } else {
-            return selectedIndex === index ? "#ffffff" : "#ececec";
+            return currentPage?.index === index ? "#ffffff" : "#ececec";
         }
     }
 
     function renderButtonColor(index: number) {
         if (theme.palette.mode === "dark") {
-            return selectedIndex === index ? "white" : "#817d7a";
+            return currentPage?.index === index ? "white" : "#817d7a";
         } else {
-            return selectedIndex === index ? "#524a5f" : "#716f74";
+            return currentPage?.index === index ? "#524a5f" : "#716f74";
         }
     }
 
     function renderCloseButtonBgColor(index: number) {
         if (theme.palette.mode === "dark") {
-            return selectedIndex === index ? "#1e1e1e" : "#2d2d2d";
+            return currentPage?.index === index ? "#1e1e1e" : "#2d2d2d";
         } else {
-            return selectedIndex === index ? "#ffffff" : "#ececec";
+            return currentPage?.index === index ? "#ffffff" : "#ececec";
         }
     }
 
     function renderCloseButtonColor(index: number) {
         if (theme.palette.mode === "dark") {
-            return selectedIndex === index ? "#white" : "#2d2d2d";
+            return currentPage?.index === index ? "#white" : "#2d2d2d";
         } else {
-            return selectedIndex === index ? "#72736d" : "#ececec";
+            return currentPage?.index === index ? "#72736d" : "#ececec";
         }
     }
 
     function renderCloseButtonHoverBgColor(index: number) {
         if (theme.palette.mode === "dark") {
-            return selectedIndex === index ? "#333c43" : "#333c43";
+            return currentPage?.index === index ? "#333c43" : "#333c43";
         } else {
-            return selectedIndex === index ? "#e6e4e5" : "#dadada";
+            return currentPage?.index === index ? "#e6e4e5" : "#dadada";
         }
     }
 
     function renderCloseButtonHoverColor(index: number) {
         if (theme.palette.mode === "dark") {
-            return selectedIndex !== index ? "#817d7a" : "#white";
+            return currentPage?.index !== index ? "#817d7a" : "#white";
         } else {
-            return selectedIndex === index ? "#44434b" : "#92938e";
+            return currentPage?.index === index ? "#44434b" : "#92938e";
         }
     }
 
@@ -101,8 +77,6 @@ export default function AppButtons({
                     disableElevation
                     disableFocusRipple
                     onClick={() => {
-                        setSelectedIndex(index);
-                        setCurrentComponent("button");
                         router.push(route);
                     }}
                     sx={{
@@ -142,9 +116,7 @@ export default function AppButtons({
                         elevation={0}
                         onClick={(e: any) => {
                             e.stopPropagation();
-                            setVisiblePageIndexs(
-                                visiblePageIndexs.filter((x) => x !== index)
-                            );
+                            setOpenPages(openPages.filter((x) => x.index !== index));
                         }}
                     >
                         <VscChromeClose/>
@@ -186,7 +158,7 @@ export default function AppButtons({
                 //   },
             }}
         >
-            {pages.map(({index, name, route, group}) =>
+            {openPages.map(({index, name, route, group}) =>
                 renderPageButton(index, name, `/${group}/${route}`)
             )}
         </Container>

@@ -10,6 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Config {
+  id        String     @id @default(cuid())
+  key       ConfigKeys @unique
+  value     Boolean
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+enum ConfigKeys {
+  accept_form_responses
+  round1_results_announced
+}
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -58,34 +71,16 @@ enum Domain {
 }
 
 model Registration {
-  id        String               @id @default(cuid())
-  domain    Domain
-  user      User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
-  status    RegistrationStatus[]
-  responses Response[]
+  id              String     @id @default(cuid())
+  domain          Domain
+  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  formSubmittedAt DateTime?
+  responses       Response[]
 
   @@unique([domain, userId])
-}
-
-enum Status {
-  // TODO: Replace with actual statuses
-  init
-  form_submitted
-  round1_result_updated
-}
-
-model RegistrationStatus {
-  id             String       @id @default(cuid())
-  status         Status
-  registration   Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
-  registrationId String
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
-
-  @@unique([status, registrationId])
 }
 
 model Question {
@@ -93,14 +88,15 @@ model Question {
   question  String
   domain    Domain
   type      Type
+  varName   String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   responses Response[]
 }
 
 enum Type {
-  st
-  lt
+  stq
+  ltq
   scq
   mcq
 }

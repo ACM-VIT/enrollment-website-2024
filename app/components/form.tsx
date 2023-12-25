@@ -2,9 +2,9 @@
 import React, {useEffect, useRef} from 'react';
 import saveForm from "@/app/actions/form";
 import {useDebouncedCallback} from "use-debounce";
-import {Question, Prisma} from ".prisma/client";
+import {Prisma} from ".prisma/client";
 import {Domain} from "@prisma/client";
-
+import {STQ, LTQ} from "@/app/components/questions";
 export function Form({questions, domain}: {
     questions: Prisma.QuestionGetPayload<{ include: { responses: true } }>[],
     domain: Domain
@@ -12,10 +12,10 @@ export function Form({questions, domain}: {
     const form = useRef(null);
 
     useEffect(() => {
+        const formproxy = (form.current! as HTMLFormElement);
 
         return () => {
-            // submit the form
-            (form!.current! as HTMLFormElement)?.requestSubmit();
+            formproxy.requestSubmit();
         }
     }, []);
 
@@ -26,13 +26,14 @@ export function Form({questions, domain}: {
     return (
         <form action={saveForm.bind(null, domain)} ref={form}>
             {questions.map((question) => {
-                    return (
-                        <div key={question.id}>
-                            <h1>{question.question}</h1>
-                            <input type="text" name={question.id} onInput={debouncedSave}
-                                   defaultValue={question.responses[0]?.response ?? ''}/>
-                        </div>
-                    );
+                    switch (question.type) {
+                        case "stq":
+                            return <STQ key={question.id} question={question} triggerSave={debouncedSave} />;
+                        case "ltq":
+                            return <LTQ key={question.id} question={question} triggerSave={debouncedSave} />;
+                        default:
+                            return <></>;
+                    }
                 }
             )}
         </form>

@@ -1,11 +1,12 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {Domain, PrismaClient} from "@prisma/client";
 import {Container} from "@mui/material";
 import {Form} from "@/app/components/form";
 
-const prisma = new PrismaClient();
 
 async function FormContainer({domain}: { domain: Domain }) {
+    const prisma = new PrismaClient();
+
     const questions = await prisma.question.findMany({
         where: {
             domain: domain,

@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Terminal from "@/app/components/Terminal";
 import Paper from '@mui/material/Paper';
 
+import PagesContext from "@/lib/PagesContext";
 
 import {
     Container,
@@ -19,9 +20,10 @@ import AppTree from "./AppTree";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import AppButtons from "./AppButtons";
-import {pages} from "../pages/pages";
-import {isBrowser} from "react-device-detect";
+import {pages as pagesGenerator} from "../pages/pages";
+import {isDesktop} from "react-device-detect";
 import {useRouter} from "next/navigation";
+import {Registration} from "@prisma/client";
 
 interface Page {
     index: number;
@@ -40,16 +42,20 @@ interface Page {
 //     return tabs;
 // }
 
-export default function App({ children }: { children: React.ReactNode }) {
+export default function App({registrations, children}: { registrations: Registration[], children: React.ReactNode }) {
     const [showTerminal, setShowTerminal] = useState(false);
-    const [expanded, setExpanded] = useState(isBrowser);
-    const [selectedIndex, setSelectedIndex] = useState(-1);
-    const [currentComponent, setCurrentComponent] = useState("");
-    const [visiblePageIndexs, setVisiblePageIndexs] = useState<number[]>([]);
-    const [darkMode, setDarkMode] = useState(false);
-    const [visiblePages, setVisiblePages] = useState<Page[]>([]);
+    const [showExplorer, setShowExplorer] = useState(isDesktop);
+    const [focusApptree, setFocusApptree] = useState(false);
+
+
+    const [pages, setPages] = useState<Page[]>(pagesGenerator(registrations));
+    const [darkMode, setDarkMode] = useState(localStorage.getItem("theme") === "dark");
+    const [openPages, setOpenPages] = useState<Page[]>(pages.filter(x => (JSON.parse(localStorage.getItem("openPages") || "[]") as number[]).includes(x.index)));
+    const [currentPage, setCurrentPage] = useState<Page | null>();
+
+    const [nextPage, setNextPage] = useState<Page | null>();
     const paletteType = darkMode ? "dark" : "light";
-    
+
     const theme = createTheme({
         palette: {
             mode: paletteType,
@@ -79,155 +85,143 @@ export default function App({ children }: { children: React.ReactNode }) {
         localStorage.setItem("theme", darkMode ? "light" : "dark");
     }
 
-    useEffect(() => {
-        const currentTheme = localStorage.getItem("theme");
-        if (!currentTheme) setDarkMode(true);
-        else setDarkMode(currentTheme === "dark");
-    }, []);
-
 
     useEffect(() => {
-        const newPages = [];
-        const deletedIndex = visiblePages.find(
-            (x) => !visiblePageIndexs.includes(x.index)
-        )?.index;
-        const deletedPosition = visiblePages.findIndex((x) => x.index === deletedIndex);
+        setOpenPages(openPages.filter(x => pages.find(y => y.index === x.index)));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pages]);
 
-        for (const index of visiblePageIndexs) {
-            const page = pages.find((x) => x.index === index);
-            if (page) newPages.push(page);
-        }
-        setVisiblePages(newPages);
+    useEffect(() => {
+        localStorage.setItem("openPages", JSON.stringify(openPages.map(x => x.index)));
 
-
-        if (visiblePageIndexs.length === 0) {
-            setSelectedIndex(-1);
-            router.push("/");
-        } else if (
-            deletedIndex === selectedIndex
-        ) {
-            if (deletedIndex === 0) {
-                setSelectedIndex(visiblePageIndexs[0]);
-                router.push(`/${pages[visiblePageIndexs[0]].group}/${pages[visiblePageIndexs[0]].route}`);
-            } else {
-                setSelectedIndex(visiblePageIndexs[deletedPosition - 1]);
-                router.push(`/${pages[visiblePageIndexs[deletedPosition - 1]].group}/${pages[visiblePageIndexs[deletedPosition - 1]].route}`);
+        if (currentPage && !openPages.find(x => x.index === currentPage?.index)) {
+            if(openPages.length > 0){
+                router.push(`/${openPages[openPages.length - 1].group}/${openPages[openPages.length - 1].route}`);
             }
-        } else {
+            else {
+                router.push("/");
+            }
         }
-    }, [visiblePageIndexs, selectedIndex]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [openPages]);
+
+    useEffect(() => {
+        if (nextPage && !openPages.find(x => x.index === nextPage?.index)) {
+            setOpenPages([...openPages, nextPage])
+        }
+        setCurrentPage(nextPage)
+        if (nextPage){
+            localStorage.setItem("lastPage", nextPage.index.toString());
+        } else {
+            localStorage.removeItem("lastPage");
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [nextPage]);
+
 
     return (
         <ThemeProvider theme={theme}>
-            <CssBaseline enableColorScheme/>
-            <Container
-                sx={{m: 0, p: 0, overflowY: "hidden"}}
-                maxWidth={false}
-                disableGutters
-            >
-                <Grid container sx={{overflow: "auto", overflowY: "hidden"}}>
-                    <Grid container sx={{overflow: "auto"}}>
-                        <Grid item sx={{width: 50}}>
-                            <Sidebar
-                                setExpanded={setExpanded}
-                                expanded={expanded}
-                                darkMode={darkMode}
-                                handleThemeChange={handleThemeChange}
-                                showTerminal={showTerminal}
-                                setShowTerminal={setShowTerminal}
-                            />
-                        </Grid>
-                        {expanded && (
-                            <Grid
-                                item
-                                sx={{
-                                    backgroundColor: darkMode ? "#252527" : "#f3f3f3",
-                                    width: 220,
-                                }}
-                            >
-                                <Stack sx={{mt: 1}}>
-                                    <Typography
-                                        variant="caption"
-                                        color="text.secondary"
-                                        sx={{ml: 4}}
-                                    >
-                                        EXPLORER
-                                    </Typography>
-                                    <AppTree
-                                        pages={pages}
-                                        selectedIndex={selectedIndex}
-                                        setSelectedIndex={setSelectedIndex}
-                                        currentComponent={currentComponent}
-                                        setCurrentComponent={setCurrentComponent}
-                                        visiblePageIndexs={visiblePageIndexs}
-                                        setVisiblePageIndexs={setVisiblePageIndexs}
-                                    />
-                                </Stack>
-                            </Grid>
-                        )}
-
-                        <Grid item xs zeroMinWidth>
-                            <Grid
-                                sx={{
-                                    height: "33px",
-                                }}
-                            >
-                                <AppButtons
-                                    // pages={pages}
-                                    pages={visiblePages}
-                                    selectedIndex={selectedIndex}
-                                    setSelectedIndex={setSelectedIndex}
-                                    currentComponent={currentComponent}
-                                    setCurrentComponent={setCurrentComponent}
-                                    visiblePageIndexs={visiblePageIndexs}
-                                    setVisiblePageIndexs={setVisiblePageIndexs}
+            <PagesContext.Provider value={{pages, setPages, openPages, setOpenPages, currentPage, setCurrentPage, nextPage, setNextPage}}>
+                <CssBaseline enableColorScheme/>
+                <Container
+                    sx={{m: 0, p: 0, overflowY: "hidden"}}
+                    maxWidth={false}
+                    disableGutters
+                >
+                    <Grid container sx={{overflow: "auto", overflowY: "hidden"}} onClick={() => setFocusApptree(false)}>
+                        <Grid container sx={{overflow: "auto"}}>
+                            <Grid item sx={{width: 50}}>
+                                <Sidebar
+                                    setExpanded={setShowExplorer}
+                                    expanded={showExplorer}
+                                    darkMode={darkMode}
+                                    handleThemeChange={handleThemeChange}
+                                    showTerminal={showTerminal}
+                                    setShowTerminal={setShowTerminal}
                                 />
                             </Grid>
+                            {showExplorer && (
+                                <Grid
+                                    item
+                                    sx={{
+                                        backgroundColor: darkMode ? "#252527" : "#f3f3f3",
+                                        width: 220,
+                                    }}
+                                    onClick={(event) => {
+                                        event.stopPropagation();
+                                        setFocusApptree(true);
+                                    }}
 
-                            <Grid
-                                sx={{
-                                    scrollBehavior: "smooth",
-                                    // overflow: 'scroll',
-                                    overflowY: "auto",
-                                    height: `calc(100vh - 20px - 33px)`,
-                                }}
-                            >
-                                {/* {children} */}
-                                {showTerminal?<>
-                                        <Box
-                                            sx={{
-                                                height: "64%",
-                                                overflow: "auto",
-                                            }}
+                                >
+                                    <Stack sx={{mt: 1}}>
+                                        <Typography
+                                            variant="caption"
+                                            color="text.secondary"
+                                            sx={{ml: 4}}
                                         >
-                                            {children}
-                                    </Box>
-                                        <Box
-                                            sx={{
-                                                height: "0.5px",
-                                                backgroundColor: "#323233",
-                                        }}
+                                            EXPLORER
+                                        </Typography>
+                                        <AppTree
+                                            focusApptree={focusApptree}
                                         />
-                                        <Box
-                                            component={Paper}
-                                        sx={{
-                                                height: "35%",
+                                    </Stack>
+                                </Grid>
+                            )}
+
+                            <Grid item xs zeroMinWidth>
+                                <Grid
+                                    sx={{
+                                        height: "33px",
+                                    }}
+                                >
+                                    <AppButtons/>
+                                </Grid>
+
+                                <Grid
+                                    sx={{
+                                        scrollBehavior: "smooth",
+                                        // overflow: 'scroll',
+                                        overflowY: "auto",
+                                        height: `calc(100vh - 20px - 33px)`,
+                                    }}
+                                >
+                                    {/* {children} */}
+                                    {showTerminal ? <>
+                                            <Box
+                                                sx={{
+                                                    height: "64.4%",
+                                                    overflow: "auto",
                                                 }}
-                                            elevation={1}
-                                        >
-                                            <Terminal setShowTerminal={setShowTerminal}></Terminal>
-                                        </Box>
+                                            >
+                                                {children}
+                                            </Box>
+                                            <Box
+                                                sx={{
+                                                    height: "0.5px",
+                                                    backgroundColor: "#323233",
+                                                }}
+                                            />
+                                            <Box
+                                                component={Paper}
+                                                sx={{
+                                                    height: "35%",
+                                                }}
+                                                elevation={1}
+                                            >
+                                                <Terminal setShowTerminal={setShowTerminal}></Terminal>
+                                            </Box>
                                         </>
-                                : children
-                                }
+                                        : children
+                                    }
+                                </Grid>
                             </Grid>
                         </Grid>
+                        <Grid item lg={12} md={12} sm={12} xs={12}>
+                            <Footer/>
+                        </Grid>
                     </Grid>
-                    <Grid item lg={12} md={12} sm={12} xs={12}>
-                        <Footer/>
-                    </Grid>
-                </Grid>
-            </Container>
+                </Container>
+            </PagesContext.Provider>
         </ThemeProvider>
     );
 }
