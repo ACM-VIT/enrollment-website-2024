@@ -9,7 +9,7 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 import {links} from "../pages/links";
 import Image from 'next/image';
 import PagesContext from "@/lib/PagesContext";

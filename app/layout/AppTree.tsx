@@ -2,8 +2,7 @@ import React, {useContext} from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {TreeItem, TreeView} from "@mui/x-tree-view";
-import {useRouter, usePathname} from 'next/navigation'
-import {useEffect} from "react";
+import {useRouter} from 'next/navigation'
 import {useTheme} from "@mui/material/styles";
 import {VscMarkdown} from "react-icons/vsc";
 import PagesContext from "@/lib/PagesContext";

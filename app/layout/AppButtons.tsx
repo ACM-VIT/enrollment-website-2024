@@ -8,7 +8,7 @@ import PagesContext from "@/lib/PagesContext";
 
 
 export default function AppButtons() {
-    const {pages, currentPage, openPages, setOpenPages} = useContext(PagesContext)
+    const {currentPage, openPages, setOpenPages} = useContext(PagesContext)
     const theme = useTheme();
     const router = useRouter();
 
