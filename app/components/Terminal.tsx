@@ -1,9 +1,11 @@
 "use client";
-import React, {useState, useTransition} from "react";
+import React, {useContext, useState, useTransition} from "react";
 import {Container} from "@mui/system";
 import {Box} from "@mui/material";
 import {formSubmit, registerDomain} from "@/app/actions/terminal";
 import {Domain} from "@prisma/client";
+import PagesContext from "@/lib/PagesContext";
+import {pages as pagesGenerator} from "../pages/pages";
 
 const terminalText = "[user@acm-mainframe]~$ ";
 
@@ -21,6 +23,8 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
             message: "Welcome to the ACM Mainframe Terminal! Type 'help' for a list of commands",
         },
     ]);
+
+    const {setPages} = useContext(PagesContext);
 
     const runCommand = async (command: string) => {
         let domain: string;
@@ -72,8 +76,11 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                     const response = await registerDomain(domain as Domain);
                     setConsoleHistory([
                         ...temp,
-                        response,
+                        response.console,
                     ]);
+                    if (response.registrations) {
+                        setPages(pagesGenerator(response.registrations));
+                    }
                 } else {
                     setConsoleHistory([
                         ...temp,
@@ -82,8 +89,6 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                             type: "error",
                         },
                     ]);
-                    // TODO update pages state from App.tsx to add the form page
-
                 }
                 break;
             case "formsubmit":
@@ -103,9 +108,11 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                     const response = await formSubmit(domain as Domain);
                     setConsoleHistory([
                         ...temp,
-                        response,
+                        response.console,
                     ]);
-                    // TODO: update pages state from App.tsx to remove the form page
+                    if (response.registrations) {
+                        setPages(pagesGenerator(response.registrations));
+                    }
                 } else {
                     setConsoleHistory([
                         ...temp,
@@ -182,6 +189,7 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                             name="input"
                             autoFocus
                             onKeyDown={(event) => {
+                                // TODO implement up-arrow and down-arrow functionality
                                 if (event.key === "Enter") {
                                     startTransition(()=>runCommand((event.target as HTMLInputElement).value));
                                     (event.target as HTMLInputElement).value = "";

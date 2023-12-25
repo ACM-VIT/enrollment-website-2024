@@ -11,7 +11,7 @@ export const STQ = ({question, triggerSave}: {
     question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
     triggerSave: Function
 }) => {
-    const [value, setValue] = useState(question.responses[0].response ?? "");
+    const [value, setValue] = useState(question.responses[0]?.response ?? "");
 
     const spanRef = useRef<HTMLSpanElement>(null);
     const theme = useTheme();
@@ -20,7 +20,8 @@ export const STQ = ({question, triggerSave}: {
 
     useEffect(() => {
         const span = spanRef.current!;
-        span.textContent = question.responses[0].response ?? "";
+        span.textContent = question.responses[0]?.response ?? "";
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -59,7 +60,7 @@ export const LTQ = ({question, triggerSave}: {
     question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
     triggerSave: Function
 }) => {
-    const [value, setValue] = useState(question.responses[0].response ?? "");
+    const [value, setValue] = useState(question.responses[0]?.response ?? "");
 
     const spanRef = useRef<HTMLSpanElement>(null);
     const theme = useTheme();
@@ -68,7 +69,8 @@ export const LTQ = ({question, triggerSave}: {
 
     useEffect(() => {
         const span = spanRef.current!;
-        span.textContent = question.responses[0].response ?? "";
+        span.textContent = question.responses[0]?.response ?? "";
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
@@ -98,7 +100,7 @@ export const LTQ = ({question, triggerSave}: {
     );
 }
 
-// lt, mcq, scq
+// TODO mcq, scq
 
 // export const PythonForm = () => {
 //   const theme = useTheme();
