@@ -1,12 +1,5 @@
-import React from "react";
-import {
-  Box,
-  Link,
-  ListItemIcon,
-  Paper,
-  Tooltip,
-  Button,
-} from "@mui/material";
+import React, { useState } from "react";
+import { Box, Link, ListItemIcon, Paper, Tooltip, Button } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -21,7 +14,6 @@ import { Dropdown } from "@mui/base/Dropdown";
 import { Menu } from "@mui/base/Menu";
 import { styled, css } from "@mui/system";
 
-
 interface Props {
   expanded: boolean;
   setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
@@ -29,6 +21,8 @@ interface Props {
   handleThemeChange: () => void;
   showTerminal: boolean;
   setShowTerminal: Function;
+  open: boolean;
+  setOpen: Function;
 }
 
 export default function Sidebar({
@@ -38,12 +32,15 @@ export default function Sidebar({
   handleThemeChange,
   showTerminal,
   setShowTerminal,
+  open,
+  setOpen,
 }: Props) {
-
+  const handleOpen = () => setOpen(true);
   const signOut = () => {};
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const openProfileMenu = Boolean(anchorEl);
+
   const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -171,22 +168,21 @@ export default function Sidebar({
           justifyContent="center"
           flexDirection="column"
         >
-          <Tooltip
-            title="Profile"
-            placement="right"
-            arrow
-          >
           <Link>
-                <Dropdown>
-                    <MenuButton ><AccountCircleIcon/></MenuButton>
-                    <Menu slots={{ listbox: Listbox }}>
-                        <MenuItem >Edit Profile</MenuItem>
-                        <Divider sx={{ paddingY: 0}} />
-                        <MenuItem >Sign out</MenuItem>
-                    </Menu>
-                </Dropdown>
-            </Link>
-          </Tooltip>
+            <Dropdown>
+              <Tooltip title="Profile" placement="right" arrow>
+                <MenuButton>
+                  <AccountCircleIcon />
+                </MenuButton>
+              </Tooltip>
+              <Menu slots={{ listbox: Listbox }}>
+                <MenuItem onClick={handleOpen}>Edit Profile</MenuItem>
+
+                <Divider sx={{ paddingY: 0 }} />
+                <MenuItem>Sign out</MenuItem>
+              </Menu>
+            </Dropdown>
+          </Link>
 
           <Tooltip
             title={darkMode ? "Turn on the light" : "Turn off the light"}
@@ -226,25 +222,25 @@ export default function Sidebar({
               color="inherit"
               sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
             > */}
-              <Box
-                sx={{
-                  flexGrow: 0,
-                  fontSize: 24,
-                  color: "#858585",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "white",
-                  },
-                  WebkitTapHighlightColor: "rgba(0,0,0,0)",
-                }}
-                display="flex"
-                justifyContent="center"
-                onClick={()=>setShowTerminal(!showTerminal)}
-              >
-                  <Box mt={0.7}>
-                    <VscTerminalPowershell />
-                  </Box>
+            <Box
+              sx={{
+                flexGrow: 0,
+                fontSize: 24,
+                color: "#858585",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "white",
+                },
+                WebkitTapHighlightColor: "rgba(0,0,0,0)",
+              }}
+              display="flex"
+              justifyContent="center"
+              onClick={() => setShowTerminal(!showTerminal)}
+            >
+              <Box mt={0.7}>
+                <VscTerminalPowershell />
               </Box>
+            </Box>
             {/* </Link> */}
           </Tooltip>
         </Box>
@@ -278,7 +274,7 @@ export default function Sidebar({
 }
 
 const Listbox = styled("ul")(
-    ({ theme }) => `
+  ({ theme }) => `
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 0.8rem;
     text-align: left;
@@ -294,7 +290,9 @@ const Listbox = styled("ul")(
     overflow: auto;
     outline: 0px;
     background: ${theme.palette.mode === "dark" ? "#1e1e1e" : "#D1D1D1"};
-    // border: 0.5px solid ${theme.palette.mode === "dark" ? "#1f1f1f" : "#1e1e1e"};
+    // border: 0.5px solid ${
+      theme.palette.mode === "dark" ? "#1f1f1f" : "#1e1e1e"
+    };
     color: ${theme.palette.mode === "dark" ? "#BDC3CF" : "#474747"};
     box-shadow: 0px 4px 4px ${
       theme.palette.mode === "dark" ? "rgba(0,0,0, 0.25)" : "rgba(0,0,0, 0.25)"
@@ -304,10 +302,10 @@ const Listbox = styled("ul")(
     position: fixed;
     transform: translateY(-100%);
     `
-  );
-  
-  const MenuItem = styled(BaseMenuItem)(
-    ({ theme }) => `
+);
+
+const MenuItem = styled(BaseMenuItem)(
+  ({ theme }) => `
     list-style: none;
     padding: 8px 4px 4px 4px;
     border-radius: 8px;
@@ -319,41 +317,41 @@ const Listbox = styled("ul")(
     }
 
     &.${menuItemClasses.disabled} {
-      color: ${theme.palette.mode === "dark" ? "#BDC3CF":"#1f1f1f"};
+      color: ${theme.palette.mode === "dark" ? "#BDC3CF" : "#1f1f1f"};
     }
   
     &:hover:not(.${menuItemClasses.disabled}) {
-      background-color: ${theme.palette.mode === "dark" ? "#6997D5":"#6997D5"};
-      color: ${theme.palette.mode === "dark" ? "#1e1e1e":"#1f1f1f"};
+      background-color: ${
+        theme.palette.mode === "dark" ? "#6997D5" : "#6997D5"
+      };
+      color: ${theme.palette.mode === "dark" ? "#1e1e1e" : "#1f1f1f"};
     }
     `
-  );
-  
+);
 
-  
-  const MenuButton = styled(BaseMenuButton)(
-    ({ theme }) => css`
-      font-family: 'IBM Plex Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.875rem;
-      line-height: 1.5;
-      padding: 10px 10px 6px 14px;
-      transition: all 150ms ease;
-      cursor: pointer;
-      background: ${theme.palette.mode === 'dark' ? "#333333" : '#333333'};
-      border: 0px;
-      
-      border-top-width: 2px;
-      color: ${theme.palette.mode === 'dark' ? "#858585":"#858585"};
-      box-shadow: 0 0 0 0;
-      
-  
-      &:hover {
-        background: ${theme.palette.mode === 'dark' ? "#333333":"#333333"};
-        color: ${theme.palette.mode === 'dark' ? "#ffffff":"#ffffff"};
-      }
-  
-      &:active {
-        background: ${theme.palette.mode === 'dark' ? "#333333":"#333333"};
-      }`,
-  );
+const MenuButton = styled(BaseMenuButton)(
+  ({ theme }) => css`
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    padding: 10px 10px 6px 14px;
+    transition: all 150ms ease;
+    cursor: pointer;
+    background: ${theme.palette.mode === "dark" ? "#333333" : "#2c2c2c"};
+    border: 0px;
+
+    border-top-width: 2px;
+    color: ${theme.palette.mode === "dark" ? "#858585" : "#858585"};
+    box-shadow: 0 0 0 0;
+
+    &:hover {
+      background: ${theme.palette.mode === "dark" ? "#333333" : "#333333"};
+      color: ${theme.palette.mode === "dark" ? "#ffffff" : "#ffffff"};
+    }
+
+    &:active {
+      background: ${theme.palette.mode === "dark" ? "#333333" : "#333333"};
+    }
+  `
+);
