@@ -1,0 +1,65 @@
+.pythonForm {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.question {
+  margin-bottom: 10px;
+}
+
+.question label {
+  display: block;
+  font-weight: bold;
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkboxContainer label {
+  display: inline-block;
+}
+
+.textBox {
+  border: none;
+  background: none;
+  outline: none;
+  font-family: monospace;
+  width: auto;
+}
+
+.span {
+  border: none;
+}
+
+/* styling for text elements light mode */
+.print {
+  color: rgb(173, 133, 0);
+}
+
+.questioneach {
+  color: rgb(202, 74, 9);
+}
+
+.comments {
+  color: rgb(4, 107, 4);
+}
+
+.bracket {
+  color: rgb(0, 124, 240);
+}
+
+.variable {
+  color: rgb(116, 1, 165);
+}
+
+.toggle {
+  color: rgb(9, 9, 219);
+}
