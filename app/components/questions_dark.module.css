@@ -41,19 +41,19 @@
 
 /* styling for text elements dark mode */
 .print {
-  color: rgb(229, 191, 64);
+  color: rgb(220, 220, 170);
 }
 
 .bracket {
-  color: yellow;
+  color: rgb(255, 215, 0);
 }
 
 .questioneach {
-  color: rgb(239, 105, 37);
+  color: rgb(206, 145, 120);
 }
 
 .comments {
-  color: rgb(8, 99, 8);
+  color: rgb(106, 153, 85);
 }
 
 .variable {
@@ -61,5 +61,5 @@
 }
 
 .toggle {
-  color: rgb(95, 95, 255);
+  color: rgb(41, 107, 165);
 }
