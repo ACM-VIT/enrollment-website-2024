@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.8.3",
     "@mui/lab": "^5.0.0-alpha.85",
     "@mui/material": "^5.8.3",
+    "@mui/system": "^5.15.2",
     "@mui/x-tree-view": "^6.17.0",
     "@prisma/client": "^5.7.1",
     "next": "14.0.4",
