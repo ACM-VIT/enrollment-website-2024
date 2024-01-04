@@ -1,101 +1,86 @@
 export default {
     domain: {
-        app: `# 📖 App`,
-        cc: `# 📖 Competitive Coding`,
-        design: `# 📖 Design`,
-    research: `# 📖 Research
-## Summary
-Senior Software Developer specializing in web application development. Experienced with all stages of the development cycle for dynamic web projects. Well-versed in numerous programming languages including C# .NET, Python and JavaScript/TypeScript. Strong background in both accounting/auditing and software development. Mitigated the gap between end users and developers, co-designed and built scalable solutions.
+        app: `# 📖 App
+## WHO WE ARE
+Hey App enthusiast!! Welcome to ACM's App domain, where we craft cutting-edge, user-friendly applications for Android and iOS platforms.
+Specializing in Flutter, Kotlin, and Swift, our team crafts event-specific apps designed for engaging user interactions. 
+        
+        
+## WHAT WE DO
+> Create a dedicated mobile application for "Cryptic Hunt" to provide participants with real-time leaderboard updates, notifications, and other interactive features. Enhance engagement and accessibility for users on the go.
 
-## Experience
+> Incorporate hands-on app development challenges, workshops, and interactive demos within the hackathons held by ACM like HackStory and Tiny Hack.
 
-**Software Developer** @ [Ernst & Young](https://www.ey.com/) _(Nov 2018 - Nov 2021)_
+> Collaborate on mobile app projects on ACM-VIT’s open repositories to optimize existing apps or introduce innovative features during our event “Forktober”.
+`,
+        cc: `# 📖 Competitive Coding
+## WHO WE ARE
+Hey CC enthusiast!! Welcome to ACM's Competitive Coding domain, a haven for individuals committed to pushing their coding boundaries. Comprising passionate coders, this domain hosts events providing a platform for students to compete in a challenging yet supportive environment. 
 
-Completed full lifecycle application development to enterprise business applications including requirement analysis, system design, development, unit testing, implementation, testing support, performance tuning, maintenance, and post-production support.
 
-- Detailed achievements:
-- Collaborated with colleagues from worldwide to implement the Disaster Recovery Project. Completed ahead of the original schedule and saved budget up to 30%.
-- Optimized deployment process and reduced manual work to accelerate product deployment by over 70%.
-- Delivered virtual and live classroom training for employees(the cumulative number of trainees exceeded 500).
-- _**Technologies used:**_ C#, MSSQL, Python, React.js
-**Staff Auditor** @ [Deloitte & Touche](https://www2.deloitte.com/global/en.html) _(July 2017 - Nov 2018)_
+## WHAT WE DO
+> Organize Reverse Coding, a one-of-a-kind contest that stands out in the coding community. It spearheads the creation of innovative problem sets, testing participants' coding abilities to the limit. 
 
-Planned and conducted operational and ﬁnancial audits to conﬁrm ﬁnancial statements are fairly presented in alignment with IFRS.
+> Organize coding challenges related to cryptography and puzzle-solving in "Cryptic Hunt".
+Host coding contests and mentorship sessions to support participants in developing innovative projects for "Tiny Hack" and “Hack Story". 
 
-- Detailed achievements:
-  - Delivered internal audit projects for major clients in the manufacturing industry with a focus on gap assessments/reviews of business processes and internal control.
-  - Supervised assigned auditing staffs to evaluate performance and maintain standards.
+> Incorporate hands-on coding exercises, workshops and interactive demonstrations into "Codex Cryptum".
+Beyond internal events, Competitive Coding members actively represent VIT in prestigious external competitions like the ACM ICPC, showcasing their skills on a global stage.
+`,
+        design: `# 📖 Design
+## WHO WE ARE
+Hey Design enthusiasts!! Welcome to ACM's Design domain, your hub for all things creative and visual. Dive deep into the world of design aesthetics, user experience, and innovation. From mastering fundamental design principles to designing prototypes that bring ideas to life, this is your space to experiment and innovate.
 
-&nbsp;
+## WHAT WE DO
+> Design visually appealing graphics, UI/UX,  themes, and branding materials that capture the essence of "Cryptic Hunt" including a captivating logo, website, and app. 
 
-**Audit Intern** @ [KPMG](https://home.kpmg/) _(July 2015 - July 2015)_
+> Create promotional content to generate excitement and engagement for internal events such as "Tiny Hack" , “HackStory” and “Forktober”; while also establishing a cohesive visual identity that reflects the event's theme and objectives.
 
-Performed analytical procedures and analyses to detect unusual ﬁnancial relationships.
-
-## Education
-
-\`2021-2022\` [National Taipei University of Technology](https://www-en.ntut.edu.tw/)
-
-- **Extension program** in Computer Science, Electrical Engineering, and Electronic Engineering
-- Courses: Computer Organization, Discrete Mathematics, Computer Program-
-  ming(I), Object-Oriented Programming, Probability, Digital Logic Design
-- GPA: 4.0/4.0
- [National Taiwan Normal University](https://en.ntnu.edu.tw/)
-
-- **Extension program** in Electrical Engineering
-- Courses: Operating Systems
-- GPA: 4.3/4.3
-
- [Fu Jen Catholic University](https://www.fju.edu.tw/indexEN.jsp)
-
-- **Extension program** in Software Engineering and Digital Innovation Applications, and Information Management
-- Courses: Algorithms, Linear Algebra, Database Administration
-- GPA: 4.0/4.0
-
-\`2020-2021\` [National Taipei University of Business](https://www.ntub.edu.tw/index.php?Lang=en)
-
-- **Extension program** in Information Management
-- Courses: Data Structures
-- GPA: 4.0/4.0
-
-\`2012-2016\` [National Cheng Kung University](https://www.ncku.edu.tw/index.php?Lang=en)
-
-- **B.B.A** in Accountancy
-- GPA: 3.88/4.0
-
-## Skills
-
-### General Tech Stacks
-
-- Architecture Design
-- Desktop App Development
-- Web Development (Frontend & Backend)
-
-### Programming languages
-
-- C# .NET
-- Python
-- JavaScript/TypeScript
-  - React.js
-- T-SQL
-- Go
-- C++
-- Java
-- VB.NET/VBA
-
-## Certificates
-
-- Certified Public Accountant (Taiwan)
-
-## Accomplishments
-
-**Won First Place** @ [EY Innovation Campaign](https://www.ey.com/) _(May 2021)_
-Built Trial Balance System, a system that streamlines data transmission across users, providing consistent, reliable financial reports to them.
-
+> Craft an aesthetically pleasing and engaging interface for the "Reverse Coding" platform, enhancing the participant experience and facilitating intuitive navigation through the contest challenges.
 
 `,
-        web: `# 📖 Web`,
-        management: `# 📖 Management`,
+    research: `# 📖 Research
+## WHO WE ARE
+Hey Research enthusiasts!! Welcome to ACM's Research domain, where we focus on research in areas such as cybersecurity, blockchain, and Artificial Intelligence (AI) and Machine Learning (ML). 
+It's not just about geeking out on the latest tech trends; here, we're breaking down the complexities, keeping it real, and making an impact. 
+
+
+
+## WHAT WE DO
+
+> Construct intricate and challenging puzzles for "Cryptic Hunt" and "Reverse Coding" by exploring various ciphers, decoders, and puzzle-solving techniques to craft a captivating and intellectually stimulating experience for participants.
+
+> Explore emerging technologies and coding trends to curate relevant themes and tracks for Hackathons held by ACM. Promote AI/ML, Cybersecurity, and Blockchain through mentorship, interdisciplinary collaboration, and networking opportunities.
+
+> Conduct insightful workshops like "Codex Cryptum" by researching deeper into innovative applications within the fields of Cryptography, Cybersecurity and Blockchain and provide a hands-on experience for participants.
+
+`,
+        web: `# 📖 Web
+## WHO WE ARE
+Hey Web enthusiast!! Welcome to ACM's Web domain, where we explore the full spectrum of web development, from foundational languages to cutting-edge frameworks like React, Next.js, Django, and Flask. 
+Whether you're delving into front-end design, mastering back-end functionalities, or navigating the complexities of web technologies, our community encourages skill development and collaboration. 
+
+## WHAT WE DO
+> Develop a comprehensive event portal for events like Cryptic Hunt and Hackathons featuring registration forms, event schedule, live updates, and submission guidelines. Ensure a responsive design that caters to participants accessing the portal during the events.
+
+> Collaborate on web development projects within ACM-VIT's open repositories, enhancing existing websites or introducing new features during our event, 'Forktober'.
+
+> Develop a platform for hosting the "Reverse Coding" event, ensuring a seamless user experience for participants accessing contest details and submitting solutions.
+
+`,
+        management: `# 📖 Management
+## WHO WE ARE
+Hey Management enthusiast!! Welcome to ACM's Management domain, where solid planning meets hands-on execution, making things happen efficiently.
+
+Our management team at ACM has consistently demonstrated expertise in curating impactful events that engage and inspire. 
+
+## WHAT WE DO
+> Organize our signature event, “Cryptic Hunt”, attracting over 600 enthusiastic participants—a testament to ACM's adept management in crafting engaging experiences.
+
+> Coordinate all aspects of the 24+ hour hackathons, like HackStory and Tiny Hack including collaborating with sponsors and speakers and ensuring smooth communication and coordination throughout the event.
+
+> Host workshops like Codex Cryptum with notable speakers, drawing audiences of over 300 participants.
+`,
 
     },
     extras: {
