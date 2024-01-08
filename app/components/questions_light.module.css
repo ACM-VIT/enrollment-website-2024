@@ -5,9 +5,6 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-family: monospace;
-}
-
-.question {
   margin-bottom: 10px;
 }
 
@@ -62,4 +59,19 @@
 
 .toggle {
   color: rgb(9, 9, 219);
+}
+
+.editor {
+  display: inline-flex;
+  gap: 10px;
+  font-family: monospace;
+  line-height: 21px;
+  border-radius: 2px;
+  padding-top: 20px;
+}
+
+.lineNumbers {
+  width: 20px;
+  color: #506882;
+  display: block;
 }
