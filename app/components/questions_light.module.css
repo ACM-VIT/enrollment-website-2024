@@ -67,7 +67,8 @@
   font-family: monospace;
   line-height: 21px;
   border-radius: 2px;
-  padding-top: 20px;
+  position: absolute;
+  top: 60px;
 }
 
 .lineNumbers {
