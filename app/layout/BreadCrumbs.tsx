@@ -18,6 +18,11 @@ export default function BreadCrumbs() {
     useEffect(() => {
         const pathArray = router.split("/").filter((x) => x);
         const extensions = ["", ""]
+        
+        if (pathArray.length === 0) {
+            setBreadcrumbs([]);
+            return;
+        }
 
         if (pathArray[0] === "domain" || pathArray[0] === "extras") {
             pathArray[1] = pathArray[1] + ".md"
