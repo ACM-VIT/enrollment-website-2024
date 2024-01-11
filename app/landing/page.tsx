@@ -1,4 +1,3 @@
-// 'use client';
 import React from 'react';
 import {auth} from "@/lib/auth";
 import {signIn, signOut} from "@/lib/auth";
