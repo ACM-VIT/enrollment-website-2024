@@ -1,16 +1,9 @@
 "use client";
 
 import {
-  Box,
   Grid,
-  IconButton,
-  Link,
-  Stack,
-  Tooltip,
-  Typography,
 } from "@mui/material";
-import React, { useContext } from "react";
-import { links } from "../pages/links";
+import React from "react";
 import Image from "next/image";
 
 export default function Page() {

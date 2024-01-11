@@ -86,7 +86,6 @@ export default function App({
     );
     const [currentPage, setCurrentPage] = useState<Page | null>(null);
 
-    const [nextPage, setNextPage] = useState<Page | null>();
     const paletteType = darkMode ? "dark" : "light";
 
     const handleClose = () => setOpen(false);

@@ -1,4 +1,4 @@
-export default {
+const content = {
     domain: {
         app: `# 📖 App
 ## WHO WE ARE
@@ -89,3 +89,5 @@ Our management team at ACM has consistently demonstrated expertise in curating i
         whois: `# 📖 Whois`,
     }
 }
+
+export default content;
