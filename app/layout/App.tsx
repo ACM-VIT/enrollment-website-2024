@@ -21,6 +21,7 @@ import AppTree from "./AppTree";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import AppButtons from "./AppButtons";
+import BreadCrumbs from "./BreadCrumbs";
 import {pages as pagesGenerator} from "../pages/pages";
 import {isDesktop} from "react-device-detect";
 import {useParams, useRouter} from "next/navigation";
@@ -320,13 +321,20 @@ export default function App({
                                 >
                                     <AppButtons/>
                                 </Grid>
+                <Grid
+                  sx={{
+                    height: "4px",
+                  }}
+                >
+                  <BreadCrumbs />
+                </Grid>
 
                                 <Grid
                                     sx={{
                                         scrollBehavior: "smooth",
                                         // overflow: 'scroll',
                                         overflowY: "auto",
-                                        height: `calc(100vh - 20px - 33px)`,
+                                        height: `calc(100vh - 20px - 33px - 4px)`,
                                     }}
                                 >
                                     {/* {children} */}

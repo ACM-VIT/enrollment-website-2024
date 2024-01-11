@@ -9,6 +9,12 @@ import {pages as pagesGenerator} from "../pages/pages";
 
 const terminalText = "[user@acm-mainframe]~$ ";
 
+const customFont = `
+    @font-face {
+        font-family: 'consolas regular';
+        src: url('../public/CONSOLA.ttf') format('truetype');
+    }
+`;
 
 interface consoleLine {
     type: 'error' | 'response' | 'command';
@@ -148,13 +154,15 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
     return (
         <>
             <Box sx={{
-                height: "10%",
-                marginTop: "4px",
-                marginBottom: "14px",
+                height: "15%",
+                marginTop: "1px",
+                // marginBottom: "0px",
                 textDecoration: "underline #0078d4",
                 textUnderlineOffset: "5px",
                 paddingLeft: "28px",
-                paddingTop: "12px",
+                paddingTop: "3px",
+                fontFamily: "consolas regular",
+                backgroundColor: "#1e1e1e",
             }}>
                 <span style={{
                     fontSize: "75%",
@@ -165,7 +173,7 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
             </Box>
             <Container
                 sx={{
-                    height: "85%",
+                    height: "86%",
                     marginLeft: "0px",
                     // height: "40%",
                     width: "100%",
@@ -187,13 +195,13 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                         <pre key={index} style={{
                             marginBottom: "8px",
                             marginTop: "8px",
-                            color: line.type === 'error' ? '#ff0000' : line.type === 'command' ? '#27cf4b' : 'inherit',
+                            color: line.type === 'error' ? '#F14C4C' : line.type === 'command' ? '#0DBC79' : 'inherit',
                         }}>{line.message}</pre>
                     ))}{!isPending &&
                     <pre style={{
                         marginBottom: "8px",
                         marginTop: "8px",
-                    }}><span style={{color: "#27cf4b",}}>{terminalText}</span>
+                    }}><span style={{color: "#0DBC79",}}>{terminalText}</span>
                          <input
                              width={"100%"}
                              ref={inputRef}
