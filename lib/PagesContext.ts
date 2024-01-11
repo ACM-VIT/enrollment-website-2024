@@ -6,7 +6,6 @@ interface Page {
     name: string;
     route: string;
     group: string;
-    content: React.ReactNode;
 }
 
 const defaultFn = () => {

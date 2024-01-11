@@ -8,7 +8,6 @@ interface Page {
     name: string;
     route: string;
     group: string;
-    content: React.ReactNode;
 }
 
 function Wrapper({page, children}: { page: Page, children: React.ReactNode }) {

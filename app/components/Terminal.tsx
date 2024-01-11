@@ -84,6 +84,7 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                 domain = command.split(" ")[1];
 
                 if (Object.keys(Domain).includes(domain)) {
+                    setConsoleHistory(temp);
                     const response = await registerDomain(domain as Domain);
                     setConsoleHistory([
                         ...temp,
@@ -116,6 +117,7 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                 domain = command.split(" ")[1];
 
                 if (Object.keys(Domain).includes(domain)) {
+                    setConsoleHistory(temp)
                     const response = await formSubmit(domain as Domain);
                     setConsoleHistory([
                         ...temp,
@@ -146,10 +148,10 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
         }
     }
 
-    useEffect(() => {
-        if (!inputRef.current) return;
-        scrollToBottom(inputRef);
-    });
+    // useEffect(() => {
+    //     if (!inputRef.current) return;
+    //     scrollToBottom(inputRef);
+    // });
 
     return (
         <>
@@ -201,9 +203,10 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                     <pre style={{
                         marginBottom: "8px",
                         marginTop: "8px",
-                    }}><span style={{color: "#0DBC79",}}>{terminalText}</span>
+                        display: "flex",
+                        flexDirection: "row"
+                    }}><span style={{color: "#0DBC79"}}>{terminalText}</span>
                          <input
-                             width={"100%"}
                              ref={inputRef}
                              type="text"
                              name="input"
@@ -220,12 +223,11 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                              style={{
                                  border: "none",
                                  outline: "none",
-                                 // backgroundColor: ()?"#272727" : "none",
+                                 flex: 1,
                                  backgroundColor: "inherit",
                                  fontFamily: "inherit",
                                  fontSize: "inherit",
                              }}
-                             // onLoad={}
                          />
       </pre>}
                 </Box>

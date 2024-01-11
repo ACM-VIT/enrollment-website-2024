@@ -47,7 +47,6 @@ interface Page {
     name: string;
     route: string;
     group: string;
-    content: React.ReactNode;
 }
 
 // function initVisiblePageIndexs(pages: Page[]) {
@@ -59,13 +58,7 @@ interface Page {
 //     return tabs;
 // }
 
-export default function App({
-                                registrations,
-                                children,
-                            }: {
-    registrations: Registration[];
-    children: React.ReactNode;
-}) {
+export default function App({registrations, children}: { registrations: Registration[], children: React.ReactNode }) {
     const params = useParams<{ folder: string, file: string }>()
 
     const [showTerminal, setShowTerminal] = useState(false);
@@ -131,8 +124,8 @@ export default function App({
             "openPages",
             JSON.stringify(openPages.map((x) => x.index))
         );
-        if(currentPage && !openPages.find(x=>x.index === currentPage.index)){
-            router.push(openPages[0]? `/${openPages[0].group}/${openPages[0].route}` : '/')
+        if (currentPage && !openPages.find(x => x.index === currentPage.index)) {
+            router.push(openPages[0] ? `/${openPages[0].group}/${openPages[0].route}` : '/')
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openPages]);
@@ -147,8 +140,7 @@ export default function App({
                     setOpenPages([...openPages, page]);
                 }
                 localStorage.setItem('lastPage', page.index.toString())
-            }
-            else
+            } else
                 localStorage.removeItem('lastPage')
         } else {
             const lastPageIndex = localStorage.getItem('lastPage')
@@ -157,7 +149,7 @@ export default function App({
                 return
             }
             const lastPage = openPages.find(x => x.index.toString() === lastPageIndex)
-            if (!lastPage){
+            if (!lastPage) {
                 setCurrentPage(null)
                 return
             }
@@ -165,19 +157,6 @@ export default function App({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);
-
-    // useEffect(() => {
-    //   if (nextPage && !openPages.find((x) => x.index === nextPage?.index)) {
-    //     setOpenPages([...openPages, nextPage]);
-    //   }
-    //   setCurrentPage(nextPage);
-    //   if (nextPage) {
-    //     localStorage.setItem("lastPage", nextPage.index.toString());
-    //   } else {
-    //     localStorage.removeItem("lastPage");
-    //   }
-    //   // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [nextPage]);
 
     return (
         <ThemeProvider theme={theme}>
@@ -320,13 +299,13 @@ export default function App({
                                 >
                                     <AppButtons/>
                                 </Grid>
-                <Grid
-                  sx={{
-                    height: "4px",
-                  }}
-                >
-                  <BreadCrumbs />
-                </Grid>
+                                <Grid
+                                    sx={{
+                                        height: "4px",
+                                    }}
+                                >
+                                    <BreadCrumbs/>
+                                </Grid>
 
                                 <Grid
                                     sx={{

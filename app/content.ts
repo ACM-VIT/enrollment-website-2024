@@ -1,4 +1,4 @@
-const content = {
+const content: { [key: string]: {[key: string]: string}} = {
     domain: {
         app: `# 📖 App
 ## WHO WE ARE

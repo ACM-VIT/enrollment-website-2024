@@ -88,7 +88,7 @@ model Question {
   question  String
   domain    Domain
   type      Type
-  options   String[]
+  // options   String[]
   varName   String
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
@@ -109,7 +109,7 @@ model Response {
   registration   Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
   registrationId String
   response       String?
-  valid          Boolean      @default(false)
+  // valid          Boolean      @default(false)
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 
