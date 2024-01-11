@@ -1,5 +1,5 @@
 "use client";
-import React, {useContext, useState, useTransition} from "react";
+import React, {MutableRefObject, useContext, useEffect, useRef, useState, useTransition} from "react";
 import {Container} from "@mui/system";
 import {Box} from "@mui/material";
 import {formSubmit, registerDomain} from "@/app/actions/terminal";
@@ -21,7 +21,12 @@ interface consoleLine {
     message: string;
 }
 
+function scrollToBottom(ref: MutableRefObject<HTMLInputElement | undefined | null>) {
+    ref.current!.scrollIntoView();
+}
+
 function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
+    const inputRef = useRef<HTMLInputElement | null>(null);
     const [isPending, startTransition] = useTransition();
     const [consoleHistory, setConsoleHistory] = useState<consoleLine[]>([
         {
@@ -66,7 +71,7 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                 }, 1000);
                 break;
             case "register":
-                if (command.split(" ").length<2){
+                if (command.split(" ").length < 2) {
                     setConsoleHistory([
                         ...temp,
                         {
@@ -78,7 +83,8 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                 }
                 domain = command.split(" ")[1];
 
-                if(Object.keys(Domain).includes(domain)){
+                if (Object.keys(Domain).includes(domain)) {
+                    setConsoleHistory(temp);
                     const response = await registerDomain(domain as Domain);
                     setConsoleHistory([
                         ...temp,
@@ -98,7 +104,7 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                 }
                 break;
             case "formsubmit":
-                if (command.split(" ").length<2){
+                if (command.split(" ").length < 2) {
                     setConsoleHistory([
                         ...temp,
                         {
@@ -110,7 +116,8 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                 }
                 domain = command.split(" ")[1];
 
-                if(Object.keys(Domain).includes(domain)){
+                if (Object.keys(Domain).includes(domain)) {
+                    setConsoleHistory(temp)
                     const response = await formSubmit(domain as Domain);
                     setConsoleHistory([
                         ...temp,
@@ -140,6 +147,11 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                 break;
         }
     }
+
+    // useEffect(() => {
+    //     if (!inputRef.current) return;
+    //     scrollToBottom(inputRef);
+    // });
 
     return (
         <>
@@ -191,29 +203,32 @@ function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
                     <pre style={{
                         marginBottom: "8px",
                         marginTop: "8px",
-                    }}><span style={{color: "#0DBC79",}}>{terminalText}</span>
+                        display: "flex",
+                        flexDirection: "row"
+                    }}><span style={{color: "#0DBC79"}}>{terminalText}</span>
                          <input
-                            type="text"
-                            name="input"
-                            autoFocus
-                            onKeyDown={(event) => {
-                                // TODO implement up-arrow and down-arrow functionality
-                                if (event.key === "Enter") {
-                                    startTransition(()=>runCommand((event.target as HTMLInputElement).value));
-                                    (event.target as HTMLInputElement).value = "";
-                                    // TODO: Scroll to bottom of terminal
-                                    // terminalContainer.current!.scrollTop = terminalContainer.current!.scrollHeight;
-                                }
-                            }}
-                            style={{
-                                border: "none",
-                                outline: "none",
-                                // backgroundColor: ()?"#272727" : "none",
-                                backgroundColor: "inherit",
-                                fontFamily: "inherit",
-                                fontSize: "inherit",
-                            }}
-                        />
+                             ref={inputRef}
+                             type="text"
+                             name="input"
+                             autoFocus
+                             onKeyDown={(event) => {
+                                 // TODO implement up-arrow and down-arrow functionality
+                                 if (event.key === "Enter") {
+                                     startTransition(() => runCommand((event.target as HTMLInputElement).value));
+                                     (event.target as HTMLInputElement).value = "";
+                                     // TODO: Scroll to bottom of terminal
+                                     // terminalContainer.current!.scrollTop = terminalContainer.current!.scrollHeight;
+                                 }
+                             }}
+                             style={{
+                                 border: "none",
+                                 outline: "none",
+                                 flex: 1,
+                                 backgroundColor: "inherit",
+                                 fontFamily: "inherit",
+                                 fontSize: "inherit",
+                             }}
+                         />
       </pre>}
                 </Box>
             </Container>
