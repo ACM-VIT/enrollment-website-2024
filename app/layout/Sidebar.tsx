@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Link, Paper, Tooltip } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Link, ListItemIcon, Paper, Tooltip, Button } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -7,6 +7,7 @@ import { VscFiles, VscTerminalPowershell } from "react-icons/vsc";
 import { BiGitBranch } from "react-icons/bi";
 import Divider from "@mui/material/Divider";
 import { links } from "../pages/links";
+import { Logout } from "@mui/icons-material";
 import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
 import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { Dropdown } from "@mui/base/Dropdown";
@@ -31,20 +32,21 @@ export default function Sidebar({
   handleThemeChange,
   showTerminal,
   setShowTerminal,
+  open,
   setOpen,
 }: Props) {
   const handleOpen = () => setOpen(true);
-  // const signOut = () => {};
-  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  //
-  // const openProfileMenu = Boolean(anchorEl);
-  //
-  // const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleProfileMenuClose = () => {
-  //   setAnchorEl(null);
-  // };
+  const signOut = () => {};
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+  const openProfileMenu = Boolean(anchorEl);
+
+  const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleProfileMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <React.Fragment>
@@ -337,7 +339,7 @@ const MenuButton = styled(BaseMenuButton)(
     transition: all 150ms ease;
     cursor: pointer;
     background: ${theme.palette.mode === "dark" ? "#333333" : "#2c2c2c"};
-    border: 0;
+    border: 0px;
 
     border-top-width: 2px;
     color: ${theme.palette.mode === "dark" ? "#858585" : "#858585"};

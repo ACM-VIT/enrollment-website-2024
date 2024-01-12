@@ -22,7 +22,7 @@ async function FormContainer({domain}: { domain: Domain }) {
         }
     });
     return (
-        <Container maxWidth={false}>
+        <Container>
             <Form questions={questions} domain={domain}/>
         </Container>
     );

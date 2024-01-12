@@ -1,4 +1,4 @@
-const content: { [key: string]: {[key: string]: string}} = {
+export default {
     domain: {
         app: `# 📖 App
 ## WHO WE ARE 👥
@@ -172,5 +172,3 @@ Ready to embark on a tech journey right here on campus? Join ACM, and let's craf
 </div>`,
     }
 }
-
-export default content;

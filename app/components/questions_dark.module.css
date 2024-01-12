@@ -5,12 +5,15 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-family: monospace;
+}
+
+.question {
   margin-bottom: 10px;
 }
 
 .question label {
   display: block;
-  /*font-weight: bold;*/
+  font-weight: bold;
 }
 
 .checkboxContainer {
@@ -59,19 +62,4 @@
 
 .toggle {
   color: rgb(41, 107, 165);
-}
-
-.editor {
-  display: inline-flex;
-  gap: 10px;
-  font-family: monospace;
-  line-height: 21px;
-  position: absolute;
-  top: 60px;
-}
-
-.lineNumbers {
-  width: 20px;
-  color: #506882;
-  display: block;
 }
