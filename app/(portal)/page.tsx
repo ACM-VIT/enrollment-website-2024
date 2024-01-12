@@ -1,37 +1,12 @@
-'use client';
+"use client";
 
 import {
-    Box,
-    Grid,
-    IconButton,
-    Link,
-    Stack,
-    Tooltip,
-    Typography,
+  Grid,
 } from "@mui/material";
-import React, {useContext} from "react";
-import {links} from "../pages/links";
-import Image from 'next/image';
-import PagesContext from "@/lib/PagesContext";
-import {useRouter} from "next/navigation";
+import React from "react";
+import Image from "next/image";
 
 export default function Page() {
-    const router = useRouter();
-    const { openPages} = useContext(PagesContext);
-
-    if(openPages.length>0){
-        const lastPageIndex = localStorage.getItem('lastPage');
-        if ( lastPageIndex) {
-            const lastPage = openPages.find((x) => x.index === parseInt(lastPageIndex));
-            if(lastPage) {
-                router.push(`/${lastPage.group}/${lastPage.route}`)
-            } else {
-                router.push(`/${openPages[0].group}/${openPages[0].route}`)
-            }
-        } else {
-            router.push(`/${openPages[0].group}/${openPages[0].route}`)
-        }
-    }
     return (
         // new changed
         <Grid
@@ -172,3 +147,4 @@ export default function Page() {
         </Grid>
     );
 }
+
