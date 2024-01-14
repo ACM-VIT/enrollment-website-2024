@@ -1,7 +1,8 @@
-import "../../public/info.svg";
-import "../../public/close-red.png";
-import "../../public/close-white.png";
+import Image from "next/image";
 import "./modal-styling.css";
+import info from "./assets/info.svg";
+import close_red from "./assets/close-red.png";
+import close_white from "./assets/close-white.png";
 
 interface ModalType {
   // children?: ReactNode;
@@ -18,12 +19,12 @@ export default function Modal(props: ModalType) {
             <div className="title">
               <span>Visual Studio Code</span>
               <button className="exit-button" onClick={props.toggle}>
-                <img src="../../public/close-white.png" className="white"/>
-                <img src="../../public/close-red.png" className="red"/>
+                <Image src={close_white} className="white" alt=""></Image>
+                <Image src={close_red} className="red" alt=""></Image>
               </button>
             </div>
             <div className="error">
-              <img src="../../public/info.svg" alt="info-icon" />
+              <Image src={info} alt="info-icon" />
               404 ERROR
             </div>
             <div className="details">
