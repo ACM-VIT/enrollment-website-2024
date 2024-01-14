@@ -10,7 +10,6 @@ import { Domain } from "@prisma/client";
 import { STQ, LTQ } from "@/app/components/questions";
 import { FormErrorWrapper } from "./formErrorWrapper";
 
-
 export function Form({
   questions,
   domain,
@@ -37,21 +36,16 @@ export function Form({
     return () => resizeObserver.disconnect();
   }, [form]);
 
-
   const theme = useTheme();
   const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
 
-
   useEffect(() => {
     const formproxy = form.current! as HTMLFormElement;
-
 
     return () => {
       formproxy.requestSubmit();
     };
   }, []);
-  const hasError = true; // Set this based on your error condition
-  const errorMessage = "There is an error!";
   const debouncedSave = useDebouncedCallback(() => {
     // submit the form
     (form!.current! as HTMLFormElement).requestSubmit();
@@ -59,9 +53,6 @@ export function Form({
   return (
     <>
       <div className={styles.editor}>
-        <FormErrorWrapper error={hasError} errorMsg={errorMessage}>
-          {"mblalala"}
-        </FormErrorWrapper>
         <div className={styles.lineNumbers}>
           {lines.map((line) => (
             <div key={line} className={styles.lineNumber}>
@@ -97,5 +88,3 @@ export function Form({
     </>
   );
 }
-
-
