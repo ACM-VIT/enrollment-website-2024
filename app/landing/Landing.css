@@ -122,6 +122,8 @@
     top: 0;
     padding-left: 0;
     display: none;
+    height: auto;
+    width: auto;
 }
 
 /* media queries */
