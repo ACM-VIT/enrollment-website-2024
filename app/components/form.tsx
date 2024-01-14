@@ -30,7 +30,7 @@ export function Form({questions, domain}: {
             if (form.current) {
                 const {current} = form
                 const boundingRect = current.getBoundingClientRect()
-                const {width, height} = boundingRect
+                const {height} = boundingRect
                 const lineHeight = 21;
                 const numLines = Math.floor(height / lineHeight);
                 const lines = Array.from(Array(numLines).keys());

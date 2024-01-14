@@ -18,8 +18,8 @@ export default function Modal(props: ModalType) {
             <div className="title">
               <span>Visual Studio Code</span>
               <button className="exit-button" onClick={props.toggle}>
-                <img src="../../public/close-white.png" className="white"></img>
-                <img src="../../public/close-red.png" className="red"></img>
+                <img src="../../public/close-white.png" className="white"/>
+                <img src="../../public/close-red.png" className="red"/>
               </button>
             </div>
             <div className="error">
