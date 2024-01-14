@@ -1,5 +1,5 @@
 'use client';
-import React, {createContext} from "react";
+import {createContext} from "react";
 
 interface Page {
     index: number;

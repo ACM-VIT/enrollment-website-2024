@@ -36,7 +36,6 @@ export default function BreadCrumbs() {
         }
         
         const breadcrumbs = pathArray.map((path, index) => {
-            const to = `/${pathArray.slice(0, index + 1).join("/")}`;
             return (
                 <div key={index} style={{display: "flex"}}>
                     { extensions[index] === ".md" && 

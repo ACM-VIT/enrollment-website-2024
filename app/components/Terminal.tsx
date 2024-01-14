@@ -1,5 +1,5 @@
 "use client";
-import React, {MutableRefObject, useContext, useEffect, useRef, useState, useTransition} from "react";
+import React, {useContext, useRef, useState, useTransition} from "react";
 import {Container} from "@mui/system";
 import {Box} from "@mui/material";
 import {formSubmit, registerDomain} from "@/app/actions/terminal";
@@ -9,21 +9,14 @@ import {pages as pagesGenerator} from "../pages/pages";
 
 const terminalText = "[user@acm-mainframe]~$ ";
 
-const customFont = `
-    @font-face {
-        font-family: 'consolas regular';
-        src: url('../public/CONSOLA.ttf') format('truetype');
-    }
-`;
-
 interface consoleLine {
     type: 'error' | 'response' | 'command';
     message: string;
 }
 
-function scrollToBottom(ref: MutableRefObject<HTMLInputElement | undefined | null>) {
-    ref.current!.scrollIntoView();
-}
+// function scrollToBottom(ref: MutableRefObject<HTMLInputElement | undefined | null>) {
+//     ref.current!.scrollIntoView();
+// }
 
 function Terminal({setShowTerminal}: { setShowTerminal: Function }) {
     const inputRef = useRef<HTMLInputElement | null>(null);
