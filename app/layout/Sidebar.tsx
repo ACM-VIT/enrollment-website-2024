@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useTransition} from "react";
 import { Box, Link, Paper, Tooltip } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -12,6 +12,7 @@ import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { Dropdown } from "@mui/base/Dropdown";
 import { Menu } from "@mui/base/Menu";
 import { styled, css } from "@mui/system";
+import {signOutAction} from "@/app/actions/auth";
 
 interface Props {
   expanded: boolean;
@@ -46,6 +47,7 @@ export default function Sidebar({
   //   setAnchorEl(null);
   // };
 
+    const [, startTransition] = useTransition();
   return (
     <React.Fragment>
       <Box
@@ -177,7 +179,7 @@ export default function Sidebar({
                 <MenuItem onClick={handleOpen}>Edit Profile</MenuItem>
 
                 <Divider sx={{  marginX: 0, paddingX: 0, marginY: '5px',backgroundColor: "#454545"}} />
-                <MenuItem>Sign out</MenuItem>
+                <MenuItem onClick={()=>startTransition(signOutAction)}>Sign out</MenuItem>
               </Menu>
             </Dropdown>
           </Link>
