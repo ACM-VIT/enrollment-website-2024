@@ -11,7 +11,7 @@ export default async function Layout({children,}: {
 }) {
     const prisma = new PrismaClient();
 
-    const { user } = (await auth())??{user:undefined};
+    const {user} = (await auth()) ?? {user: undefined};
     const registrations = await prisma.registration.findMany({
         where: {
             user: {
@@ -20,12 +20,12 @@ export default async function Layout({children,}: {
         }
     });
 
-    if (!user) {
+    if (!user || !(await prisma.user.findUnique({where: {email: user!.email!}}))?.phone) {
         return redirect('/landing')
-    }else
-    return (
-        <SessionProvider>
-            <App registrations={registrations}>{children}</App>
-        </SessionProvider>
-    )
+    } else
+        return (
+            <SessionProvider>
+                <App registrations={registrations}>{children}</App>
+            </SessionProvider>
+        )
 }

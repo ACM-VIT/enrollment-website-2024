@@ -5,22 +5,18 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   font-family: monospace;
-}
-
-.question {
   margin-bottom: 10px;
 }
 
 .question label {
   display: block;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .checkboxContainer {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: 10px;
 }
 
 .checkboxContainer label {
@@ -41,19 +37,19 @@
 
 /* styling for text elements dark mode */
 .print {
-  color: rgb(229, 191, 64);
+  color: rgb(220, 220, 170);
 }
 
 .bracket {
-  color: yellow;
+  color: rgb(255, 215, 0);
 }
 
 .questioneach {
-  color: rgb(239, 105, 37);
+  color: rgb(206, 145, 120);
 }
 
 .comments {
-  color: rgb(8, 99, 8);
+  color: rgb(106, 153, 85);
 }
 
 .variable {
@@ -61,5 +57,20 @@
 }
 
 .toggle {
-  color: rgb(95, 95, 255);
+  color: rgb(41, 107, 165);
+}
+
+.editor {
+  display: inline-flex;
+  gap: 10px;
+  font-family: monospace;
+  line-height: 21px;
+  position: absolute;
+  top: 60px;
+}
+
+.lineNumbers {
+  width: 20px;
+  color: #506882;
+  display: block;
 }

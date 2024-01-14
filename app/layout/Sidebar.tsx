@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Box, Link, ListItemIcon, Paper, Tooltip, Button } from "@mui/material";
+import React, {useTransition} from "react";
+import { Box, Link, Paper, Tooltip } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -7,12 +7,12 @@ import { VscFiles, VscTerminalPowershell } from "react-icons/vsc";
 import { BiGitBranch } from "react-icons/bi";
 import Divider from "@mui/material/Divider";
 import { links } from "../pages/links";
-import { Logout } from "@mui/icons-material";
 import { MenuButton as BaseMenuButton } from "@mui/base/MenuButton";
 import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { Dropdown } from "@mui/base/Dropdown";
 import { Menu } from "@mui/base/Menu";
 import { styled, css } from "@mui/system";
+import {signOutAction} from "@/app/actions/auth";
 
 interface Props {
   expanded: boolean;
@@ -32,22 +32,22 @@ export default function Sidebar({
   handleThemeChange,
   showTerminal,
   setShowTerminal,
-  open,
   setOpen,
 }: Props) {
   const handleOpen = () => setOpen(true);
-  const signOut = () => {};
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  // const signOut = () => {};
+  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  //
+  // const openProfileMenu = Boolean(anchorEl);
+  //
+  // const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleProfileMenuClose = () => {
+  //   setAnchorEl(null);
+  // };
 
-  const openProfileMenu = Boolean(anchorEl);
-
-  const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleProfileMenuClose = () => {
-    setAnchorEl(null);
-  };
-
+    const [, startTransition] = useTransition();
   return (
     <React.Fragment>
       <Box
@@ -178,8 +178,8 @@ export default function Sidebar({
               <Menu slots={{ listbox: Listbox }}>
                 <MenuItem onClick={handleOpen}>Edit Profile</MenuItem>
 
-                <Divider sx={{ paddingY: 0 }} />
-                <MenuItem>Sign out</MenuItem>
+                <Divider sx={{  marginX: 0, paddingX: 0, marginY: '5px',backgroundColor: "#454545"}} />
+                <MenuItem onClick={()=>startTransition(signOutAction)}>Sign out</MenuItem>
               </Menu>
             </Dropdown>
           </Link>
@@ -276,22 +276,22 @@ export default function Sidebar({
 const Listbox = styled("ul")(
   ({ theme }) => `
     font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     text-align: left;
     text-indent: 2em;
     transform-origin: top right;
-    padding-left: 2px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-right: 2px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 5px;
     box-sizing: border-box;
-    min-width: 150px;
-    border-radius: 8px;
+    min-width: 170px;
+    border-radius: 6px;
     overflow: auto;
-    outline: 0px;
+    outline: 1px;
     background: ${theme.palette.mode === "dark" ? "#1e1e1e" : "#D1D1D1"};
-    // border: 0.5px solid ${
-      theme.palette.mode === "dark" ? "#1f1f1f" : "#1e1e1e"
+    border: 0.5px solid ${
+      theme.palette.mode === "dark" ? "#454545" : "#1e1e1e"
     };
     color: ${theme.palette.mode === "dark" ? "#BDC3CF" : "#474747"};
     box-shadow: 0px 4px 4px ${
@@ -307,11 +307,10 @@ const Listbox = styled("ul")(
 const MenuItem = styled(BaseMenuItem)(
   ({ theme }) => `
     list-style: none;
-    padding: 8px 4px 4px 4px;
-    border-radius: 8px;
+    padding: 3px 4px;
+    border-radius: 6px;
     cursor: pointer;
     user-select: none;
-  
     &:last-of-type {
       border-bottom: none;
     }
@@ -321,10 +320,11 @@ const MenuItem = styled(BaseMenuItem)(
     }
   
     &:hover:not(.${menuItemClasses.disabled}) {
+      
       background-color: ${
-        theme.palette.mode === "dark" ? "#6997D5" : "#6997D5"
+        theme.palette.mode === "dark" ? "#04395E" : "#6997D5"
       };
-      color: ${theme.palette.mode === "dark" ? "#1e1e1e" : "#1f1f1f"};
+      color: ${theme.palette.mode === "dark" ? "#ffffff" : "#1f1f1f"};
     }
     `
 );
@@ -339,7 +339,7 @@ const MenuButton = styled(BaseMenuButton)(
     transition: all 150ms ease;
     cursor: pointer;
     background: ${theme.palette.mode === "dark" ? "#333333" : "#2c2c2c"};
-    border: 0px;
+    border: 0;
 
     border-top-width: 2px;
     color: ${theme.palette.mode === "dark" ? "#858585" : "#858585"};
