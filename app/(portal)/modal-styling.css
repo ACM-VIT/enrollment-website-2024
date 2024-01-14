@@ -1,0 +1,114 @@
+.modal-overlay {
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  font-family: "Segoe UI", "MS Shell Dlg", "Helvetica";
+  display: flex;
+  flex-direction: column;
+  background: white;
+  width: 450px;
+  height: fit-content;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.title {
+  border-radius: 8px 8px 0px 0px;
+  font-size: 14px;
+  align-items: center;
+  position: relative;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #eeeeee;
+  border-bottom: 1px solid #ccc;
+}
+
+.title span {
+  padding: 7px;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  margin-top: 10px;
+  color: #005a9e;
+
+  img {
+    margin-top: 5px;
+    margin-inline: 9px;
+  }
+}
+
+.details {
+  margin-left: 65px;
+  margin-top: 10px;
+  font-size: 14px;
+  bottom: 10px;
+  position: relative;
+  width: fit-content;
+}
+
+.okay-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  background-color: #eeeeee;
+  padding: 5px;
+  border-radius: 0px 0px 8px 8px;
+
+  button {
+    background-color: white;
+    border: 1px solid #005a9e;
+    border-radius: 3px;
+    cursor: pointer;
+    height: 28px;
+    width: 90px;
+    font-family: "MS Shell Dlg", "Helvetica";
+    font-size: 14px;
+    outline: none;
+  }
+}
+
+.red {
+  z-index: 1;
+  border-top-right-radius: 8px;
+  height: 30px;
+}
+.white {
+  height: 30px;
+  border-top-right-radius: 8px;
+  z-index: 2;
+  position: absolute;
+}
+
+.exit-button {
+  border-radius: 8px;
+  border: none;
+  height: 30px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  justify-content: flex-end;
+}
+
+.white:hover {
+  opacity: 0;
+}
+
+@media only screen and (max-width: 430px) {
+  .modal-box {
+    width: 90%;
+  }
+}
