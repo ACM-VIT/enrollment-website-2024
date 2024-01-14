@@ -104,7 +104,6 @@ export const LTQ = ({question, data, updateResponse, triggerSave}: {
     );
 }
 
-// TODO mcq, scq
 
 // export const PythonForm = () => {
 //   const theme = useTheme();
