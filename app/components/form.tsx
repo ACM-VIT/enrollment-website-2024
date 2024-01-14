@@ -13,7 +13,7 @@ export function Form({questions, domain}: {
     questions: Prisma.QuestionGetPayload<{ include: { responses: true } }>[],
     domain: Domain
 }) {
-    const [pending, startSave] = useTransition();
+    const [, startSave] = useTransition();
     const [formData, setFormData] = useState<Record<string, {
         response: string | Record<string, boolean>,
         error: { message: string, title: string } | null

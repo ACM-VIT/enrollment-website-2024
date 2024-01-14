@@ -1,6 +1,6 @@
 "use client";
 
-import React, {FormEvent, KeyboardEvent, useEffect, useRef, useState} from "react";
+import React, {FormEvent, KeyboardEvent, useEffect, useRef} from "react";
 import styles_light from "./questions_light.module.css";
 import styles_dark from "./questions_dark.module.css";
 import {useTheme} from "@mui/material";
@@ -468,8 +468,8 @@ export const SCQ = ({question, data, updateResponse, triggerSave}: {
 
 
     const handleChange = (event: any) => {
-        const {name, checked} = event.target;
-        updateResponse(question.id, {...data.response, [name]: checked});
+        const {id, checked} = event.target;
+        updateResponse(question.id, {...Object.fromEntries(question.options.map(i=>[i, false])), [id]: checked});
         triggerSave();
     };
 
@@ -499,7 +499,7 @@ export const SCQ = ({question, data, updateResponse, triggerSave}: {
                             hidden={true}
                             type="radio"
                             id={option}
-                            name={option}
+                            name={question.id}
                             checked={data.response[option]}
                             onChange={handleChange}
                         />

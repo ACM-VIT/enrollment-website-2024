@@ -98,7 +98,7 @@ main {
 
 h1 {
   padding-bottom: 10%;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-weight: 500;
   color: white;
   background-color: transparent;
@@ -116,7 +116,7 @@ form {
 
 input {
   width: 500px;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-weight: 400;
   font-size: 21px;
   margin-bottom: 25px;
@@ -131,7 +131,7 @@ input {
 #submit_button{
   width: auto;
   margin: auto;
-  font-family: "DM Sans";
+  font-family: "DM Sans", sans-serif;
   font-weight: 500;
   font-size: 25px;
   padding-block: 15px;
@@ -169,7 +169,7 @@ input {
   button {
     text-align: center;
     width: 65%;
-    padding-inline: 0px;
+    padding-inline: 0;
   }
   .H21,
   .H2_rev1 {
