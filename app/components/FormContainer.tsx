@@ -2,6 +2,7 @@ import React from 'react';
 import {Domain, PrismaClient} from "@prisma/client";
 import {Container} from "@mui/material";
 import {Form} from "@/app/components/form";
+import { auth } from '@/lib/auth';
 
 
 async function FormContainer({domain}: { domain: Domain }) {
@@ -16,6 +17,9 @@ async function FormContainer({domain}: { domain: Domain }) {
                 where: {
                     registration: {
                         domain: domain,
+                        user: {
+                            email: (await auth())!.user!.email,
+                        }
                     },
                 }
             }

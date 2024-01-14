@@ -2,6 +2,7 @@
 import {PrismaClient, Domain, Registration} from '@prisma/client';
 import { auth } from "@/lib/auth";
 import {Prisma} from ".prisma/client";
+import { revalidatePath } from 'next/cache';
 
 interface consoleResponse {
     console: {
@@ -71,6 +72,7 @@ export const formSubmit = async (domain: Domain): Promise<consoleResponse> => {
                 userId: userId
             },
         })
+        revalidatePath(`/forms/${domain}`)
         return {console: {message: 'Form submitted successfully', type: 'response'}, registrations}
     } catch (error) {
         return {console: {message: 'Form submission failed due to an unknown error. Please try again later or reach out to us.', type: 'error'}}
