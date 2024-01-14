@@ -10,7 +10,7 @@
 
 .question label {
   display: block;
-  font-weight: bold;
+  /*font-weight: bold;*/
 }
 
 .checkboxContainer {

@@ -1,60 +1,33 @@
 "use client";
 
 import {
-  Box,
   Grid,
-  IconButton,
-  Link,
-  Stack,
-  Tooltip,
-  Typography,
 } from "@mui/material";
-import React, { useContext } from "react";
-import { links } from "../pages/links";
+import React from "react";
 import Image from "next/image";
-import PagesContext from "@/lib/PagesContext";
-import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const router = useRouter();
-  const { openPages } = useContext(PagesContext);
+    return (
+        <Grid
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ minHeight: `calc(100vh - 20px - 33px)` }}
+        >
+            <Image
+                src="/AcmLogo.svg"
+                width={150}
+                height={150}
+                style={{
+                    height: "auto",
+                    width: "auto",
+                }}
+                alt="logo"
+            />
 
-  if (openPages.length > 0) {
-    const lastPageIndex = localStorage.getItem("lastPage");
-    if (lastPageIndex) {
-      const lastPage = openPages.find(
-        (x) => x.index === parseInt(lastPageIndex)
-      );
-      if (lastPage) {
-        router.push(`/${lastPage.group}/${lastPage.route}`);
-      } else {
-        router.push(`/${openPages[0].group}/${openPages[0].route}`);
-      }
-    } else {
-      router.push(`/${openPages[0].group}/${openPages[0].route}`);
-    }
-  }
-  return (
-    <Grid
-      container
-      spacing={0}
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      sx={{ minHeight: `calc(100vh - 20px - 33px)` }}
-    >
-      <Image
-        src="/AcmLogo.svg"
-        width={150}
-        height={150}
-        style={{
-          height: "auto",
-          width: "auto",
-        }}
-        alt="logo"
-      />
-
-      {/* <Grid item xs={3}>
+            {/* <Grid item xs={3}>
         <Stack direction={{ xs: "column", sm: "row-reverse" }} spacing={2}>
           <Box display="flex" sx={{ justifyContent: "center" }}></Box>
           <Box>
@@ -96,6 +69,7 @@ export default function Page() {
           </Box>
         </Stack>
       </Grid> */}
-    </Grid>
-  );
+        </Grid>
+    );
 }
+
