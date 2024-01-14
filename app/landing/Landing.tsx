@@ -2,7 +2,17 @@
 
 import { useTransition } from "react";
 import "./Landing.css";
+import Image from "next/image";
 import { signInAction } from "@/app/actions/auth";
+import H2 from "./assets/H2.png";
+import rectangle_26 from "./assets/Rectangle 26.png";
+import Dots from "./assets/Dots.png";
+import rect from "./assets/rect.png";
+import rectangle_25 from "./assets/Rectangle 25.png";
+import acm_logo from "./assets/ACM Logo.png";
+import rectangle_27 from "./assets/Rectangle 27.png";
+import rectangle_24 from "./assets/Rectangle 24.png";
+import h2_rev from "./assets/H2 rev.png";
 
 const svg = `<svg width="160" height="222" viewBox="0 0 173 222" fill="none" xmlns="http://www.w3.org/2000/svg">
 <a xlink:href="https://github.com/ACM-VIT" target="_blank">
@@ -37,16 +47,16 @@ function Landing() {
 
   return (
     <div className="container">
-      <img src="/H2.png" alt="" className="H2" />
-      <img src="/Rectangle 26.png" alt="" className="side_half" />
-      <img src="/Dots.png" alt="" className="top_dots" />
-      <img src="/rect.png" alt="" className="top_rect" />
-      <img src="/Rectangle 25.png" alt="" className="top_half" />
+      <Image src={H2} alt="" className="H2" />
+      <Image src={rectangle_26} alt="" className="side_half" />
+      <Image src={Dots} alt="" className="top_dots" />
+      <Image src={rect} alt="" className="top_rect" />
+      <Image src={rectangle_25} alt="" className="top_half" />
 
       <div className="main">
         <div className="logoDiv">
           <a href="https://acmvit.in/" target="_blank">
-            <img src="/ACM Logo.png" alt="ACM Logo" className="logo" />
+            <Image src={acm_logo} alt="ACM Logo" className="logo" />
           </a>
         </div>
         <div>
@@ -71,11 +81,11 @@ function Landing() {
         </div>
       </div>
 
-      <img src="/rect.png" alt="" className="bottom_rect" />
-      <img src="/Dots.png" alt="" className="bottom_dots" />
-      <img src="/Rectangle 27.png" alt="" className="side_half2" />
-      <img src="/Rectangle 24.png" alt="" className="bottom_half" />
-      <img src="/H2 rev.png" alt="" className="H2_rev" />
+      <Image src={rect} alt="" className="bottom_rect" />
+      <Image src={Dots} alt="" className="bottom_dots" />
+      <Image src={rectangle_27} alt="" className="side_half2" />
+      <Image src={rectangle_24} alt="" className="bottom_half" />
+      <Image src={h2_rev} alt="" className="H2_rev" />
       <div className="social" dangerouslySetInnerHTML={{ __html: svg }}></div>
     </div>
   );
