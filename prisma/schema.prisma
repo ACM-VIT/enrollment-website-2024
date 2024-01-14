@@ -84,15 +84,16 @@ model Registration {
 }
 
 model Question {
-  id        String     @id @default(cuid())
-  question  String
-  domain    Domain
-  type      Type
-  // options   String[]
-  varName   String
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  responses Response[]
+  id             String           @id @default(cuid())
+  question       String
+  domain         Domain
+  type           Type
+  options        String[]
+  varName        String
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  responses      Response[]
+  ValidationRule ValidationRule[]
 }
 
 enum Type {
@@ -109,9 +110,17 @@ model Response {
   registration   Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
   registrationId String
   response       String?
-  // valid          Boolean      @default(false)
+  error          Json?
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
 
   @@unique([questionId, registrationId])
+}
+
+model ValidationRule {
+  id         String   @id @default(cuid())
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+  ruleType   String
+  ruleValue  Json
 }

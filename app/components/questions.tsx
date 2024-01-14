@@ -7,12 +7,15 @@ import {useTheme} from "@mui/material";
 import {Prisma} from "@prisma/client";
 
 
-export const STQ = ({question, triggerSave}: {
+export const STQ = ({question, data, updateResponse, triggerSave}: {
     question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
-    triggerSave: Function
+    triggerSave: Function,
+    updateResponse: Function,
+    data: {
+        response: string,
+        error: { message: string } | null
+    }
 }) => {
-    const [value, setValue] = useState(question.responses[0]?.response ?? "");
-
     const spanRef = useRef<HTMLSpanElement>(null);
     const theme = useTheme();
 
@@ -20,19 +23,19 @@ export const STQ = ({question, triggerSave}: {
 
     useEffect(() => {
         const span = spanRef.current!;
-        span.textContent = question.responses[0]?.response ?? "";
+        span.textContent = data.response ?? "";
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
     return (<div className={styles.question}>
             <label htmlFor="name">
-                <input type="text" name={question.id} hidden={true} value={value}/>
+                <input type="text" name={question.id} hidden={true} value={data.response} readOnly={true}/>
                 <span className={styles.print}>print</span>
                 <span className={styles.bracket}>(</span>
                 <span className={styles.questioneach}>
-        &quot;{question.question}&quot;
-      </span>
+                    &quot;{question.question}&quot;
+                </span>
                 <span className={styles.bracket}>)</span>
             </label>
             <span className={styles.variable}>{question.varName}</span>=&quot;
@@ -40,7 +43,7 @@ export const STQ = ({question, triggerSave}: {
                 ref={spanRef}
                 className={styles.textBox}
                 onInput={(event: FormEvent) => {
-                    setValue((event.target as HTMLSpanElement).textContent ?? "");
+                    updateResponse(question.id, (event.target as HTMLSpanElement).textContent ?? "");
                     triggerSave();
                 }}
                 onKeyDown={(event: KeyboardEvent) => {
@@ -49,19 +52,21 @@ export const STQ = ({question, triggerSave}: {
                     }
                 }}
                 contentEditable="true"
-                defaultValue={value}
             ></span>
             &quot;
         </div>
     );
 }
 
-export const LTQ = ({question, triggerSave}: {
+export const LTQ = ({question, data, updateResponse, triggerSave}: {
     question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
-    triggerSave: Function
+    triggerSave: Function,
+    updateResponse: Function,
+    data: {
+        response: string,
+        error: { message: string } | null
+    }
 }) => {
-    const [value, setValue] = useState(question.responses[0]?.response ?? "");
-
     const spanRef = useRef<HTMLSpanElement>(null);
     const theme = useTheme();
 
@@ -69,33 +74,32 @@ export const LTQ = ({question, triggerSave}: {
 
     useEffect(() => {
         const span = spanRef.current!;
-        span.textContent = question.responses[0]?.response ?? "";
+        span.textContent = data.response ?? "";
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
 
     return (<div className={styles.question}>
             <label htmlFor="name">
-                <input type="text" name={question.id} hidden={true} value={value}/>
+                <input type="text" name={question.id} hidden={true} value={data.response} readOnly={true}/>
                 <span className={styles.print}>print</span>
                 <span className={styles.bracket}>(</span>
                 <span className={styles.questioneach}>
-        &quot;{question.question}&quot;
-      </span>
+                    &quot;{question.question}&quot;
+                </span>
                 <span className={styles.bracket}>)</span>
             </label>
-            <span className={styles.variable}>{question.varName}</span>=&quot;&quot;&quot;
+            <span className={styles.variable}>{question.varName}</span>=&quot;
             <span
                 ref={spanRef}
                 className={styles.textBox}
                 onInput={(event: FormEvent) => {
-                    setValue((event.target as HTMLSpanElement).textContent ?? "");
+                    updateResponse(question.id, (event.target as HTMLSpanElement).textContent ?? "");
                     triggerSave();
                 }}
                 contentEditable="true"
-                defaultValue={value}
             ></span>
-            &quot;&quot;&quot;
+            &quot;
         </div>
     );
 }
@@ -294,3 +298,216 @@ export const LTQ = ({question, triggerSave}: {
 // };
 
 // export default PythonForm;
+
+
+//Separated mcq and scq components
+// export const MCQ = ({question, triggerSave}: {
+//     question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
+//     triggerSave: Function
+// }) => {
+
+export const MCQ = ({question, data, updateResponse, triggerSave}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
+    triggerSave: Function,
+    updateResponse: Function,
+    data: {
+        response: Record<string, boolean>,
+        error: { message: string } | null
+    }
+}) => {
+    const theme = useTheme();
+
+    const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+
+
+    const handleChange = (event: any) => {
+        const {name, checked} = event.target;
+        updateResponse(question.id, {...data.response, [name]: checked});
+        triggerSave();
+    };
+
+    return (<div className={styles.question}>
+        <label htmlFor={question.id}>
+            <span className={styles.print}>print</span>
+            <span className={styles.bracket}>(</span>
+            <span className={styles.questioneach}>
+            &quot;{question.question}&quot;
+          </span>
+            <span className={styles.bracket}>)</span>
+        </label>
+        <br/>
+        <div className={styles.checkboxContainer}>
+            <span>
+            <span className={styles.variable}>{question.varName}</span>=
+            <span className={styles.bracket}>&#123;</span>
+            </span>
+            {
+                question.options.map(option => (
+                    <label htmlFor={option} key={option}>
+                        <span className={styles.questioneach}>
+                            &nbsp;&nbsp;&nbsp;&quot;{option}
+                        </span>
+                        &quot;:&nbsp;
+                        <input
+                            hidden={true}
+                            type="checkbox"
+                            id={option}
+                            name={option}
+                            checked={data.response[option]}
+                            onChange={handleChange}
+                        />
+                        <span className={styles.toggle}>{data.response[option].toString()}</span>,
+                    </label>
+                ))
+            }
+            <span className={styles.bracket}>&#125;</span>
+        </div>
+    </div>)
+};
+
+
+// export const SCQ = ({question, triggerSave}: {
+//     question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
+//     triggerSave: Function
+// }) => {
+//
+//     const theme = useTheme();
+//     const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+//     const initialGenders = {
+//         male: false,
+//         female: false,
+//         other: false,
+//     };
+//
+//     const [gender, setGender] = useState(initialGenders);
+//
+//
+//     const handleChangeGender = (event: any) => {
+//         const {name, checked} = event.target;
+//         setGender({...initialGenders, [name]: checked});
+//     };
+//
+//
+//     return (<div className={styles.question}>
+//         <label htmlFor="interests">
+//             <span className={styles.print}>print</span>
+//             <span className={styles.bracket}>(</span>
+//             <span className={styles.questioneach}>
+//             &quot;{question.question}?&quot;
+//           </span>
+//             <span className={styles.bracket}>)</span>
+//         </label>
+//         <br></br>
+//         <div className={styles.checkboxContainer}>
+//           <span>
+//             <span className={styles.variable}>Gender</span>=
+//             <span className={styles.bracket}>&#123;</span>
+//           </span>
+//             <label htmlFor="male">
+//             <span className={styles.questioneach}>
+//               &nbsp;&nbsp;&nbsp;&quot;Male
+//             </span>
+//                 &quot;:
+//                 <input
+//                     hidden={true}
+//                     type="checkbox"
+//                     id="male"
+//                     name="male"
+//                     checked={gender.male}
+//                     onChange={handleChangeGender}
+//                 />
+//                 <span className={styles.toggle}>{gender.male.toString()}</span>,
+//             </label>
+//             <label htmlFor="female">
+//             <span className={styles.questioneach}>
+//               &nbsp;&nbsp;&nbsp;&quot;Female
+//             </span>
+//                 &quot;:
+//                 <input
+//                     hidden={true}
+//                     type="checkbox"
+//                     id="female"
+//                     name="female"
+//                     checked={gender.female}
+//                     onChange={handleChangeGender}
+//                 />
+//                 <span className={styles.toggle}>{gender.female.toString()}</span>,
+//             </label>
+//             <label htmlFor="other">
+//             <span className={styles.questioneach}>
+//               &nbsp;&nbsp;&nbsp;&quot;Other
+//             </span>
+//                 &quot;:
+//                 <input
+//                     hidden={true}
+//                     type="checkbox"
+//                     id="other"
+//                     name="other"
+//                     checked={gender.other}
+//                     onChange={handleChangeGender}
+//                 />
+//                 <span className={styles.toggle}>{gender.other.toString()}</span>
+//             </label>
+//             <span className={styles.bracket}>&#125;</span>
+//         </div>
+//     </div>);
+// }
+
+export const SCQ = ({question, data, updateResponse, triggerSave}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
+    triggerSave: Function,
+    updateResponse: Function,
+    data: {
+        response: Record<string, boolean>,
+        error: { message: string } | null
+    }
+}) => {
+    const theme = useTheme();
+
+    const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+
+
+    const handleChange = (event: any) => {
+        const {name, checked} = event.target;
+        updateResponse(question.id, {...data.response, [name]: checked});
+        triggerSave();
+    };
+
+    return (<div className={styles.question}>
+        <label htmlFor={question.id}>
+            <span className={styles.print}>print</span>
+            <span className={styles.bracket}>(</span>
+            <span className={styles.questioneach}>
+            &quot;{question.question}&quot;
+          </span>
+            <span className={styles.bracket}>)</span>
+        </label>
+        <br/>
+        <div className={styles.checkboxContainer}>
+            <span>
+            <span className={styles.variable}>{question.varName}</span>=
+            <span className={styles.bracket}>&#123;</span>
+            </span>
+            {
+                question.options.map(option => (
+                    <label htmlFor={option} key={option}>
+                        <span className={styles.questioneach}>
+                            &nbsp;&nbsp;&nbsp;&quot;{option}
+                        </span>
+                        &quot;:&nbsp;
+                        <input
+                            hidden={true}
+                            type="radio"
+                            id={option}
+                            name={option}
+                            checked={data.response[option]}
+                            onChange={handleChange}
+                        />
+                        <span className={styles.toggle}>{data.response[option].toString()}</span>,
+                    </label>
+                ))
+            }
+            <span className={styles.bracket}>&#125;</span>
+        </div>
+    </div>)
+};
