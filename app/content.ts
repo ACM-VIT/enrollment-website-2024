@@ -84,7 +84,25 @@ Our management team at ACM has consistently demonstrated expertise in curating i
 
     },
     extras: {
-        events: `# 📖 Events`,
+            events: `# 📖 Events
+            ## TINY HACK 🚀
+            The Tiny Hack is a 10-hour-long hackathon that is designed for individuals who are interested in developing and building innovative projects in a short amount of time. The event is focused on creating small, but impactful solutions to real-world problems using technology. Participants will have the opportunity to collaborate and work with like-minded individuals from diverse backgrounds in order to develop their ideas. 💡🔧
+            
+            ## CRYPTIC HUNT 🔍
+            ACM-VIT's Hybrid Cryptic Hunt is an elaborate treasure hunt where our participants will be given questions to solve using skills from the cryptography and cybersecurity domains. Through the Hunt, the participants will get to explore both the world of cybersec and that of VIT, in search of the answers to your problems in the most unexpected places. 🌐🔒
+            
+            ## CODEX CRYPTUM 🛡️
+            Codex Cryptum is a specialized workshop organized by ACM-VIT, focusing on deepening participants' understanding of cybersecurity and cryptography. The event offers hands-on sessions and interactions with industry specialists, enabling attendees to delve into advanced topics and gain practical insights. Through this workshop, participants can expand their knowledge base, refine their skills, and engage in meaningful discussions with peers and experts in the field. 🤝💻
+            
+            ## FORKTOBER 🍂
+            Forktober Fest is an engaging event hosted by ACM-VIT, tailored for participants to contribute to open-source projects. This collaborative initiative encourages participants to actively engage with ACM-VIT's repositories and have the opportunity to explore, modify, and enhance existing projects, while collaborating with like-minded individuals. 🌐🤖
+            
+            ## REVERSE CODING ⬅️💻
+            Reverse Coding is a challenging event conducted by ACM-VIT, designed to challenge and inspire participants in the realm of problem-solving and code deciphering. Unlike traditional coding challenges, this event flips the script. The teams are tasked with reverse engineering and deducing the code based on provided inputs and outputs. It's a test of analytical thinking, coding prowess, and creative problem-solving. 🧩🤔
+            
+            ## HACK STORY 📖
+            HackStory is a 24 hour hackathon featuring multiple tracks for diverse interests. Participants tackle real-world challenges, collaborate with peers, and engage with industry mentors, all in a condensed time frame focused on innovation and skill-building. 👩‍💻🔥
+`,
         faqs: `# 📖 FAQs`,
         whois: `# 📖 Whois`,
     }
