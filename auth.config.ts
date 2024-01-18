@@ -9,7 +9,7 @@ export const authConfig = {
     secret: process.env.AUTH_SECRET,
     pages: {
         signIn: '/landing',
-        newUser: '/onboarding',
+        newUser: '/landing',
     },
     providers: [
         GoogleProvider({

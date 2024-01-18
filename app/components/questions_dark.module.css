@@ -65,10 +65,20 @@
   gap: 10px;
   font-family: monospace;
   line-height: 21px;
-  position: absolute;
+  padding-top: 1.5%;
+  /* position: absolute; */
   top: 60px;
 }
-
+@media only screen and (max-width: 768px ) {
+  .editor{
+    padding-top: 4%;
+  }
+}
+@media only screen and (max-width: 430px ) {
+  .editor{
+    padding-top: 6%;
+  }
+}
 .lineNumbers {
   width: 20px;
   color: #506882;
