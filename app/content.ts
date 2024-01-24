@@ -105,6 +105,106 @@ Our management team at ACM has consistently demonstrated expertise in curating i
 `,
         faqs: `# 📖 FAQs`,
         whois: `# 📖 Whois`,
+        },
+        instructions: {
+                instructions: `# Instructions & Navigation
+<!-- Chalo shuru karte hai aaj ki bakchodi -->
+
+## Welcome to ACM Registrations! 
+
+As you can see with our magnificent website, we are a technical chapter.
+And a damn good one. Just kidding, we are humble.
+(not kidding about the good part - Sorry, I crack weird jokes when I get nervous...) <br>
+
+Anyways, let's help you figure out **our registration process - step by step..**
+
+<!--Section ends here -->
+## 📖 Personal Info & Configuration
+In the bottom left corner of your screen, you will see three icons: <br>
+
+1. **PROFILE** - Check your details and make sure they are \`filled correctly\`.
+2. **COLOUR** - Use this to switch from light to dark mode and vice-versa.
+3. **TERMINAL** - Here's where all your commands will run.
+
+>**Also,** don't forget to follow us on [Instagram](https://www.instagram.com/acmvit/), [LinkedIn](https://www.linkedin.com/company/acmvit) and [Twitter](https://twitter.com/ACM_VIT)!
+
+<!--Section ends here -->
+## GETTING STARTED
+
+Your ACM journey begins with the **ACM Mainframe Terminal.** <br>
+
+1. Click on the last icon \`Terminal\` on the bottom-left corner of the website. <br>
+![Alt text](/terminal.jpg)
+
+2. As requested, you can see all the commands at your disposal using \`help\` <br>
+![Alt text](/help.png)
+
+There are 5 commands, and you've now already tested \`help\`. Here's what the rest are for:<br>
+
+\|Commands| Purpose|
+|-----|-----|
+|\`clear\`| If you played with the terminal too much and find it clattered, it clears it up.
+|\`register domain\`| You'll use this to access your domain forms |
+|\`formsubmit domain\`| You'll use this to submit your domain forms|
+|\`exit\`| If your work is done or terminal is hindering view|\
+Now, to the main course... 
+
+<!-- Section ends here -->
+## DOMAINS & REGISTRATIONS
+
+ACM-VIT have several domains that may interest you. 
+Before filling out your forms, <b>we highly encourage</b> you to go through each of our domains and what we do. <br>
+
+On the top-left corner of our website, do the following:
+underneath \`EXPLORER\` -> \`domains\` -> read through all \`.md\` files.
+
+> **NOTE**
+Irrespective of how many domains you apply to, if selected, you win be assigned to only one particular domain.
+
+> **IMPORTANT**
+For the commands you're about to type next, you'll need a _execution time of 2 secs._
+<br>
+Now that you've read about all the domains, it's time to fill your application form(s).
+1. Open \`Terminal\` and run \`register domain_name\` to access the form for that domain_name. 
+Let's say you want to apply for web, your command would be \`register web\`.<br><br>
+![Alt text](/register.png)
+    
+2. Once you get message **"Registration Successful"**, you will find a new \`forms\` folder underneath \`EXPLORER\`.
+
+Based on the domains you've registered, you'll find different \`.py\` files with domain-specific questions.<br>
+![Alt text](/forms.png)
+    
+3. You can begin answering the questions.
+For **Short & Long Answers**, answer within \`" "\`.
+For **MCQs**, just click on \`true\` or \`false\` for each option.    
+> !! **CAUTION** !!
+Autosave only works every 5 seconds. Please be patient with your responses.
+
+## Submission
+
+Once you're done with filling your forms, you can proceed to submit the form.
+
+> !! **WARNING** !!
+Once you submit your form, you _lose viewing and editing access_ to it.
+
+For each form, you'll have to submit using \`formsubmit domain_name\` and _wait 2 seconds_ for submission. <br>
+![Alt text](/formsubmit.png)
+Once you see this, that means your form has been submitted successfully.<br>
+> **NOTE** 
+Your \`domain_name.py\` file will automatically disappear from the \`forms\` folder post submission.
+
+## What's Next?
+
+It's alright, boss! You can relax after submitting your forms.
+If you make it through, we will get back to you with updates shortly.
+
+> **DISCLAIMER**
+Due to the high quantity of incoming forms, it won't be possible for us to give individual feedback for every individual and form.
+
+### ALL THE BEST !
+
+`
+                
     }
 }
 
