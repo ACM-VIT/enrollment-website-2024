@@ -127,6 +127,9 @@ function Terminal({ setShowTerminal }: { setShowTerminal: Function }) {
           ]);
         }
         break;
+      // case "chair":
+      //   setConsoleHistory([...temp, { message: "MM", type: "response" }]);
+      //   break;
       default:
         setConsoleHistory([
           ...temp,
