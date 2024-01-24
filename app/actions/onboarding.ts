@@ -17,7 +17,7 @@ const saveForm = async (formData: FormData) => {
         }
     })
 
-    return redirect('/extras/whois')
+    return redirect('/instructions/instructions')
 }
 
 export default saveForm;
