@@ -1,24 +1,68 @@
 "use client";
 import React, { useContext, useRef, useState, useTransition } from "react";
-import { Container } from "@mui/system";
+import { Container, color, fontSize } from "@mui/system";
 import { Box } from "@mui/material";
 import { formSubmit, registerDomain } from "@/app/actions/terminal";
 import { Domain } from "@prisma/client";
 import PagesContext from "@/lib/PagesContext";
 import { pages as pagesGenerator } from "../pages/pages";
+import { ReactTerminal } from "react-terminal";
 
-const terminalText = "[user@acm-mainframe]~$ ";
+const terminalText = (
+  <span
+    style={{
+      color: "#0DBC79",
+    }}
+  >
+    [user@acm-mainframe]~$
+  </span>
+);
+
+const welcomeMessage = (
+  <span>
+    Welcome to the ACM Mainframe Terminal! Type <strong>'help'</strong> for a
+    list of commands
+    <br />
+    <br />
+  </span>
+);
 
 interface consoleLine {
   type: "error" | "response" | "command";
   message: string;
 }
 
-// function scrollToBottom(ref: MutableRefObject<HTMLInputElement | undefined | null>) {
-//     ref.current!.scrollIntoView();
-// }
+function Terminal({
+  setShowTerminal,
+  dark,
+}: {
+  setShowTerminal: Function;
+  dark: boolean;
+}) {
+  const commands = {
+    help: (input) => {
+      return (
+        <span>
+          Available commands: <br />
+          ┝ help - displays this message <br />
+          ┝ clear - clears the terminal <br />
+          ┝ register domain - registers a domain <br />
+          ┝ formsubmit domain - submits a form for a domain, <br />└ exit -
+          exits the terminal
+        </span>
+      );
+    },
+    exit: (input) => {
+      setTimeout(() => {
+        setShowTerminal(false);
+      }, 1000);
+      return <span>Goodbye!</span>;
+    },
+    vc: (input) => {
+      return <span>Anand Rajaram</span>;
+    },
+  };
 
-function Terminal({ setShowTerminal }: { setShowTerminal: Function }) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isPending, startTransition] = useTransition();
   const [consoleHistory, setConsoleHistory] = useState<consoleLine[]>([
@@ -142,11 +186,6 @@ function Terminal({ setShowTerminal }: { setShowTerminal: Function }) {
     }
   };
 
-  // useEffect(() => {
-  //     if (!inputRef.current) return;
-  //     scrollToBottom(inputRef);
-  // });
-
   return (
     <>
       <Box
@@ -173,7 +212,7 @@ function Terminal({ setShowTerminal }: { setShowTerminal: Function }) {
           Terminal
         </span>
       </Box>
-      <Container
+      {/* <Container
         sx={{
           height: "86%",
           marginLeft: "0px",
@@ -247,6 +286,44 @@ function Terminal({ setShowTerminal }: { setShowTerminal: Function }) {
             </pre>
           )}
         </Box>
+      </Container> */}
+      <Container
+        sx={{
+          height: "85%",
+          marginLeft: "0px",
+        }}
+      >
+        <ReactTerminal
+          commands={commands}
+          themes={{
+            dark1: {
+              themeBGColor: "#1e1e1e",
+              themeToolbarColor: "#424242",
+              themeColor: "#fff",
+              themePromptColor: "#42A5F5",
+            },
+            light1: {
+              themeBGColor: "#fafafa",
+              themeToolbarColor: "#424242",
+              themeColor: "#151515",
+              themePromptColor: "#42A5F5",
+            },
+          }}
+          showControlBar={false}
+          welcomeMessage={welcomeMessage}
+          theme={dark ? "dark1" : "light1"}
+          prompt={terminalText}
+          errorMessage={
+            <span
+              style={{
+                color: "#FF443E",
+                fontWeight: "bold",
+              }}
+            >
+              Command not found
+            </span>
+          }
+        />
       </Container>
     </>
   );
