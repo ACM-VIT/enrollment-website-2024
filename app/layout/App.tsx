@@ -354,6 +354,8 @@ export default function App({
                             <Terminal
                               setShowTerminal={setShowTerminal}
                               dark={darkMode}
+                              showTerminal={showTerminal}
+                              setPages={setPages}
                             ></Terminal>
                           </Box>
                         </>
