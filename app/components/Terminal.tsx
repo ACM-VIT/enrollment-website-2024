@@ -19,8 +19,8 @@ const terminalText = (
 
 const welcomeMessage = (
   <span>
-    Welcome to the ACM Mainframe Terminal! Type <strong>'help'</strong> for a
-    list of commands
+    Welcome to the ACM Mainframe Terminal! Type{" "}
+    <strong>&apos;help&apos;</strong> for a list of commands
     <br />
     <br />
   </span>
