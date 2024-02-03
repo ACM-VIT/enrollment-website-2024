@@ -6,6 +6,18 @@ import styles_dark from "./questions_dark.module.css";
 import { useTheme } from "@mui/material";
 import { Prisma } from "@prisma/client";
 
+const comments = {
+  stq: `this is a single text question(stq)`,
+  ltq: `this is a long text question(ltq)`,
+  mcq: `this is a multiple choice question(mcq)`,
+  scq: `this is a single choice question(scq)`,
+};
+
+const style_value = {
+  color: "#6a9742",
+  fontWeight: 600,
+};
+
 export const STQ = ({
   question,
   data,
@@ -28,11 +40,11 @@ export const STQ = ({
   useEffect(() => {
     const span = spanRef.current!;
     span.textContent = data.response ?? "";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className={styles.question}>
+      <span style={style_value}># {comments.stq}</span>
       <label htmlFor="name">
         <input
           type="text"
@@ -93,11 +105,11 @@ export const LTQ = ({
   useEffect(() => {
     const span = spanRef.current!;
     span.textContent = data.response ?? "";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className={styles.question}>
+      <span style={style_value}># {comments.ltq}</span>
       <label htmlFor="name">
         <input
           type="text"
@@ -157,6 +169,7 @@ export const MCQ = ({
 
   return (
     <div className={styles.question}>
+      <span style={style_value}># {comments.mcq}</span>
       <label htmlFor={question.id}>
         <span className={styles.print}>print</span>
         <span className={styles.bracket}>(</span>
@@ -226,6 +239,7 @@ export const SCQ = ({
 
   return (
     <div className={styles.question}>
+      <span style={style_value}># {comments.scq}</span>
       <label htmlFor={question.id}>
         <span className={styles.print}>print</span>
         <span className={styles.bracket}>(</span>

@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Terminal from "@/app/components/Terminal";
 import Paper from "@mui/material/Paper";
 import PagesContext from "@/lib/PagesContext";
-import Modal from "@mui/material/Modal";
 
 import {
   Container,
@@ -24,22 +23,20 @@ import BreadCrumbs from "./BreadCrumbs";
 import { pages as pagesGenerator } from "../pages/pages";
 import { isDesktop } from "react-device-detect";
 import { useParams, useRouter } from "next/navigation";
-import { Registration } from "@prisma/client";
-import Fade from "@mui/material/Fade";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { Registration, User } from "@prisma/client";
 import { TerminalContextProvider } from "react-terminal";
+import ProfileModal from "../components/profileEdit";
 
 const style = {
   position: "absolute",
-  top: "23%",
+  top: "26%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "400",
   bgcolor: "background.paper",
   border: "1px solid #323233",
   boxShadow: 24,
   p: 4,
+  height: "50.5%",
 };
 
 interface Page {
@@ -49,20 +46,13 @@ interface Page {
   group: string;
 }
 
-// function initVisiblePageIndexs(pages: Page[]) {
-//     const tabs = [];
-//     for (let i = 0; i < pages.length; i++) {
-//         const page = pages[i];
-//         if (page.visible) tabs.push(page.index);
-//     }
-//     return tabs;
-// }
-
 export default function App({
   registrations,
+  user,
   children,
 }: {
   registrations: Registration[];
+  user: User;
   children: React.ReactNode;
 }) {
   const params = useParams<{ folder: string; file: string }>();
@@ -232,77 +222,12 @@ export default function App({
 
                   <Grid item xs zeroMinWidth>
                     <div>
-                      <Modal open={open} onClose={handleClose}>
-                        <Box sx={style} style={{ borderRadius: "8px" }}>
-                          <Fade in={open}>
-                            <div>
-                              <TextField
-                                label="Name"
-                                fullWidth
-                                margin="normal"
-                                value="Sai Kumar"
-                                disabled
-                                style={{
-                                  borderRadius: "12px",
-                                }}
-                              />
-                              <TextField
-                                label="Regn No."
-                                value="18BCE0000"
-                                margin="normal"
-                                fullWidth
-                                disabled
-                                style={{
-                                  borderRadius: "12px",
-                                }}
-                              />
-                              <TextField
-                                label="Email ID"
-                                placeholder="Email ID"
-                                value="pms@vitstudent.ac.in"
-                                fullWidth
-                                margin="normal"
-                                disabled
-                                style={{
-                                  borderRadius: "12px",
-                                }}
-                              />
-                              <TextField
-                                label="Phone Number"
-                                contentEditable
-                                // value="9876543210"
-                                fullWidth
-                                margin="normal"
-                                name="phoneNumber"
-                                type="tel"
-                                style={{
-                                  borderRadius: "12px",
-                                }}
-                              />
-                              <Button
-                                variant="outlined"
-                                size="small"
-                                sx={{
-                                  backgroundColor: "inherit",
-                                  border: "1px solid #333",
-                                  color: "#3279cb",
-                                  padding: "8px 16px",
-                                  borderRadius: "4px",
-                                  textTransform: "none",
-                                  "&:hover": {
-                                    backgroundColor: "#3279cb",
-                                    color: "white",
-                                    border: "1px solid #333",
-                                  },
-                                  marginTop: "12px",
-                                }}
-                              >
-                                Update
-                              </Button>
-                            </div>
-                          </Fade>
-                        </Box>
-                      </Modal>
+                      <ProfileModal
+                        open={open}
+                        handleClose={handleClose}
+                        style={style}
+                        user={user}
+                      />
                     </div>
                     <Grid
                       sx={{
