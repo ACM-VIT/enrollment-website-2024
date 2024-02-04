@@ -29,14 +29,14 @@ import ProfileModal from "../components/profileEdit";
 
 const style = {
   position: "absolute",
-  top: "26%",
+  top: "15%",
   left: "50%",
   transform: "translate(-50%, -50%)",
   bgcolor: "background.paper",
   border: "1px solid #323233",
   boxShadow: 24,
   p: 4,
-  height: "50.5%",
+  height: "30%",
 };
 
 interface Page {
@@ -173,7 +173,7 @@ export default function App({
           <TerminalContextProvider>
             <CssBaseline enableColorScheme />
             <Container
-              sx={{ m: 0, p: 0, overflowY: "hidden" }}
+              sx={{ m: 0, p: 0, overflowY: "hidden", height: "100dvh" }}
               maxWidth={false}
               disableGutters
             >
