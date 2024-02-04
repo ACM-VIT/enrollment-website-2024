@@ -173,7 +173,7 @@ export default function App({
           <TerminalContextProvider>
             <CssBaseline enableColorScheme />
             <Container
-              sx={{ m: 0, p: 0, overflowY: "hidden", height: "100svh" }}
+              sx={{ m: 0, p: 0, overflowY: "hidden", height: "100vh" }}
               maxWidth={false}
               disableGutters
             >
