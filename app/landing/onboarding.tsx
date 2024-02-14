@@ -12,7 +12,7 @@ import rectangle_24 from "./assets/Rectangle 24.png";
 import h2_rev from "./assets/H2 rev.png";
 import { useFormStatus } from 'react-dom'
 import {User} from "@prisma/client";
-import saveForm from "@//app/actions/onboarding";
+import saveForm from "@/app/actions/onboarding";
 
 const Onboarding = ({user}: {user: User}) => {
 
@@ -60,7 +60,7 @@ const Onboarding = ({user}: {user: User}) => {
 
 function SubmitButton() {
     const { pending } = useFormStatus();
-    return <button type="submit" id="submit_button" aria-disabled={pending}>SUBMIT</button>;
+    return <button type="submit" id="submit_button" aria-disabled={pending}>{ pending ? "Submitting..." : "SUBMIT"}</button>;
 }
 
 export default Onboarding;
