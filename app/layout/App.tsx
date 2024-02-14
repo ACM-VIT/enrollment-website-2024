@@ -47,7 +47,7 @@ interface Page {
   group: string;
 }
 
-export default function App({registrations, children}: { registrations: Registration[], children: React.ReactNode }) {
+export default function App({registrations, user, children}: { registrations: Registration[], children: React.ReactNode, user: User}) {
     const params = useParams<{ folder: string, file: string }>()
     const router = useRouter();
 
