@@ -51,15 +51,27 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String?        @unique
-  emailVerified DateTime?
-  image         String?
-  phone         String?
-  accounts      Account[]
-  sessions      Session[]
-  registrations Registration[]
+  id                 String         @id @default(cuid())
+  name               String?
+  email              String?        @unique
+  emailVerified      DateTime?
+  image              String?
+  phone              String?
+  accounts           Account[]
+  sessions           Session[]
+  registrations      Registration[]
+  push_subscriptions Subscription[]
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  endpoint  String
+  p256dh    String
+  auth      String
+  userId    String
+  User      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Domain {

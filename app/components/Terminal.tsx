@@ -1,6 +1,6 @@
 "use client";
-import React, { useContext, useRef, useState, useTransition } from "react";
-import { Container, color, fontSize, width } from "@mui/system";
+import React from "react";
+import { Container } from "@mui/system";
 import { Box } from "@mui/material";
 import { formSubmit, registerDomain } from "@/app/actions/terminal";
 import { Domain } from "@prisma/client";
@@ -29,7 +29,6 @@ const welcomeMessage = (
 
 function Terminal({
   setShowTerminal,
-  showTerminal,
   setPages,
   dark,
 }: {
