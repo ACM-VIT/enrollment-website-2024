@@ -6,6 +6,7 @@ import { formSubmit, registerDomain } from "@/app/actions/terminal";
 import { Domain } from "@prisma/client";
 import { pages as pagesGenerator } from "../pages/pages";
 import { ReactTerminal } from "react-terminal";
+import style1 from "@/app/components/terminal.module.css";
 
 const terminalText = (
   <span
@@ -122,30 +123,32 @@ function Terminal({
         }}
         maxWidth={false}
       >
-        <ReactTerminal
-          commands={commands}
-          themes={{
-            dark1: {
-              themeBGColor: "#1e1e1e",
-              themeToolbarColor: "#424242",
-              themeColor: "#fff",
-              themePromptColor: "#42A5F5",
-            },
-            light1: {
-              themeBGColor: "#fafafa",
-              themeToolbarColor: "#424242",
-              themeColor: "#151515",
-              themePromptColor: "#42A5F5",
-            },
-          }}
-          showControlBar={false}
-          welcomeMessage={welcomeMessage}
-          theme={dark ? "dark1" : "light1"}
-          prompt={terminalText}
-          errorMessage={
-            <span style={{ color: "#FF443E" }}>Command not found</span>
-          }
-        />
+        <div className={style1.terminal} >
+          <ReactTerminal
+            commands={commands}
+            themes={{
+              dark1: {
+                themeBGColor: "#1e1e1e",
+                themeToolbarColor: "#424242",
+                themeColor: "#fff",
+                themePromptColor: "#42A5F5",
+              },
+              light1: {
+                themeBGColor: "#fafafa",
+                themeToolbarColor: "#424242",
+                themeColor: "#151515",
+                themePromptColor: "#42A5F5",
+              },
+            }}
+            showControlBar={false}
+            welcomeMessage={welcomeMessage}
+            theme={dark ? "dark1" : "light1"}
+            prompt={terminalText}
+            errorMessage={
+              <span style={{ color: "#FF443E" }}>Command not found</span>
+            }
+          />
+        </div>
       </Container>
     </>
   );

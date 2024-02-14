@@ -190,7 +190,7 @@ export function MarkdownBlockquote(props: any): ReactElement {
 // }
 
 export function MarkdownImage(props: any) {
-  return <Image src={props.src} alt={props.alt} />;
+  return <img src={props.src} alt={props.alt} />;
 }
 
 export function MarkdownParagraph(props: any): ReactElement {

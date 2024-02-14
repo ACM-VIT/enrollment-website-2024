@@ -66,18 +66,6 @@ export function Form({
   const theme = useTheme();
   const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
 
-  // useEffect(() => {
-  //     // const formproxy = (form.current! as HTMLFormElement);
-  //
-  //     return () => {
-  //         // formproxy.requestSubmit();
-  //         saveForm(domain, formData).then(res => {
-  //             if (!res) alert('Error in saving');
-  //         })
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   const debouncedSave = useDebouncedCallback(() => {
     // submit the form
     // (form!.current! as HTMLFormElement).requestSubmit();
@@ -129,63 +117,75 @@ export function Form({
             switch (question.type) {
               case "stq":
                 return (
-                  <STQ
-                    key={question.id}
-                    question={question}
-                    updateResponse={updateResponse}
-                    triggerSave={debouncedSave}
-                    data={
-                      formData[question.id] as {
-                        response: string;
-                        error: { message: string; title: string } | null;
+                  <>
+                    <STQ
+                      key={question.id}
+                      question={question}
+                      updateResponse={updateResponse}
+                      triggerSave={debouncedSave}
+                      data={
+                        formData[question.id] as {
+                          response: string;
+                          error: { message: string; title: string } | null;
+                        }
                       }
-                    }
-                  />
+                    />
+                    <br />
+                  </>
                 );
               case "ltq":
                 return (
-                  <LTQ
-                    key={question.id}
-                    question={question}
-                    updateResponse={updateResponse}
-                    triggerSave={debouncedSave}
-                    data={
-                      formData[question.id] as {
-                        response: string;
-                        error: { message: string; title: string } | null;
+                  <>
+                    <LTQ
+                      key={question.id}
+                      question={question}
+                      updateResponse={updateResponse}
+                      triggerSave={debouncedSave}
+                      data={
+                        formData[question.id] as {
+                          response: string;
+                          error: { message: string; title: string } | null;
+                        }
                       }
-                    }
-                  />
+                    />
+                    <br />
+                  </>
                 );
               case "mcq":
                 return (
-                  <MCQ
-                    key={question.id}
-                    question={question}
-                    updateResponse={updateResponse}
-                    triggerSave={debouncedSave}
-                    data={
-                      formData[question.id] as {
-                        response: Record<string, boolean>;
-                        error: { message: string; title: string } | null;
+                  <>
+                    <MCQ
+                      key={question.id}
+                      question={question}
+                      updateResponse={updateResponse}
+                      triggerSave={debouncedSave}
+                      data={
+                        formData[question.id] as {
+                          response: Record<string, boolean>;
+                          error: { message: string; title: string } | null;
+                        }
                       }
-                    }
-                  />
+                    />
+                    <br />
+                  </>
                 );
               case "scq":
                 return (
-                  <SCQ
-                    key={question.id}
-                    question={question}
-                    updateResponse={updateResponse}
-                    triggerSave={debouncedSave}
-                    data={
-                      formData[question.id] as {
-                        response: Record<string, boolean>;
-                        error: { message: string; title: string } | null;
+                  <>
+                    <SCQ
+                      key={question.id}
+                      question={question}
+                      updateResponse={updateResponse}
+                      triggerSave={debouncedSave}
+                      data={
+                        formData[question.id] as {
+                          response: Record<string, boolean>;
+                          error: { message: string; title: string } | null;
+                        }
                       }
-                    }
-                  />
+                    />
+                    <br />
+                  </>
                 );
             }
           })}

@@ -1,4 +1,4 @@
-import React, {useTransition} from "react";
+import React, { useTransition } from "react";
 import { Box, Link, Paper, Tooltip } from "@mui/material";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -12,7 +12,7 @@ import { MenuItem as BaseMenuItem, menuItemClasses } from "@mui/base/MenuItem";
 import { Dropdown } from "@mui/base/Dropdown";
 import { Menu } from "@mui/base/Menu";
 import { styled, css } from "@mui/system";
-import {signOutAction} from "@/app/actions/auth";
+import { signOutAction } from "@/app/actions/auth";
 
 interface Props {
   expanded: boolean;
@@ -47,7 +47,7 @@ export default function Sidebar({
   //   setAnchorEl(null);
   // };
 
-    const [, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
   return (
     <React.Fragment>
       <Box
@@ -177,9 +177,17 @@ export default function Sidebar({
               </Tooltip>
               <Menu slots={{ listbox: Listbox }}>
                 <MenuItem onClick={handleOpen}>Edit Profile</MenuItem>
-
-                <Divider sx={{  marginX: 0, paddingX: 0, marginY: '5px',backgroundColor: "#454545"}} />
-                <MenuItem onClick={()=>startTransition(signOutAction)}>Sign out</MenuItem>
+                <Divider
+                  sx={{
+                    marginX: 0,
+                    paddingX: 0,
+                    marginY: "5px",
+                    backgroundColor: "#454545",
+                  }}
+                />
+                <MenuItem onClick={() => startTransition(signOutAction)}>
+                  Sign out
+                </MenuItem>
               </Menu>
             </Dropdown>
           </Link>
@@ -289,7 +297,7 @@ const Listbox = styled("ul")(
     border-radius: 6px;
     overflow: auto;
     outline: 1px;
-    background: ${theme.palette.mode === "dark" ? "#1e1e1e" : "#D1D1D1"};
+    background: ${theme.palette.mode === "dark" ? "#1e1e1e" : "#ffffff"};
     border: 0.5px solid ${
       theme.palette.mode === "dark" ? "#454545" : "#1e1e1e"
     };
