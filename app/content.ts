@@ -123,7 +123,7 @@ Anyways, let's help you figure out **our registration process - step by step..**
 In the bottom left corner of your screen, you will see three icons: <br>
 
 1. **PROFILE** - Check your details and make sure they are \`filled correctly\`.
-2. **COLOUR** - Use this to switch from light to dark mode and vice-versa.
+2. **THEME** - Use this to switch from light to dark mode and vice-versa.
 3. **TERMINAL** - Here's where all your commands will run.
 
 >**Also,** don't forget to follow us on [Instagram](https://www.instagram.com/acmvit/), [LinkedIn](https://www.linkedin.com/company/acmvit) and [Twitter](https://twitter.com/ACM_VIT)!
@@ -159,10 +159,10 @@ On the top-left corner of our website, do the following:
 underneath \`EXPLORER\` -> \`domains\` -> read through all \`.md\` files.
 
 > **NOTE**
-Irrespective of how many domains you apply to, if selected, you win be assigned to only one particular domain.
+Irrespective of how many domains you apply to, if selected, you will be assigned to only one particular domain.
 
 > **IMPORTANT**
-For the commands you're about to type next, you'll need a _execution time of 2 secs._
+For the commands you're about to type next, you'll need an _execution time of 2 secs._
 <br>
 Now that you've read about all the domains, it's time to fill your application form(s).
 1. Open \`Terminal\` and run \`register domain_name\` to access the form for that domain_name. 
@@ -176,9 +176,9 @@ Based on the domains you've registered, you'll find different \`.py\` files with
     
 3. You can begin answering the questions.
 For **Short & Long Answers**, answer within \`" "\`.
-For **MCQs**, just click on \`true\` or \`false\` for each option.    
+For **MCQs & SCQs**, just click on \`true\` or \`false\` for each option.    
 > !! **CAUTION** !!
-Autosave only works every 5 seconds. Please be patient with your responses.
+Autosave takes a time of **5 secs** after you stop typing. Please be patient with your responses.
 
 ## Submission
 
