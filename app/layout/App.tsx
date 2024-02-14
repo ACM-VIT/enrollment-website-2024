@@ -29,6 +29,7 @@ import {Registration} from "@prisma/client";
 import Fade from "@mui/material/Fade";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import subscribe from "@/app/actions/push";
 
 const style = {
     position: "absolute",
@@ -60,6 +61,7 @@ interface Page {
 
 export default function App({registrations, children}: { registrations: Registration[], children: React.ReactNode }) {
     const params = useParams<{ folder: string, file: string }>()
+    const router = useRouter();
 
     const [showTerminal, setShowTerminal] = useState(false);
     const [showExplorer, setShowExplorer] = useState(isDesktop);
@@ -105,12 +107,28 @@ export default function App({registrations, children}: { registrations: Registra
             },
         },
     });
-    const router = useRouter();
 
     function handleThemeChange() {
         setDarkMode(!darkMode);
         localStorage.setItem("theme", darkMode ? "light" : "dark");
     }
+
+    useEffect(() => {
+        if ("serviceWorker" in navigator) {
+            const handleServiceWorker = async () => {
+                const register = await navigator.serviceWorker.register("/sw.js");
+                console.log("New Service Worker registered", register.active);
+
+                const subscription = await register.pushManager.subscribe({
+                    userVisibleOnly: true,
+                    applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+                });
+
+                subscribe(subscription.toJSON()).then((res) => console.log(res));
+            };
+            handleServiceWorker();
+        }
+    }, []);
 
     useEffect(() => {
         setOpenPages(
