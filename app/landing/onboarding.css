@@ -145,6 +145,11 @@ input {
   cursor: pointer;
 }
 
+#submit_button :disabled {
+  background: linear-gradient(to right, #017acb, #697090);
+  color: #fff;
+  cursor: not-allowed;
+}
 
 @media only screen and (max-width: 1024px) {
   
