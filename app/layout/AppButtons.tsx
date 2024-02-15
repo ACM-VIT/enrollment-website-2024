@@ -1,18 +1,17 @@
-import {Button, Box, Paper} from "@mui/material";
-import React, {useContext} from "react";
-import {VscMarkdown, VscChromeClose} from "react-icons/vsc";
-import {useTheme} from "@mui/material/styles";
-import {Container} from "@mui/system";
-import {useRouter} from "next/navigation";
+import { Button, Box, Paper } from "@mui/material";
+import React, { useContext } from "react";
+import { VscMarkdown, VscChromeClose } from "react-icons/vsc";
+import { useTheme } from "@mui/material/styles";
+import { Container } from "@mui/system";
+import { useRouter } from "next/navigation";
 import PagesContext from "@/lib/PagesContext";
-
+import { FaPython } from "react-icons/fa";
 
 export default function AppButtons() {
-    const {currentPage, openPages, setOpenPages} = useContext(PagesContext)
+    const { currentPage, openPages, setOpenPages } = useContext(PagesContext);
     const theme = useTheme();
     const router = useRouter();
 
-    // const [selectedIndex, setSelectedIndex] = useState(-1);
     function renderButtonBgColor(index: number) {
         if (theme.palette.mode === "dark") {
             return currentPage?.index === index ? "#1e1e1e" : "#2d2d2d";
@@ -61,14 +60,20 @@ export default function AppButtons() {
         }
     }
 
-    function renderPageButton(index: number, name: string, route: string) {
+    function renderPageButton(
+        index: number,
+        name: string,
+        route: string,
+        type: string
+    ) {
         return (
             <Box
                 key={index}
                 sx={{
                     display: "inline-block",
                     borderRight: 1,
-                    borderColor: theme.palette.mode === "dark" ? "#252525" : "#f3f3f3",
+                    borderColor:
+                        theme.palette.mode === "dark" ? "#252525" : "#f3f3f3",
                 }}
             >
                 <Button
@@ -93,9 +98,16 @@ export default function AppButtons() {
                     }}
                 >
                     <Box
-                        sx={{color: "#6997d5", width: 20, height: 20, mr: 0.4, ml: -1}}
+                        sx={{
+                            color: "#6997d5",
+                            width: 20,
+                            height: 20,
+                            mr: 0.4,
+                            ml: -1,
+                        }}
                     >
-                        <VscMarkdown/>
+                        {type === "md" && <VscMarkdown color="#6997d5" />}
+                        {type === "py" && <FaPython color="#6997d5" />}
                     </Box>
                     {name}
                     <Box
@@ -116,10 +128,12 @@ export default function AppButtons() {
                         elevation={0}
                         onClick={(e: any) => {
                             e.stopPropagation();
-                            setOpenPages(openPages.filter((x) => x.index !== index));
+                            setOpenPages(
+                                openPages.filter((x) => x.index !== index)
+                            );
                         }}
                     >
-                        <VscChromeClose/>
+                        <VscChromeClose />
                     </Box>
                 </Button>
             </Box>
@@ -135,7 +149,8 @@ export default function AppButtons() {
                 overflowX: "auto",
                 overflowY: "hidden",
                 whiteSpace: "nowrap",
-                backgroundColor: theme.palette.mode === "dark" ? "#252527" : "#f3f3f3",
+                backgroundColor:
+                    theme.palette.mode === "dark" ? "#252527" : "#f3f3f3",
                 "&::-webkit-scrollbar": {
                     height: "3px",
                     // backgroundColor: 'red',
@@ -158,8 +173,8 @@ export default function AppButtons() {
                 //   },
             }}
         >
-            {openPages.map(({index, name, route, group}) =>
-                renderPageButton(index, name, `/${group}/${route}`)
+            {openPages.map(({ index, name, route, group, type }) =>
+                renderPageButton(index, name, `/${group}/${route}`, type)
             )}
         </Container>
     );
