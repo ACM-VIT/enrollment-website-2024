@@ -47,9 +47,17 @@ interface Page {
   group: string;
 }
 
-export default function App({registrations, user, children}: { registrations: Registration[], children: React.ReactNode, user: User}) {
-    const params = useParams<{ folder: string, file: string }>()
-    const router = useRouter();
+export default function App({
+  registrations,
+  user,
+  children,
+}: {
+  registrations: Registration[];
+  children: React.ReactNode;
+  user: User;
+}) {
+  const params = useParams<{ folder: string; file: string }>();
+  const router = useRouter();
 
   const [showTerminal, setShowTerminal] = useState(false);
   const [showExplorer, setShowExplorer] = useState(isDesktop);
@@ -73,28 +81,28 @@ export default function App({registrations, user, children}: { registrations: Re
 
   const handleClose = () => setOpen(false);
 
-    const theme = createTheme({
-        palette: {
-            mode: paletteType,
-            background: {
-                default: paletteType === "light" ? "#FFFFFF" : "#1e1e1e",
-            },
+  const theme = createTheme({
+    palette: {
+      mode: paletteType,
+      background: {
+        default: paletteType === "light" ? "#FFFFFF" : "#1e1e1e",
+      },
+    },
+    components: {
+      MuiCssBaseline: {
+        styleOverrides: {
+          body: paletteType === "dark" ? darkScrollbar() : null,
         },
-        components: {
-            MuiCssBaseline: {
-                styleOverrides: {
-                    body: paletteType === "dark" ? darkScrollbar() : null,
-                },
-            },
-            MuiDivider: {
-                styleOverrides: {
-                    root: {
-                        borderColor: "rgba(255, 255, 255, 0.12)",
-                    },
-                },
-            },
+      },
+      MuiDivider: {
+        styleOverrides: {
+          root: {
+            borderColor: "rgba(255, 255, 255, 0.12)",
+          },
         },
-    });
+      },
+    },
+  });
 
   function handleThemeChange() {
     setDarkMode(!darkMode);
@@ -102,28 +110,28 @@ export default function App({registrations, user, children}: { registrations: Re
   }
 
   useEffect(() => {
-        if ("serviceWorker" in navigator) {
-            const handleServiceWorker = async () => {
-                const register = await navigator.serviceWorker.register("/sw.js");
-                console.log("New Service Worker registered", register.active);
+    if ("serviceWorker" in navigator) {
+      const handleServiceWorker = async () => {
+        const register = await navigator.serviceWorker.register("/sw.js");
+        console.log("New Service Worker registered", register.active);
 
-                const subscription = await register.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-                });
+        const subscription = await register.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
+        });
 
-                subscribe(subscription.toJSON()).then((res) => console.log(res));
-            };
-            handleServiceWorker();
-        }
-    }, []);
+        subscribe(subscription.toJSON()).then((res) => console.log(res));
+      };
+      handleServiceWorker();
+    }
+  }, []);
 
-    useEffect(() => {
-        setOpenPages(
-            openPages.filter((x) => pages.find((y) => y.index === x.index))
-        );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pages]);
+  useEffect(() => {
+    setOpenPages(
+      openPages.filter((x) => pages.find((y) => y.index === x.index))
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pages]);
 
   useEffect(() => {
     localStorage.setItem(
@@ -253,7 +261,6 @@ export default function App({registrations, user, children}: { registrations: Re
                     >
                       <BreadCrumbs />
                     </Grid>
-
                     <Grid
                       sx={{
                         scrollBehavior: "smooth",
@@ -273,12 +280,6 @@ export default function App({registrations, user, children}: { registrations: Re
                           >
                             {children}
                           </Box>
-                          <Box
-                            sx={{
-                              height: "0.5px",
-                              backgroundColor: "#323233",
-                            }}
-                          />
                           <Box
                             component={Paper}
                             sx={{
