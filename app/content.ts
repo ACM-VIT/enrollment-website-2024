@@ -118,6 +118,8 @@ And a damn good one. Just kidding, we are humble.
 
 Anyways, let's help you figure out **our registration process - step by step..**
 
+**IT IS RECOMMENDED TO USE THE WEBSITE ON A BIGGER SCREEN TO ACCESS ALL FEATURES!!!**
+
 <!--Section ends here -->
 ## 📖 Personal Info & Configuration
 In the bottom left corner of your screen, you will see three icons: <br>
