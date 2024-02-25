@@ -30,14 +30,15 @@ import subscribe from "@/app/actions/push";
 
 const style = {
     position: "absolute",
-    top: "15%",
+    top: "27%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     bgcolor: "background.paper",
     border: "1px solid #323233",
     boxShadow: 24,
     p: 4,
-    height: "30%",
+    height: "53%",
+    width: "30%",
 };
 
 interface Page {
