@@ -45,7 +45,6 @@ export default function ProfileModal({
                     >
                         My Profile
                     </span>
-
                 </div>
                 <Fade in={open}>
                     <div
@@ -56,15 +55,18 @@ export default function ProfileModal({
                         <div style={{ marginBottom: "20px" }}>
                             <div
                                 style={{
-                                    cursor: "pointer",
                                     fontSize: "18px",
                                     display: "flex",
                                     flexDirection: "row",
                                     justifyContent: "flex-end",
                                 }}
-                                onClick={handleClose}
                             >
-                                <Image src={closebutton} alt="close" />
+                                <Image
+                                    src={closebutton}
+                                    alt="close"
+                                    onClick={handleClose}
+                                    style={{ cursor: "pointer" }}
+                                />
                             </div>
                             Name:
                             <input
