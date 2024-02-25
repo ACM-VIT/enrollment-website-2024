@@ -30,7 +30,6 @@ const subscribe = async (subscription: PushSubscriptionJSON) => {
             p256dh: subscription.keys!.p256dh
         }
     })
-
 }
 
 export default subscribe;

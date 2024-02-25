@@ -18,6 +18,23 @@ model Config {
   updatedAt DateTime   @updatedAt
 }
 
+
+model Round {
+  id     String    @id @default(cuid())
+  number Int
+  domain Domain
+  active Boolean
+  type   RoundType
+
+  @@unique([domain, number])
+}
+
+enum RoundType {
+  form
+  interview
+  task
+}
+
 enum ConfigKeys {
   accept_form_responses
   round1_results_announced
@@ -97,16 +114,16 @@ model Registration {
 }
 
 model Question {
-  id             String           @id @default(cuid())
-  question       String
-  domain         Domain
-  type           Type
-  options        String[]
-  varName        String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  responses      Response[]
-  ValidationRule ValidationRule[]
+  id         String           @id @default(cuid())
+  question   String
+  domain     Domain
+  type       Type
+  options    String[]
+  varName    String
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  responses  Response[]
+  validators ValidationRule[]
 }
 
 enum Type {
@@ -137,3 +154,4 @@ model ValidationRule {
   ruleType   String
   ruleValue  Json
 }
+

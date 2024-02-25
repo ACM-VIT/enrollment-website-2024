@@ -1,5 +1,5 @@
-import { Box, Button, Fade, Modal, TextField } from "@mui/material";
-import { User } from "@prisma/client";
+import {Box, Button, Fade, Modal} from "@mui/material";
+import {User} from "@prisma/client";
 
 export default function ProfileModal({
     open,
@@ -40,6 +40,7 @@ export default function ProfileModal({
                     >
                         Profile
                     </span>
+
                 </div>
                 <div
                     style={{
@@ -57,17 +58,19 @@ export default function ProfileModal({
                             >
                                 <span>Your Information</span>
                             </div>
+                            <div>
+                                Name: {user!.name!.slice(0, user!.name!.length - 10)}
+                            </div>
+                            <div>
+                                Registration Number: {user!.name!.slice(user!.name!.length - 9)}
+                            </div>
+                            <div>
+                                Email: {user.email}
 
-                            <div>
-                                Name:{" "}
-                                {user!.name!.slice(0, user!.name!.length - 10)}
                             </div>
                             <div>
-                                Registration Number:{" "}
-                                {user!.name!.slice(user!.name!.length - 9)}
+                                Phone Number: {user.phone}
                             </div>
-                            <div>Email: {user.email}</div>
-                            <div>Phone Number: {user.phone}</div>
                             <div
                                 style={{
                                     display: "flex",

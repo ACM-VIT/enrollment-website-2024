@@ -10,7 +10,6 @@
 
 .question label {
   display: block;
-  /*font-weight: bold;*/
 }
 
 .checkboxContainer {
@@ -48,7 +47,7 @@
   color: rgb(206, 145, 120);
 }
 
-.comments {
+.comment {
   color: rgb(106, 153, 85);
 }
 
@@ -65,7 +64,7 @@
   gap: 10px;
   font-family: monospace;
   line-height: 21px;
-  padding-top: 1.5%;
+  padding-top: 20px;
   /* position: absolute; */
   top: 60px;
 }
