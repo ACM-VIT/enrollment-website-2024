@@ -13,7 +13,7 @@ import Ig from "@/app/components/assets/ig.svg";
 import Gh from "@/app/components/assets/GH.svg";
 import Lk from "@/app/components/assets/LI.svg";
 import yt from "@/app/components/assets/yt.svg";
-
+import "../tailwind.css";
 export default function Landing() {
     const [pending, startAuth] = useTransition();
     useEffect(() => {
