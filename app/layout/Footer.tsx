@@ -15,7 +15,6 @@ export default function Footer() {
             component={Paper}
             square
             elevation={0}
-            // sx={{ height: '3vh' }}
             sx={{height: "20px", color: "white"}}
             display="flex"
         >
@@ -42,14 +41,6 @@ export default function Footer() {
                     display="flex"
                 >
                     <Stack direction="row" spacing={0.5} sx={{pl: 1}}>
-                        {/* <Stack direction="row" spacing={0.5}> */}
-                        {/* <Tooltip title="react-vscode-portoflio (Git)" arrow> */}
-                        {/* <Link
-              href="https://github.com/noworneverev/react-vscode-portfolio"
-              underline="none"
-              color="white"
-              target="_blank"
-            > */}
                         <Box
                             component={Link}
                             href="https://github.com/Supratim69/react-vscode-portfolio"
@@ -72,10 +63,6 @@ export default function Footer() {
                                 main
                             </Typography>
                         </Box>
-                        {/* </Link> */}
-
-                        {/* </Tooltip> */}
-                        {/* </Stack> */}
                         <Stack
                             direction="row"
                             spacing={0.5}

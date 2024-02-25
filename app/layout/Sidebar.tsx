@@ -35,18 +35,8 @@ export default function Sidebar({
     setShowTerminal,
     setOpen,
 }: Props) {
-    const handleOpen = () => setOpen(true);
-    // const signOut = () => {};
-    // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    //
-    // const openProfileMenu = Boolean(anchorEl);
-    //
-    // const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
-    //   setAnchorEl(event.currentTarget);
-    // };
-    // const handleProfileMenuClose = () => {
-    //   setAnchorEl(null);
-    // };
+
+  const handleOpen = () => setOpen(true);
 
     const [, startTransition] = useTransition();
     return (
@@ -265,7 +255,7 @@ export default function Sidebar({
                             </Box>
                         </Tooltip>
                     ) : (
-                        <></>
+                        null
                     )}
                 </Box>
             </Box>

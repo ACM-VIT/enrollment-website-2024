@@ -1,14 +1,14 @@
-import { Button, Box, Paper } from "@mui/material";
-import React, { useContext } from "react";
-import { VscMarkdown, VscChromeClose } from "react-icons/vsc";
-import { useTheme } from "@mui/material/styles";
-import { Container } from "@mui/system";
-import { useRouter } from "next/navigation";
+import {Button, Box, Paper} from "@mui/material";
+import React, {useContext} from "react";
+import {VscMarkdown, VscChromeClose,VscCircleFilled} from "react-icons/vsc";
+import {useTheme} from "@mui/material/styles";
+import {Container} from "@mui/system";
+import {useRouter} from "next/navigation";
 import PagesContext from "@/lib/PagesContext";
-import { FaPython } from "react-icons/fa";
+import {FaPython} from "react-icons/fa";
 
 export default function AppButtons() {
-    const { currentPage, openPages, setOpenPages } = useContext(PagesContext);
+    const {currentPage, openPages, setOpenPages, unsavedChanges} = useContext(PagesContext);
     const theme = useTheme();
     const router = useRouter();
 
@@ -82,7 +82,9 @@ export default function AppButtons() {
                     disableElevation
                     disableFocusRipple
                     onClick={() => {
-                        router.push(route);
+                        if (!unsavedChanges) return router.push(route);
+                        if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                            router.push(route);
                     }}
                     sx={{
                         borderRadius: 0,
@@ -106,8 +108,8 @@ export default function AppButtons() {
                             ml: -1,
                         }}
                     >
-                        {type === "md" && <VscMarkdown color="#6997d5" />}
-                        {type === "py" && <FaPython color="#6997d5" />}
+                        {type === "md" && <VscMarkdown color="#6997d5"/>}
+                        {type === "py" && <FaPython color="#6997d5"/>}
                     </Box>
                     {name}
                     <Box
@@ -128,12 +130,21 @@ export default function AppButtons() {
                         elevation={0}
                         onClick={(e: any) => {
                             e.stopPropagation();
-                            setOpenPages(
-                                openPages.filter((x) => x.index !== index)
-                            );
+                            if (!unsavedChanges || currentPage?.index !== index)
+                                return setOpenPages(
+                                    openPages.filter((x) => x.index !== index)
+                                );
+                            if (currentPage?.index === index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                                return setOpenPages(
+                                    openPages.filter((x) => x.index !== index)
+                                );
                         }}
                     >
-                        <VscChromeClose />
+                        {!unsavedChanges || currentPage?.index !== index ? (
+                            <VscChromeClose/>
+                        ) : (
+                            <VscCircleFilled/>
+                        )}
                     </Box>
                 </Button>
             </Box>
@@ -153,7 +164,6 @@ export default function AppButtons() {
                     theme.palette.mode === "dark" ? "#252527" : "#f3f3f3",
                 "&::-webkit-scrollbar": {
                     height: "3px",
-                    // backgroundColor: 'red',
                 },
                 "&::-webkit-scrollbar-thumb": {
                     backgroundColor:
@@ -163,17 +173,10 @@ export default function AppButtons() {
                     backgroundColor:
                         theme.palette.mode === "dark" ? "#ffffff" : "#8c8c8c",
                 },
-                // '&::-webkit-scrollbar:hover, & *::-webkit-scrollbar:hover': {
-                //   backgroundColor: '#ffffff',
-                // },
-                // '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
-                //   {
-                //     backgroundColor:
-                //       theme.palette.mode === 'dark' ? '#ffffff' : '#8c8c8c',
-                //   },
+
             }}
         >
-            {openPages.map(({ index, name, route, group, type }) =>
+            {openPages.map(({index, name, route, group, type}) =>
                 renderPageButton(index, name, `/${group}/${route}`, type)
             )}
         </Container>

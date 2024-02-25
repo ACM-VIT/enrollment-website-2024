@@ -14,19 +14,19 @@ import {
     ThemeProvider,
     Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import AppTree from "./AppTree";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import AppButtons from "./AppButtons";
 import BreadCrumbs from "./BreadCrumbs";
-import { pages as pagesGenerator } from "../pages/pages";
-import { isDesktop } from "react-device-detect";
-import { useParams, useRouter } from "next/navigation";
-import { Registration, User } from "@prisma/client";
-import { TerminalContextProvider } from "react-terminal";
+import {pages as pagesGenerator} from "../pages/pages";
+import {isDesktop} from "react-device-detect";
+import {useParams, useRouter} from "next/navigation";
+import {Prisma} from "@prisma/client";
+import {TerminalContextProvider} from "react-terminal";
 import ProfileModal from "../components/profileEdit";
-import subscribe from "@/app/actions/push";
+import UserGetPayload = Prisma.UserGetPayload;
 
 const style = {
     position: "absolute",
@@ -50,13 +50,15 @@ interface Page {
 }
 
 export default function App({
-    registrations,
-    user,
-    children,
-}: {
-    registrations: Registration[];
+                                user,
+                                children,
+                            }: {
     children: React.ReactNode;
-    user: User;
+    user: UserGetPayload<{
+        include: {
+            registrations: true
+        }
+    }>;
 }) {
     const params = useParams<{ folder: string; file: string }>();
     const router = useRouter();
@@ -66,10 +68,11 @@ export default function App({
     const [focusApptree, setFocusApptree] = useState(false);
     const [open, setOpen] = React.useState(false);
 
-    const [pages, setPages] = useState<Page[]>(pagesGenerator(registrations));
+    const [pages, setPages] = useState<Page[]>(pagesGenerator(user.registrations));
     const [darkMode, setDarkMode] = useState(
         localStorage ? localStorage.getItem("theme") === "dark" : false
     );
+
     const [openPages, setOpenPages] = useState<Page[]>(
         pages.filter((x) =>
             (
@@ -79,11 +82,14 @@ export default function App({
             ).includes(x.index)
         )
     );
+
     const [currentPage, setCurrentPage] = useState<Page | null>(null);
+
+    const [unsavedChanges, setUnsavedChanges] = useState(false);
 
     const paletteType = darkMode ? "dark" : "light";
 
-    const handleClose = () => setOpen(false);
+    const handleClose = useCallback(() => setOpen(false), []);
 
     const theme = createTheme({
         palette: {
@@ -108,38 +114,17 @@ export default function App({
         },
     });
 
-    function handleThemeChange() {
-        setDarkMode(!darkMode);
+    const handleThemeChange = (() => {
+        setDarkMode(prev => !prev);
         localStorage.setItem("theme", darkMode ? "light" : "dark");
-    }
+        console.log('theme change', darkMode);
+    })
 
-    useEffect(() => {
-        if ("serviceWorker" in navigator) {
-            const handleServiceWorker = async () => {
-                const register = await navigator.serviceWorker.register(
-                    "/sw.js"
-                );
-                console.log("New Service Worker registered", register.active);
-
-                const subscription = await register.pushManager.subscribe({
-                    userVisibleOnly: true,
-                    applicationServerKey:
-                        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
-                });
-
-                subscribe(subscription.toJSON()).then((res) =>
-                    console.log(res)
-                );
-            };
-            handleServiceWorker();
-        }
-    }, []);
 
     useEffect(() => {
         setOpenPages(
-            openPages.filter((x) => pages.find((y) => y.index === x.index))
+            prevState => prevState.filter((x) => pages.find((y) => y.index === x.index))
         );
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pages]);
 
     useEffect(() => {
@@ -157,6 +142,7 @@ export default function App({
                     : "/"
             );
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [openPages]);
 
     useEffect(() => {
@@ -186,6 +172,7 @@ export default function App({
             }
             router.replace(`/${lastPage.group}/${lastPage.route}`);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params]);
 
     return (
@@ -198,10 +185,12 @@ export default function App({
                         openPages,
                         setOpenPages,
                         currentPage,
+                        unsavedChanges,
+                        setUnsavedChanges,
                     }}
                 >
                     <TerminalContextProvider>
-                        <CssBaseline enableColorScheme />
+                        <CssBaseline enableColorScheme/>
                         <Container
                             sx={{
                                 m: 0,
@@ -214,11 +203,11 @@ export default function App({
                         >
                             <Grid
                                 container
-                                sx={{ overflow: "auto", overflowY: "hidden" }}
+                                sx={{overflow: "auto", overflowY: "hidden"}}
                                 onClick={() => setFocusApptree(false)}
                             >
-                                <Grid container sx={{ overflow: "auto" }}>
-                                    <Grid item sx={{ width: 50 }}>
+                                <Grid container sx={{overflow: "auto"}}>
+                                    <Grid item sx={{width: 50}}>
                                         <Sidebar
                                             setExpanded={setShowExplorer}
                                             expanded={showExplorer}
@@ -246,11 +235,11 @@ export default function App({
                                                 setFocusApptree(true);
                                             }}
                                         >
-                                            <Stack sx={{ mt: 1 }}>
+                                            <Stack sx={{mt: 1}}>
                                                 <Typography
                                                     variant="caption"
                                                     color="text.secondary"
-                                                    sx={{ ml: 4 }}
+                                                    sx={{ml: 4}}
                                                 >
                                                     EXPLORER
                                                 </Typography>
@@ -273,9 +262,10 @@ export default function App({
                                         <Grid
                                             sx={{
                                                 height: "33px",
+                                                position:"relative"
                                             }}
                                         >
-                                            <AppButtons />
+                                            <AppButtons/>
                                         </Grid>
                                         <Grid
                                             sx={{
@@ -291,7 +281,6 @@ export default function App({
                                         <Grid
                                             sx={{
                                                 scrollBehavior: "smooth",
-                                                // overflow: 'scroll',
                                                 overflowY: "auto",
                                                 height: `calc(100vh - 20px - 33px - 4px)`,
                                             }}
@@ -333,7 +322,7 @@ export default function App({
                                     </Grid>
                                 </Grid>
                                 <Grid item lg={12} md={12} sm={12} xs={12}>
-                                    <Footer />
+                                    <Footer/>
                                 </Grid>
                             </Grid>
                         </Container>

@@ -45,6 +45,7 @@ export default function ProfileModal({
                     >
                         My Profile
                     </span>
+
                 </div>
                 <Fade in={open}>
                     <div

@@ -1,12 +1,12 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { TreeItem, TreeView } from "@mui/x-tree-view";
-import { useRouter } from "next/navigation";
-import { useTheme } from "@mui/material/styles";
-import { VscMarkdown } from "react-icons/vsc";
+import {TreeItem, TreeView} from "@mui/x-tree-view";
+import {useRouter} from "next/navigation";
+import {useTheme} from "@mui/material/styles";
+import {VscMarkdown} from "react-icons/vsc";
 import PagesContext from "@/lib/PagesContext";
-import { FaPython } from "react-icons/fa";
+import {FaPython} from "react-icons/fa";
 
 const groupBy = function (xs: any[], key: string | number | Function) {
     return xs.reduce(function (rv, x) {
@@ -16,8 +16,8 @@ const groupBy = function (xs: any[], key: string | number | Function) {
     }, {});
 };
 
-export default function AppTree({ focusApptree }: { focusApptree: boolean }) {
-    const { pages, currentPage } = useContext(PagesContext);
+export default function AppTree({focusApptree}: { focusApptree: boolean }) {
+    const {pages, currentPage, unsavedChanges} = useContext(PagesContext);
     const router = useRouter();
     const theme = useTheme();
 
@@ -44,11 +44,10 @@ export default function AppTree({ focusApptree }: { focusApptree: boolean }) {
     return (
         <TreeView
             aria-label="file system navigator"
-            defaultCollapseIcon={<ExpandMoreIcon />}
-            defaultExpandIcon={<ChevronRightIcon />}
-            sx={{ minWidth: 220 }}
+            defaultCollapseIcon={<ExpandMoreIcon/>}
+            defaultExpandIcon={<ChevronRightIcon/>}
+            sx={{minWidth: 220}}
             defaultExpanded={["-1"]}
-            // sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
         >
             {Object.keys(groupBy(pages, "group")).map(
                 (group) =>
@@ -61,7 +60,7 @@ export default function AppTree({ focusApptree }: { focusApptree: boolean }) {
                         >
                             {pages
                                 .filter((i) => i.group === group)
-                                .map(({ index, name, route, type }) => (
+                                .map(({index, name, route, type}) => (
                                     <TreeItem
                                         key={index}
                                         nodeId={index.toString()}
@@ -80,15 +79,17 @@ export default function AppTree({ focusApptree }: { focusApptree: boolean }) {
                                         icon={
                                             <>
                                                 {type === "md" && (
-                                                    <VscMarkdown color="#6997d5" />
+                                                    <VscMarkdown color="#6997d5"/>
                                                 )}
                                                 {type === "py" && (
-                                                    <FaPython color="#6997d5" />
+                                                    <FaPython color="#6997d5"/>
                                                 )}
                                             </>
                                         }
                                         onClick={() => {
-                                            router.push(`/${group}/${route}`);
+                                            if (!unsavedChanges) return router.push(`/${group}/${route}`);
+                                            if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                                                router.push(`/${group}/${route}`);
                                         }}
                                     />
                                 ))}
