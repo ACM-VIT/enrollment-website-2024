@@ -2,11 +2,12 @@ import {Box, Button, Fade, Modal} from "@mui/material";
 import {User} from "@prisma/client";
 
 export default function ProfileModal({
-                                         open,
-                                         handleClose,
-                                         style,
-                                         user,
-                                     }: {
+    open,
+    handleClose,
+    style,
+  user,
+    //todo
+}: {
     open: boolean;
     handleClose: () => void;
     style: any;
@@ -32,13 +33,14 @@ export default function ProfileModal({
                         borderTopRightRadius: "4px",
                     }}
                 >
-          <span
-              style={{
-                  paddingBottom: "1%",
-              }}
-          >
-            Profile
-          </span>
+                    <span
+                        style={{
+                            paddingBottom: "1%",
+                        }}
+                    >
+                        Profile
+                    </span>
+
                 </div>
                 <div
                     style={{
