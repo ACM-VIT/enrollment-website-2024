@@ -2,6 +2,7 @@
 
 import {PrismaClient, Domain} from '@prisma/client';
 import {auth} from "@/lib/auth";
+import {revalidateTag} from "next/cache";
 
 const prisma = new PrismaClient();
 
@@ -51,6 +52,7 @@ const saveForm = async (domain: Domain, formData: Record<string, {
     const responses = await Promise.allSettled(promises)
     console.log(responses)
 
+    revalidateTag( 'FormContainer')
     return !responses.map((response) => {
         return response.status === 'rejected'
     }).includes(true)

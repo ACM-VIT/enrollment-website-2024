@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import {useEffect, useTransition} from "react";
 import "./Landing.css";
 import Image from "next/image";
 import { signInAction } from "@/app/actions/auth";
@@ -44,6 +44,11 @@ const svg = `<svg width="160" height="222" viewBox="0 0 173 222" fill="none" xml
 
 function Landing() {
   const [pending, startAuth] = useTransition();
+
+    useEffect(() => {
+        if(!localStorage.getItem('theme'))
+            localStorage.setItem('theme', window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    }, []);
 
   return (
     <div className="container">

@@ -35,17 +35,6 @@ export default function Sidebar({
   setOpen,
 }: Props) {
   const handleOpen = () => setOpen(true);
-  // const signOut = () => {};
-  // const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  //
-  // const openProfileMenu = Boolean(anchorEl);
-  //
-  // const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  // const handleProfileMenuClose = () => {
-  //   setAnchorEl(null);
-  // };
 
   const [, startTransition] = useTransition();
   return (
@@ -224,12 +213,7 @@ export default function Sidebar({
             </Box>
           </Tooltip>
           <Tooltip title="Terminal" arrow placement="right">
-            {/* <Link
-              
-              underline="none"
-              color="inherit"
-              sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
-            > */}
+
             <Box
               sx={{
                 flexGrow: 0,
@@ -253,30 +237,7 @@ export default function Sidebar({
           </Tooltip>
         </Box>
       </Box>
-      {/* <Menu
-        anchorEl={anchorEl}
-        id="account-menu"
-        open={openProfileMenu}
-        onClose={handleProfileMenuClose}
-        onClick={handleProfileMenuClose}
-        transformOrigin={{ horizontal: "left", vertical: "top" }}
-        anchorOrigin={{ horizontal: "right", vertical: "top" }}
-      >
-        <MenuItem onClick={handleProfileMenuClose}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          <Button
-            color="inherit"
-            disableRipple
-            style={{ backgroundColor: "transparent" }}
-            onClick={signOut}
-            sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
-          >
-            Logout
-          </Button>
-        </MenuItem>
-      </Menu> */}
+
     </React.Fragment>
   );
 }
