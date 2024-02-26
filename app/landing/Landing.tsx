@@ -30,6 +30,7 @@ export default function Landing() {
         <div
             className="flex flex-col h-screen"
             style={{
+                backgroundColor: "black",
                 backgroundImage: `url(${bglayer1.src}), url(${bglayer0.src})`,
                 backgroundPosition: `left bottom, left top`,
                 backgroundSize: `cover,  auto 40vh`,
