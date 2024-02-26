@@ -35,8 +35,7 @@ export default function Sidebar({
     setShowTerminal,
     setOpen,
 }: Props) {
-
-  const handleOpen = () => setOpen(true);
+    const handleOpen = () => setOpen(true);
 
     const [, startTransition] = useTransition();
     return (
@@ -176,7 +175,7 @@ export default function Sidebar({
                             </Tooltip>
                             <Menu slots={{ listbox: Listbox }}>
                                 <MenuItem onClick={handleOpen}>
-                                    Edit Profile
+                                    View Profile
                                 </MenuItem>
                                 <Divider
                                     sx={{
@@ -254,9 +253,7 @@ export default function Sidebar({
                                 </Box>
                             </Box>
                         </Tooltip>
-                    ) : (
-                        null
-                    )}
+                    ) : null}
                 </Box>
             </Box>
         </React.Fragment>
