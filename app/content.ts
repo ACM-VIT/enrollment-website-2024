@@ -129,14 +129,14 @@ _Of course, a Management dude write this :)_
 For every event we host, we are in charge of making it aesthetic and appealing _(yeah yeah design too)_. We strategize and communicate to other students why this event is the banger of their lives.
 
 - \`Managing Finances 📠\` <br>
-Every event needs money to be conducted. Be it _graVITas, Yantra_ or other internal occasions, we make sure we have the resources to 
+Every event, from graVITas to Yantra and other internal occasions, requires funding to ensure their success and memorability, focusing on meticulous planning and efficient resource management.
 
 - \`Arranging logistics 🚘\` <br>
 From booking auditoriums and arranging extentions to getting required permissions from authorities to run the event smoothly, we ensure that the only thing participants need to focus on is participating!
 
 - \`Content Writing & Curation ✒️\` <br>
 From forming PR calendars and deciding what going up on our social media sites to managing blog posts, anything that deals with content is our headache.<br>
-_No extra mark for creativity :(_
+_No extra marks for creativity :(_
 
 - \`Networking & Connections 👔\` <br>
 We regularly reach out to speakers and working professional for multiple companies to establish connections and collaboration opportunities to enrich events in terms of knowledge and logistical capabilities.
@@ -273,7 +273,7 @@ Anyways, let's help you figure out **our registration process - step by step...*
 In the bottom left corner of your screen, you will see three icons: <br>
 
 1. **PROFILE** - Check your details and make sure they are \`filled correctly\`.
-2. **COLOUR** - Use this to switch from light to dark mode and vice-versa.
+2. **THEME TOGGLE** - Use this to switch from light to dark mode and vice-versa.
 3. **TERMINAL** - Here's where all your commands will run.
 
 >**Also,** don't forget to follow us on [Instagram](https://www.instagram.com/acmvit/), [LinkedIn](https://www.linkedin.com/company/acmvit) and [Twitter](https://twitter.com/ACM_VIT)!
@@ -309,7 +309,7 @@ On the top-left corner of our website, do the following: <br>
 underneath \`EXPLORER\` -> \`domains\` -> read through all \`.md\` files.
 
 > **NOTE** <br>
-Irrespective of how many domains you apply to, if selected, you win be assigned to only one particular domain.
+Irrespective of how many domains you apply to, if selected, you will be assigned to only one particular domain.
 
 > **IMPORTANT** <br>
     For the commands you're about to type next, you'll need a _execution time of 2 sec._

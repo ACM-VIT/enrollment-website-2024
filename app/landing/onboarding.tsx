@@ -108,6 +108,7 @@ export default function Onboarding({ user }: { user: User }) {
                                 Contact Number:
                                 <br />
                                 <input
+                                    required
                                     type="number"
                                     name="number"
                                     placeholder="Contact Number"
