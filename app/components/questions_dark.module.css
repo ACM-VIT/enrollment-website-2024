@@ -1,85 +1,85 @@
 .pythonForm {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-family: monospace;
-  margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: monospace;
+    margin-bottom: 10px;
 }
 
 .question label {
-  display: block;
+    display: block;
 }
 
 .checkboxContainer {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .checkboxContainer label {
-  display: inline-block;
+    display: inline-block;
 }
 
 .textBox {
-  border: none;
-  background: none;
-  outline: none;
-  font-family: monospace;
-  width: auto;
+    border: none;
+    background: none;
+    outline: none;
+    font-family: monospace;
+    width: auto;
 }
 
 .span {
-  border: none;
+    border: none;
 }
 
 /* styling for text elements dark mode */
 .print {
-  color: rgb(220, 220, 170);
+    color: rgb(220, 220, 170);
 }
 
 .bracket {
-  color: rgb(255, 215, 0);
+    color: rgb(255, 215, 0);
 }
 
 .questioneach {
-  color: rgb(206, 145, 120);
+    color: rgb(206, 145, 120);
 }
 
 .comment {
-  color: rgb(106, 153, 85);
+    color: rgb(106, 153, 85);
 }
 
 .variable {
-  color: rgb(176, 176, 255);
+    color: rgb(176, 176, 255);
 }
 
 .toggle {
-  color: rgb(41, 107, 165);
+    color: rgb(41, 107, 165);
 }
 
 .editor {
-  display: inline-flex;
-  gap: 10px;
-  font-family: monospace;
-  line-height: 21px;
-  padding-top: 20px;
-  /* position: absolute; */
-  top: 60px;
+    display: inline-flex;
+    gap: 10px;
+    font-family: monospace;
+    line-height: 21px;
+    padding-top: 0px;
+    /* position: absolute; */
+    top: 60px;
 }
-@media only screen and (max-width: 768px ) {
-  .editor{
-    padding-top: 4%;
-  }
+@media only screen and (max-width: 768px) {
+    .editor {
+        padding-top: 4%;
+    }
 }
-@media only screen and (max-width: 430px ) {
-  .editor{
-    padding-top: 6%;
-  }
+@media only screen and (max-width: 430px) {
+    .editor {
+        padding-top: 6%;
+    }
 }
 .lineNumbers {
-  width: 20px;
-  color: #506882;
-  display: block;
+    width: 20px;
+    color: #506882;
+    display: block;
 }

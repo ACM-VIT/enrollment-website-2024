@@ -1,11 +1,10 @@
-import React from 'react';
-import {Domain, PrismaClient} from "@prisma/client";
-import {Container} from "@mui/material";
-import {Form} from "@/app/components/form";
-import { auth } from '@/lib/auth';
+import React from "react";
+import { Domain, PrismaClient } from "@prisma/client";
+import { Container } from "@mui/material";
+import { Form } from "@/app/components/form";
+import { auth } from "@/lib/auth";
 
-
-async function FormContainer({domain}: { domain: Domain }) {
+async function FormContainer({ domain }: { domain: Domain }) {
     const prisma = new PrismaClient();
 
     const questions = await prisma.question.findMany({
@@ -19,15 +18,15 @@ async function FormContainer({domain}: { domain: Domain }) {
                         domain: domain,
                         user: {
                             email: (await auth())!.user!.email,
-                        }
+                        },
                     },
-                }
-            }
-        }
+                },
+            },
+        },
     });
     return (
         <Container maxWidth={false}>
-            <Form questions={questions} domain={domain}/>
+            <Form questions={questions} domain={domain} />
         </Container>
     );
 }

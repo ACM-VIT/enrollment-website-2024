@@ -330,7 +330,7 @@ For **MCQs**, just click on \`true\` or \`false\` for each option.
 <br>
 
 >  !! **CAUTION** !!<br>
-Autosave only works every 5 seconds. Please be patient with your responses.
+Changes are saved 5 seconds after you've stop editing the form. Please be patient with your responses.
 
 ## ✔️ Submission
 

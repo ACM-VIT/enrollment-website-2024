@@ -46,6 +46,9 @@ function Terminal({
                 ┝ register &lt;domain&gt; - registers a domain <br />┝
                 formsubmit &lt;domain&gt; - submits a form for a domain, <br />└
                 exit - exits the terminal
+                <br />
+                Try writing a few random commands. There maybe something
+                interesting in there...
             </span>
         ),
         exit: () => {
@@ -93,15 +96,17 @@ function Terminal({
             "Saharsh Bhansali: He doesn't just lead by an example, he leads by an example and a 10-mark diagram.",
         designLead:
             "Ritaank Gunjesh: A maestro of the twerk and design, man shakes up social media with bootylicious designs and visually stunning graphics.",
-        contentLead: "Ojal Binoj Koshy",
+        contentLead:
+            "Ojal Binoj Koshy: you think she is the quietest one until she starts making those offensive jokes",
         projectLead:
-            "Sarthak Gupta: If acm were a classroom he would be the quiet kid.",
-        internalLead: "Hari R. Kartha",
+            "Sarthak Gupta: Will the real polymath please stand up? A man who can sail 100 boats at once and still steer out of a hurricane.",
+        internalLead:
+            "Hari R. Kartha: Calls him internal lead to feel good about himself",
         devRelLead:
             "Vidit Kothari: He makes every flex box move to his melodious tunes.",
         wChair: "Anshuman Gupta: he infuses every interaction with a potent blend of engaging humor and communication wizardry",
         wVC: " Devanshi Tripathi:  a girl with an iron will and a heart of gold, promising endless reliability with a sprinkle of fun!",
-        wSec: "Aryan Chaudhary:",
+        wSec: "Aryan Chaudhary: looks like a cinnamon roll and is one as well.",
         dev: (
             <span>
                 Kairav Nitin Sheth & Supratim Ghose
@@ -176,6 +181,7 @@ function Terminal({
                     paddingTop: "3px",
                     fontFamily: "consolas regular",
                     color: "inherit",
+                    borderTop: "1px solid #4f4f4f",
                 }}
             >
                 <span

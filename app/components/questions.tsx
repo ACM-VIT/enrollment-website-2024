@@ -1,74 +1,137 @@
 "use client";
 
-import React, {FormEvent, KeyboardEvent, useCallback, useEffect, useRef} from "react";
+import React, {
+    FormEvent,
+    KeyboardEvent,
+    useCallback,
+    useEffect,
+    useRef,
+} from "react";
 import styles_light from "./questions_light.module.css";
 import styles_dark from "./questions_dark.module.css";
-import {useTheme} from "@mui/material";
-import {Prisma} from "@prisma/client";
+import { useTheme } from "@mui/material";
+import { Prisma } from "@prisma/client";
 
-function Comment({text, styles}: { text: string, styles: typeof styles_dark | typeof styles_light }) {
+function Comment({
+    text,
+    styles,
+}: {
+    text: string;
+    styles: typeof styles_dark | typeof styles_light;
+}) {
     return (
-        <code style={{display: "block"}}>
+        <code style={{ display: "block" }}>
             <span className={styles.comment}># {text}</span>
         </code>
-    )
+    );
 }
 
-function PrintLine({text, styles}: { text: string, styles: typeof styles_dark | typeof styles_light }) {
+function PrintLine({
+    text,
+    styles,
+}: {
+    text: string;
+    styles: typeof styles_dark | typeof styles_light;
+}) {
     return (
-        <code style={{display: "block"}}>
+        <code style={{ display: "block" }}>
             <span className={styles.print}>print</span>
             <span className={styles.bracket}>(</span>
-            <span className={styles.questioneach}>
-                &quot;{text}&quot;
-            </span>
+            <span className={styles.questioneach}>&quot;{text}&quot;</span>
             <span className={styles.bracket}>)</span>
         </code>
-    )
+    );
 }
 
-function InputLines({variable, data, updateResponse, triggerSave, questionId, options, styles, type}: {
-    variable: string,
-    styles: typeof styles_dark | typeof styles_light,
-    type: 'stq' | 'ltq' | 'mcq' | 'scq',
-    questionId: string,
-    options: string[] | undefined,
-    data: any,
-    updateResponse: Function,
-    triggerSave: Function
+function InputLines({
+    variable,
+    data,
+    updateResponse,
+    triggerSave,
+    questionId,
+    options,
+    styles,
+    type,
+}: {
+    variable: string;
+    styles: typeof styles_dark | typeof styles_light;
+    type: "stq" | "ltq" | "mcq" | "scq";
+    questionId: string;
+    options: string[] | undefined;
+    data: any;
+    updateResponse: Function;
+    triggerSave: Function;
 }) {
     return [
-        <code key={'q' + questionId}>
-            <span className={styles.variable}>
-                {variable}
-            </span>
+        <code key={"q" + questionId} style={{ display: "block" }}>
+            <span className={styles.variable}>{variable}</span>
             &nbsp;=&nbsp;
-            {type === 'stq' && <ST_input initialValue={data.response} styles={styles} updateResponse={updateResponse}
-                                         triggerSave={triggerSave} questionId={questionId}/>}
-            {type === 'ltq' && <LT_input initialValue={data.response} styles={styles} updateResponse={updateResponse}
-                                         triggerSave={triggerSave} questionId={questionId}/>}
-            {type === 'mcq' && <span className={styles.bracket}>&#123;</span>}
-            {type === 'scq' && <span className={styles.bracket}>&#123;</span>}
+            {type === "stq" && (
+                <ST_input
+                    initialValue={data.response}
+                    styles={styles}
+                    updateResponse={updateResponse}
+                    triggerSave={triggerSave}
+                    questionId={questionId}
+                />
+            )}
+            {type === "ltq" && (
+                <LT_input
+                    initialValue={data.response}
+                    styles={styles}
+                    updateResponse={updateResponse}
+                    triggerSave={triggerSave}
+                    questionId={questionId}
+                />
+            )}
+            {type === "mcq" && <span className={styles.bracket}>&#123;</span>}
+            {type === "scq" && <span className={styles.bracket}>&#123;</span>}
         </code>,
-        type === 'mcq' && <MCQ_input response={data.response} updateResponse={updateResponse} triggerSave={triggerSave}
-                                     questionId={questionId} options={options!} styles={styles}/>,
-        type === 'scq' && <SCQ_input response={data.response} updateResponse={updateResponse} triggerSave={triggerSave}
-                                     questionId={questionId} options={options!} styles={styles}/>,
-        type === 'mcq' && <code style={{display: "block"}} key={'bc'}>
-            <span className={styles.bracket}>&#125;</span>
-        </code>,
-        type === 'scq' && <code style={{display: "block"}} key={'bc'}>
-            <span className={styles.bracket}>&#125;</span>
-        </code>
-    ]
+        type === "mcq" && (
+            <MCQ_input
+                response={data.response}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={questionId}
+                options={options!}
+                styles={styles}
+            />
+        ),
+        type === "scq" && (
+            <SCQ_input
+                response={data.response}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={questionId}
+                options={options!}
+                styles={styles}
+            />
+        ),
+        type === "mcq" && (
+            <code style={{ display: "block" }} key={"bc"}>
+                <span className={styles.bracket}>&#125;</span>
+            </code>
+        ),
+        type === "scq" && (
+            <code style={{ display: "block" }} key={"bc"}>
+                <span className={styles.bracket}>&#125;</span>
+            </code>
+        ),
+    ];
 }
 
-function ST_input({initialValue, styles, questionId, triggerSave, updateResponse}: {
-    initialValue: string,
-    styles: typeof styles_dark | typeof styles_light,
-    updateResponse: Function,
-    triggerSave: Function,
-    questionId: string
+function ST_input({
+    initialValue,
+    styles,
+    questionId,
+    triggerSave,
+    updateResponse,
+}: {
+    initialValue: string;
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
 }) {
     const spanRef = useRef<HTMLSpanElement>(null);
     const handleInput = useCallback((event: FormEvent) => {
@@ -80,13 +143,13 @@ function ST_input({initialValue, styles, questionId, triggerSave, updateResponse
         );
         triggerSave();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     const handleKeyDown = useCallback((event: KeyboardEvent) => {
         if (event.key === "Enter") {
             event.preventDefault();
         }
-    }, [])
+    }, []);
 
     useEffect(() => {
         const span = spanRef.current!;
@@ -95,25 +158,31 @@ function ST_input({initialValue, styles, questionId, triggerSave, updateResponse
     }, []);
 
     return [
-        "\"",
+        '"',
         <span
-            key={'span'}
+            key={"span"}
             ref={spanRef}
             className={styles.textBox}
             onInput={handleInput}
             onKeyDown={handleKeyDown}
             contentEditable="true"
         ></span>,
-        "\""
-    ]
+        '"',
+    ];
 }
 
-function LT_input({initialValue, styles, updateResponse, triggerSave, questionId}: {
-    initialValue: string,
-    styles: typeof styles_dark | typeof styles_light,
-    updateResponse: Function,
-    triggerSave: Function,
-    questionId: string
+function LT_input({
+    initialValue,
+    styles,
+    updateResponse,
+    triggerSave,
+    questionId,
+}: {
+    initialValue: string;
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
 }) {
     const spanRef = useRef<HTMLSpanElement>(null);
     const handleInput = useCallback((event: FormEvent) => {
@@ -125,7 +194,7 @@ function LT_input({initialValue, styles, updateResponse, triggerSave, questionId
         );
         triggerSave();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
     useEffect(() => {
         const span = spanRef.current!;
@@ -134,36 +203,42 @@ function LT_input({initialValue, styles, updateResponse, triggerSave, questionId
     }, []);
 
     return [
-        "\"\"\" ",
+        '""" ',
         <span
-            key={'span'}
+            key={"span"}
             ref={spanRef}
             className={styles.textBox}
             onInput={handleInput}
             contentEditable="true"
         ></span>,
-        " \"\"\""
-    ]
+        ' """',
+    ];
 }
 
-function MCQ_input({response, updateResponse, triggerSave, questionId, options, styles}: {
-    response: Record<string, boolean>,
-    styles: typeof styles_dark | typeof styles_light,
-    updateResponse: Function,
-    triggerSave: Function,
-    questionId: string,
-    options: string[]
+function MCQ_input({
+    response,
+    updateResponse,
+    triggerSave,
+    questionId,
+    options,
+    styles,
+}: {
+    response: Record<string, boolean>;
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
+    options: string[];
 }) {
     const handleChange = (event: any) => {
-        const {name, checked} = event.target;
-        updateResponse(questionId, {...response, [name]: checked}, false);
+        const { name, checked } = event.target;
+        updateResponse(questionId, { ...response, [name]: checked }, false);
         triggerSave();
     };
 
-
-    return options?.map(option => (
-        <code key={option}>
-            <label htmlFor={option}>
+    return options?.map((option) => (
+        <code key={option} style={{display: "block"}}>
+            <label className={styles.questionlabel} htmlFor={option}>
                 <span className={styles.questioneach}>
                     &nbsp;&nbsp;&nbsp;&quot;{option}
                 </span>
@@ -182,29 +257,33 @@ function MCQ_input({response, updateResponse, triggerSave, questionId, options, 
                 ,
             </label>
         </code>
-    ))
+    ));
 }
 
-function SCQ_input({response, updateResponse, triggerSave, questionId, options, styles}: {
-    response: string | null | undefined,
-    styles: typeof styles_dark | typeof styles_light,
-    updateResponse: Function,
-    triggerSave: Function,
-    questionId: string,
-    options: string[]
+function SCQ_input({
+    response,
+    updateResponse,
+    triggerSave,
+    questionId,
+    options,
+    styles,
+}: {
+    response: string | null | undefined;
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
+    options: string[];
 }) {
     const handleChange = useCallback((event: any) => {
-        updateResponse(questionId,
-            event.target.id,
-            false
-        )
+        updateResponse(questionId, event.target.id, false);
         triggerSave();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, []);
 
-    return options?.map(option => (
-        <code key={option}>
-            <label htmlFor={option}>
+    return options?.map((option) => (
+        <code key={option} style={{display: "block"}}>
+            <label className={styles.questionlabel} htmlFor={option}>
                 <span className={styles.questioneach}>
                     &nbsp;&nbsp;&nbsp;&quot;{option}
                 </span>
@@ -223,13 +302,18 @@ function SCQ_input({response, updateResponse, triggerSave, questionId, options, 
                 ,
             </label>
         </code>
-    ))
+    ));
 }
 
-export function STQ({question, data, updateResponse, triggerSave}: {
-    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
-    triggerSave: Function,
-    updateResponse: Function,
+export function STQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
     data: {
         response: string;
         error: { message: string } | null;
@@ -239,20 +323,32 @@ export function STQ({question, data, updateResponse, triggerSave}: {
     const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
 
     return (
-        <div className={styles.question}>
-            <PrintLine text={question.question} styles={styles}/>
-            <Comment text={"Help text for question here"} styles={styles}/>
-            <InputLines variable={question.varName} data={data} updateResponse={updateResponse}
-                        triggerSave={triggerSave} questionId={question.id} options={undefined} styles={styles}
-                        type={'stq'}/>
-        </div>
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={undefined}
+                styles={styles}
+                type={"stq"}
+            />
+        </>
     );
 }
 
-export function LTQ({question, data, updateResponse, triggerSave}: {
-    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
-    triggerSave: Function,
-    updateResponse: Function,
+export function LTQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
     data: {
         response: string;
         error: { message: string } | null;
@@ -262,20 +358,32 @@ export function LTQ({question, data, updateResponse, triggerSave}: {
     const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
 
     return (
-        <div className={styles.question}>
-            <PrintLine text={question.question} styles={styles}/>
-            <Comment text={"Help text for question here"} styles={styles}/>
-            <InputLines variable={question.varName} data={data} updateResponse={updateResponse}
-                        triggerSave={triggerSave} questionId={question.id} options={undefined} styles={styles}
-                        type={'ltq'}/>
-        </div>
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={undefined}
+                styles={styles}
+                type={"ltq"}
+            />
+        </>
     );
 }
 
-export function MCQ({question, data, updateResponse, triggerSave}: {
-    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
-    triggerSave: Function,
-    updateResponse: Function,
+export function MCQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
     data: {
         response: Record<string, boolean>;
         error: { message: string } | null;
@@ -285,20 +393,32 @@ export function MCQ({question, data, updateResponse, triggerSave}: {
     const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
 
     return (
-        <div className={styles.question}>
-            <PrintLine text={question.question} styles={styles}/>
-            <Comment text={"Help text for question here"} styles={styles}/>
-            <InputLines variable={question.varName} data={data} updateResponse={updateResponse}
-                        triggerSave={triggerSave} questionId={question.id} options={question.options} styles={styles}
-                        type={'mcq'}/>
-        </div>
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={question.options}
+                styles={styles}
+                type={"mcq"}
+            />
+        </>
     );
 }
 
-export function SCQ({question, data, updateResponse, triggerSave}: {
-    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>,
-    triggerSave: Function,
-    updateResponse: Function,
+export function SCQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
     data: {
         response: Record<string, boolean>;
         error: { message: string } | null;
@@ -308,13 +428,19 @@ export function SCQ({question, data, updateResponse, triggerSave}: {
     const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
 
     return (
-        <div className={styles.question}>
-            <PrintLine text={question.question} styles={styles}/>
-            <Comment text={"Help text for question here"} styles={styles}/>
-            <InputLines variable={question.varName} data={data} updateResponse={updateResponse}
-                        triggerSave={triggerSave} questionId={question.id} options={question.options} styles={styles}
-                        type={'scq'}/>
-        </div>
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={question.options}
+                styles={styles}
+                type={"scq"}
+            />
+        </>
     );
 }
-

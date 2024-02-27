@@ -1,0 +1,17 @@
+form.code {
+    white-space: pre-wrap;
+}
+form.code::before {
+    counter-reset: listing;
+}
+form.code code {
+    counter-increment: listing;
+}
+form.code code::before {
+    content: counter(listing);
+    display: inline-block;
+    width: 1em;
+    text-align: right;
+    margin-right: 25px;
+    color: #858585;
+}
