@@ -147,7 +147,7 @@ function LT_input({initialValue, styles, updateResponse, triggerSave, questionId
 }
 
 function MCQ_input({response, updateResponse, triggerSave, questionId, options, styles}: {
-    response: Record<string, boolean>,
+    response: { [key: string]: boolean },
     styles: typeof styles_dark | typeof styles_light,
     updateResponse: Function,
     triggerSave: Function,
@@ -277,7 +277,7 @@ export function MCQ({question, data, updateResponse, triggerSave}: {
     triggerSave: Function,
     updateResponse: Function,
     data: {
-        response: Record<string, boolean>;
+        response: { [key: string]: boolean };
         error: { message: string } | null;
     };
 }) {
@@ -300,8 +300,8 @@ export function SCQ({question, data, updateResponse, triggerSave}: {
     triggerSave: Function,
     updateResponse: Function,
     data: {
-        response: Record<string, boolean>;
-        error: { message: string } | null;
+        response: string;
+        error: { message: string, title: string } | null;
     };
 }) {
     const theme = useTheme();

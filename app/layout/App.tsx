@@ -55,8 +55,12 @@ export default function App({
     children: React.ReactNode;
     user: UserGetPayload<{
         include: {
-            registrations: true
-        }
+            RoundUser: {
+                include: {
+                    round: true,
+                }
+            }
+        },
     }>;
 }) {
     const params = useParams<{ folder: string; file: string }>();
@@ -67,7 +71,7 @@ export default function App({
     const [focusApptree, setFocusApptree] = useState(false);
     const [open, setOpen] = React.useState(false);
 
-    const [pages, setPages] = useState<Page[]>(pagesGenerator(user.registrations));
+    const [pages, setPages] = useState<Page[]>(pagesGenerator(user.RoundUser));
     const [darkMode, setDarkMode] = useState(
         localStorage ? localStorage.getItem("theme") === "dark" : false
     );

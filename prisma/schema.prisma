@@ -10,21 +10,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Config {
-  id        String     @id @default(cuid())
-  key       ConfigKeys @unique
-  value     Boolean
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
-
-
 model Round {
-  id     String    @id @default(cuid())
-  number Int
-  domain Domain
-  active Boolean
-  type   RoundType
+  id         String      @id @default(cuid())
+  number     Int
+  domain     Domain
+  active     Boolean
+  type       RoundType
+  eliminates Boolean
+  announced  Boolean
+  RoundUser  RoundUser[]
+  Question   Question[]
 
   @@unique([domain, number])
 }
@@ -35,9 +30,25 @@ enum RoundType {
   task
 }
 
-enum ConfigKeys {
-  accept_form_responses
-  round1_results_announced
+model RoundUser {
+  id             String          @id @default(cuid())
+  roundId        String
+  userId         String
+  round          Round           @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status         RoundStatus     @default(pending)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  formSubmission FormSubmission?
+
+  @@unique([roundId, userId])
+}
+
+enum RoundStatus {
+  pending
+  evaluate
+  promoted
+  rejected
 }
 
 model Account {
@@ -76,8 +87,8 @@ model User {
   phone              String?
   accounts           Account[]
   sessions           Session[]
-  registrations      Registration[]
   push_subscriptions Subscription[]
+  RoundUser          RoundUser[]
 }
 
 model Subscription {
@@ -86,7 +97,7 @@ model Subscription {
   p256dh    String
   auth      String
   userId    String
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -100,23 +111,23 @@ enum Domain {
   design
 }
 
-model Registration {
+model FormSubmission {
   id              String     @id @default(cuid())
-  domain          Domain
-  user            User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId          String
+  roundUser       RoundUser  @relation(fields: [roundUserId], references: [id], onDelete: Cascade)
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
   formSubmittedAt DateTime?
   responses       Response[]
-
-  @@unique([domain, userId])
+  roundUserId     String     @unique
+  valid           Boolean
 }
 
 model Question {
   id         String           @id @default(cuid())
   question   String
-  domain     Domain
+  helpText   String?
+  round      Round            @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  roundId    String
   type       Type
   options    String[]
   varName    String
@@ -134,24 +145,35 @@ enum Type {
 }
 
 model Response {
-  id             String       @id @default(cuid())
-  question       Question     @relation(fields: [questionId], references: [id], onDelete: Cascade)
-  questionId     String
-  registration   Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
-  registrationId String
-  response       String?
-  error          Json?
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  id         String         @id @default(cuid())
+  question   Question       @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  submission FormSubmission @relation(fields: [formId], references: [id], onDelete: Cascade)
+  formId     String
+  response   String?
+  error      Json?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
 
-  @@unique([questionId, registrationId])
+  @@unique([questionId, formId])
 }
 
 model ValidationRule {
   id         String   @id @default(cuid())
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
-  ruleType   String
-  ruleValue  Json
+  ruleType   RuleType
+  ruleValue  String?
+  priority   Int
+  helpText   String
+  helpTitle  String
 }
 
+enum RuleType {
+  requiredIf
+  required
+  min
+  max
+  pattern
+  custom
+}

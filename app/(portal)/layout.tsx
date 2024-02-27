@@ -12,20 +12,27 @@ export default async function Layout({
 }) {
     const prisma = new PrismaClient();
 
-    const authUser = await auth();
+    const session = await auth();
+    if (!session || !session.user) return redirect("/landing");
 
     const user = await prisma.user.findUnique({
         where: {
-            email: authUser?.user?.email ?? "",
+            email: session.user.email!,
         },
         include: {
-            registrations: true,
+            // registrations: true,
+            RoundUser: {
+                include: {
+                    round: true,
+                }
+            }
         },
-    });
 
+    });
     if (!user) {
         return redirect("/landing");
     }
+
 
     return (
         <SessionProvider>

@@ -2,32 +2,39 @@ import React from 'react';
 import {Domain, PrismaClient} from "@prisma/client";
 import {Container} from "@mui/material";
 import {Form} from "@/app/components/form";
-import { auth } from '@/lib/auth';
+import {auth} from '@/lib/auth';
 
 
-async function FormContainer({domain}: { domain: Domain }) {
+async function FormContainer({roundId}: { roundId: string }) {
     const prisma = new PrismaClient();
 
     const questions = await prisma.question.findMany({
         where: {
-            domain: domain,
+            roundId
         },
         include: {
             responses: {
                 where: {
-                    registration: {
-                        domain: domain,
-                        user: {
-                            email: (await auth())!.user!.email,
+                    submission: {
+                        roundUser: {
+                            roundId,
+                            user: {
+                                email: (await auth())!.user!.email!
+                            }
                         }
-                    },
+                    }
+                }
+            },
+            validators: {
+                orderBy: {
+                    priority: 'asc'
                 }
             }
         }
     });
     return (
         <Container maxWidth={false}>
-            <Form questions={questions} domain={domain}/>
+            <Form questions={questions} roundId={roundId}/>
         </Container>
     );
 }
