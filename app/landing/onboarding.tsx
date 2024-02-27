@@ -8,6 +8,7 @@ import { useFormStatus } from "react-dom";
 import { User } from "@prisma/client";
 import saveForm from "@/app/actions/onboarding";
 import "../tailwind.css";
+
 export default function Onboarding({ user }: { user: User }) {
     return (
         <div className="flex flex-col h-screen w-screen" id="page">

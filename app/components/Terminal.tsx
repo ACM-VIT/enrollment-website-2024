@@ -6,7 +6,7 @@ import { formSubmit, registerDomain } from "@/app/actions/terminal";
 import { Domain } from "@prisma/client";
 import { pages as pagesGenerator } from "../pages/pages";
 import { ReactTerminal } from "react-terminal";
-import style1 from "@/app/components/terminal.module.css";
+import TerminalStyle from "@/app/components/terminal.module.css";
 
 const terminalText = (
     <span
@@ -44,7 +44,7 @@ function Terminal({
                 ┝ help - displays this message <br />
                 ┝ clear - clears the terminal <br />
                 ┝ register &lt;domain&gt; - registers a domain <br />┝
-                submitform &lt;domain&gt; - submits a form for a domain, <br />└
+                formsubmit &lt;domain&gt; - submits a form for a domain, <br />└
                 exit - exits the terminal
             </span>
         ),
@@ -195,7 +195,7 @@ function Terminal({
                 }}
                 maxWidth={false}
             >
-                <div className={style1.terminal}>
+                <div className={TerminalStyle.terminal}>
                     <ReactTerminal
                         commands={commands}
                         themes={{

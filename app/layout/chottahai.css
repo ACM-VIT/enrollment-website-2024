@@ -1,0 +1,46 @@
+/* phones */
+@media screen and (max-width: 767px) {
+    #main {
+        @apply m-0 flex-[6] flex-col;
+    }
+    #header {
+        @apply flex-[0.5];
+    }
+    #profile {
+        @apply flex flex-col pl-0 items-center border-l-0 pr-0;
+    }
+    #terminal {
+        @apply text-center text-[0.68em] space-x-[0.7em];
+    }
+    #left-dots {
+        @apply absolute top-[65%];
+    }
+    #right-dots {
+        @apply top-[10%];
+    }
+    #sidebar {
+        @apply justify-end;
+    }
+    #text {
+        @apply text-xl;
+    }
+}
+
+/* tablets */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    #sidebar {
+        @apply flex-1;
+    }
+    #terminal {
+        @apply flex-1;
+    }
+    #header {
+        @apply flex-[0.5];
+    }
+    #left-dots {
+        @apply absolute top-[65%];
+    }
+    #text {
+        @apply text-3xl;
+    }
+}
