@@ -1,12 +1,15 @@
-import {Box, Button, Fade, Modal} from "@mui/material";
-import {User} from "@prisma/client";
+import { Box, Button, Fade, Modal, TextField } from "@mui/material";
+import { User } from "@prisma/client";
+import Image from "next/image";
+import closebutton from "./assets/Esc.svg";
 
 export default function ProfileModal({
-                                         open,
-                                         handleClose,
-                                         style,
-                                         user,
-                                     }: {
+    open,
+    handleClose,
+    style,
+    user,
+}: //todo
+{
     open: boolean;
     handleClose: () => void;
     style: any;
@@ -15,114 +18,130 @@ export default function ProfileModal({
     return (
         <Modal open={open} onClose={handleClose}>
             <Box
-                sx={style}
-                style={{
+                sx={{
+                    ...style,
                     borderRadius: "4px",
                     padding: "0px",
+                    backgroundColor: "#262626",
+                    color: "white",
+                    overflow: "auto",
                 }}
             >
                 <div
                     style={{
                         display: "flex",
-                        justifyContent: "center",
-                        paddingTop: "1%",
-                        color: "#b3b3b3",
-                        backgroundColor: "#424242",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        padding: "16px 32px",
+                        backgroundColor: "#333333",
                         borderTopLeftRadius: "4px",
                         borderTopRightRadius: "4px",
                     }}
                 >
-          <span
-              style={{
-                  paddingBottom: "1%",
-              }}
-          >
-            Profile
-          </span>
+                    <span
+                        style={{
+                            fontSize: "18px",
+                        }}
+                    >
+                        My Profile
+                    </span>
                 </div>
-                <div
-                    style={{
-                        paddingLeft: "32px",
-                        paddingRight: "32px",
-                    }}
-                >
-                    <Fade in={open}>
-                        <div>
+                <Fade in={open}>
+                    <div
+                        style={{
+                            padding: "32px",
+                        }}
+                    >
+                        <div style={{ marginBottom: "20px" }}>
                             <div
                                 style={{
-                                    color: "grey",
-                                    marginTop: "20px",
-                                }}
-                            >
-                                <span>Your Information</span>
-                            </div>
-                            <div>
-                                Name: {user!.name!.slice(0, user!.name!.length - 10)}
-                            </div>
-                            <div>
-                                Registration Number: {user!.name!.slice(user!.name!.length - 9)}
-                            </div>
-                            <div>
-                                Email: {user.email}
-
-                            </div>
-                            <div>
-                                Phone Number: {user.phone}
-                            </div>
-                            <div
-                                style={{
+                                    fontSize: "18px",
                                     display: "flex",
+                                    flexDirection: "row",
                                     justifyContent: "flex-end",
-                                    marginRight: "2%",
                                 }}
                             >
-                                <Button
-                                    variant="outlined"
-                                    sx={{
-                                        width: "17%",
-                                        backgroundColor: "#424242",
-                                        border: "1px solid #333",
-                                        color: "white",
-                                        padding: "8px 16px",
-                                        borderRadius: "3px",
-                                        textTransform: "none",
-                                        "&:hover": {
-                                            backgroundColor: "#363636",
-                                            color: "white",
-                                            border: "1px solid #333",
-                                        },
-                                        marginTop: "12px",
-                                        marginRight: "3%",
-                                    }}
+                                <Image
+                                    src={closebutton}
+                                    alt="close"
                                     onClick={handleClose}
-                                >
-                                    Back
-                                </Button>
-                                <Button
-                                    variant="outlined"
-                                    sx={{
-                                        width: "17%",
-                                        backgroundColor: "#3279cb",
-                                        border: "1px solid #333",
-                                        color: "white",
-                                        padding: "8px 16px",
-                                        borderRadius: "3px",
-                                        textTransform: "none",
-                                        "&:hover": {
-                                            backgroundColor: "#255a97",
-                                            color: "white",
-                                            border: "1px solid #333",
-                                        },
-                                        marginTop: "12px",
-                                        marginRight: "2%",
-                                    }}
-                                >
-                                    Update
-                                </Button>
+                                    style={{ cursor: "pointer" }}
+                                />
                             </div>
+                            Name:
+                            <input
+                                type="text"
+                                value={user!.name!.slice(
+                                    0,
+                                    user!.name!.length - 10
+                                )}
+                                disabled
+                                style={{
+                                    width: "100%",
+                                    backgroundColor: "#333333",
+                                    color: "white",
+                                    border: "none",
+                                    borderBottom: "1px solid #b3b3b3",
+                                    padding: "8px",
+                                    marginTop: "8px",
+                                }}
+                            />
                         </div>
-                    </Fade>
-                </div>
+                        <div style={{ marginBottom: "20px" }}>
+                            Registration Number:
+                            <input
+                                type="text"
+                                value={user!.name!.slice(
+                                    user!.name!.length - 9
+                                )}
+                                disabled
+                                style={{
+                                    width: "100%",
+                                    backgroundColor: "#333333",
+                                    color: "white",
+                                    border: "none",
+                                    borderBottom: "1px solid #b3b3b3",
+                                    padding: "8px",
+                                    marginTop: "8px",
+                                }}
+                            />
+                        </div>
+                        <div style={{ marginBottom: "20px" }}>
+                            E-mail:
+                            <input
+                                type="email"
+                                value={user.email ?? ""}
+                                disabled
+                                style={{
+                                    width: "100%",
+                                    backgroundColor: "#333333",
+                                    color: "white",
+                                    border: "none",
+                                    borderBottom: "1px solid #b3b3b3",
+                                    padding: "8px",
+                                    marginTop: "8px",
+                                }}
+                            />
+                        </div>
+                        <div style={{ marginBottom: "20px" }}>
+                            Contact:
+                            <input
+                                type="text"
+                                value={user.phone ?? ""}
+                                disabled
+                                style={{
+                                    width: "100%",
+                                    backgroundColor: "#333333",
+                                    color: "white",
+                                    border: "none",
+                                    borderBottom: "1px solid #b3b3b3",
+                                    padding: "8px",
+                                    marginTop: "8px",
+                                }}
+                            />
+                        </div>
+                    </div>
+                </Fade>
             </Box>
         </Modal>
     );

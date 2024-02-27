@@ -1,5 +1,5 @@
 import React from 'react';
-import {Domain, PrismaClient} from "@prisma/client";
+import {PrismaClient} from "@prisma/client";
 import {Container} from "@mui/material";
 import {Form} from "@/app/components/form";
 import {auth} from '@/lib/auth';
