@@ -3,6 +3,7 @@ import {PrismaClient, Domain, RoundStatus, RoundType} from '@prisma/client';
 import {auth} from "@/lib/auth";
 import {Prisma} from ".prisma/client";
 import RoundUserGetPayload = Prisma.RoundUserGetPayload;
+import {revalidatePath} from "next/cache";
 
 interface consoleResponse {
     console: {
@@ -74,7 +75,7 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
 
     const user = await prisma.user.findUniqueOrThrow({
         where: {
-            email: session.user.email!
+            email: session.user.email!,
         },
         include: {
             RoundUser: {
@@ -121,6 +122,13 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
         }
     };
 
+    if (roundUser.status !== RoundStatus.pending) return {
+        console: {
+            message: 'Already submitted form for this round',
+            type: 'error'
+        }
+    }
+
     if (!roundUser.formSubmission) return {
         console: {
             message: 'You have not filled the form',
@@ -144,7 +152,16 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
                 status: RoundStatus.evaluate
             }
         })
-        return {console: {message: 'Form submitted successfully. Wait for results.', type: 'response'}}
+        const roundUsers = await prisma.roundUser.findMany({
+            where: {
+                userId: user.id
+            },
+            include: {
+                round: true
+            }
+        })
+
+        return {console: {message: 'Form submitted successfully. Wait for results.', type: 'response'}, roundUser: roundUsers}
     } else {
         await Promise.allSettled([prisma.roundUser.update({
             where: {
@@ -171,7 +188,17 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
                 status: RoundStatus.pending
             }
         })])
-        return {console: {message: 'Form submitted successfully. Proceed to next activity.', type: 'response'}}
+        const roundUsers = await prisma.roundUser.findMany({
+            where: {
+                userId: user.id
+            },
+            include: {
+                round: true
+            }
+        })
+        console.log(roundUsers)
+        // revalidatePath(`/forms/${domain}`)
+        return {console: {message: 'Form submitted successfully. Proceed to next activity.', type: 'response'}, roundUser: roundUsers}
     }
 
 

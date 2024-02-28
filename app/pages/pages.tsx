@@ -41,10 +41,8 @@ export const pages = (
         include: { round: true }
     }>) => x.round.domain)).map(([key, value]) => {
         const entry = (value as RoundUserGetPayload<{ include: { round: true } }>[]);
-        console.log(entry);
         if(!entry[0].round.active) return null;
         if(entry[0].status !== 'pending') return null;
-        console.log('cp1');
         return {
             index: map1[key] + entry[0].round.number,
             group: map2[entry[0].round.type],

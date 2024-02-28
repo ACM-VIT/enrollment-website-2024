@@ -151,7 +151,7 @@ model Response {
   submission FormSubmission @relation(fields: [formId], references: [id], onDelete: Cascade)
   formId     String
   response   String?
-  error      Json?
+  error      String?
   createdAt  DateTime       @default(now())
   updatedAt  DateTime       @updatedAt
 

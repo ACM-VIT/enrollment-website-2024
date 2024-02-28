@@ -25,10 +25,14 @@ const saveForm = async (roundId: string, valid: boolean, formData: Record<string
 
     const submission = await prisma.formSubmission.upsert({
         where: {
-            roundUserId
+            roundUserId,
+            roundUser: {
+                status: 'pending',
+            }
         },
         update: {
             updatedAt: new Date(),
+            valid
         },
         create: {
             roundUserId,
@@ -75,9 +79,11 @@ const saveForm = async (roundId: string, valid: boolean, formData: Record<string
                     },
                     update: {
                         response: JSON.stringify(formData[question.id].response),
+                        error: JSON.stringify(formData[question.id].error),
                     },
                     create: {
                         response: JSON.stringify(formData[question.id].response),
+                        error: JSON.stringify(formData[question.id].error),
                         formId: submission.id,
                         questionId: question.id,
                     }

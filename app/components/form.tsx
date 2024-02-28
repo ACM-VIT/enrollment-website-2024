@@ -42,7 +42,7 @@ export function Form({
                             : Object.fromEntries(
                                 question.options.map((option) => [option, false])
                             ),
-                    error: null,
+                    error: JSON.parse(question.responses[0]?.error as string || "null")
                 },
             ])
         )
@@ -90,7 +90,6 @@ export function Form({
     const debouncedSave = useDebouncedCallback(() => {
         // submit the form
         // (form!.current! as HTMLFormElement).requestSubmit();
-        console.log(formData);
         startSave(() => {
             const temp = {...formData};
             saveForm(roundId, !Object.entries(temp).filter(([, i]) => i.error !== null).length, temp).then((res) => {
@@ -142,11 +141,11 @@ export function Form({
                         }
                     }
                     if (validator.ruleType === RuleType.required) {
-                        if (question.type === Type.stq && !data[i].response) {
+                        if (question.type === Type.stq && !data[i].response?.length) {
                             data[i].error = {message: validator.helpText, title: validator.helpTitle};
                             break;
                         }
-                        if (question.type === Type.ltq && !data[i].response) {
+                        if (question.type === Type.ltq && !data[i].response?.length) {
                             data[i].error = {message: validator.helpText, title: validator.helpTitle};
                             break;
                         }
@@ -187,6 +186,8 @@ export function Form({
                 }
             }
         }
+        console.log(data);
+        console.log(!Object.entries(data).filter(([, i]) => i.error !== null).length);
         return data;
     }, [questions]);
 

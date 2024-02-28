@@ -150,6 +150,7 @@ function Terminal({
                 );
             }
             const response = await submitForm(domain as Domain);
+            console.log(response);
             if (response.roundUser) {
                 setPages(pagesGenerator(response.roundUser));
             }
