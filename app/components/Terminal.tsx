@@ -44,7 +44,7 @@ function Terminal({
                 ┝ help - displays this message <br />
                 ┝ clear - clears the terminal <br />
                 ┝ register &lt;domain&gt; - registers a domain <br />┝
-                formsubmit &lt;domain&gt; - submits a form for a domain, <br />└
+                formsubmit &lt;domain&gt; - submits a form for a domain <br />└
                 exit - exits the terminal
                 <br />
                 Try writing a few random commands. There maybe something
