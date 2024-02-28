@@ -296,7 +296,9 @@ There are 5 commands, and you've now already tested \`help\`. Here's what the re
 |\`register\` \`domain\`| You'll use this to access your domain forms |
 |\`formsubmit\` \`domain\`| You'll use this to submit your domain forms|
 |\`exit\`| If your work is done or terminal is hindering view|
-
+<br>
+PS: Don't even think of typing \`board\` in the terminal :)
+<br>
 Now, to the main course... 
 
 <!-- Section ends here -->
