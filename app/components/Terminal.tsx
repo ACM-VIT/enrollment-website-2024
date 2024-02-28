@@ -2,7 +2,7 @@
 import React from "react";
 import { Container } from "@mui/system";
 import { Box } from "@mui/material";
-import { formSubmit, registerDomain } from "@/app/actions/terminal";
+import { submitForm, registerDomain } from "@/app/actions/terminal";
 import { Domain } from "@prisma/client";
 import { pages as pagesGenerator } from "../pages/pages";
 import { ReactTerminal } from "react-terminal";
@@ -130,8 +130,8 @@ function Terminal({
                 );
             }
             const response = await registerDomain(domain as Domain);
-            if (response.registrations) {
-                setPages(pagesGenerator(response.registrations));
+            if (response.roundUser) {
+                setPages(pagesGenerator(response.roundUser));
             }
             return response.console.type === "error" ? (
                 <span style={{ color: "#FF443E" }}>
@@ -154,9 +154,9 @@ function Terminal({
                     <span style={{ color: "#FF443E" }}>Domain not found</span>
                 );
             }
-            const response = await formSubmit(domain as Domain);
-            if (response.registrations) {
-                setPages(pagesGenerator(response.registrations));
+            const response = await submitForm(domain as Domain);
+            if (response.roundUser) {
+                setPages(pagesGenerator(response.roundUser));
             }
             return response.console.type === "error" ? (
                 <span style={{ color: "#FF443E" }}>
@@ -198,7 +198,9 @@ function Terminal({
             <Container
                 sx={{
                     height: "85%",
+                    paddingLeft: "24px"
                 }}
+                disableGutters={true}
                 maxWidth={false}
             >
                 <div className={TerminalStyle.terminal}>

@@ -7,9 +7,12 @@ import dots from "@/app/components/assets/dots.png";
 import { useFormStatus } from "react-dom";
 import { User } from "@prisma/client";
 import saveForm from "@/app/actions/onboarding";
+import parsePhoneNumber from 'libphonenumber-js'
 import "../tailwind.css";
 
 export default function Onboarding({ user }: { user: User }) {
+    const [phone, setPhone] = React.useState('');
+    const [error, setError] = React.useState('');
     return (
         <div className="flex flex-col h-screen w-screen" id="page">
             <header className="bg-[#040f1a] flex-1" id="header" />
@@ -63,6 +66,15 @@ export default function Onboarding({ user }: { user: User }) {
                         className="bg-transparent	flex flex-col"
                         action={saveForm}
                         id="form"
+                        onSubmit={(e) => {
+                            const parsedPhone = parsePhoneNumber(phone, 'IN');
+                            if (!parsedPhone || !parsedPhone.isValid()) {
+                                e.preventDefault();
+                                setError('Invalid Phone Number');
+                            } else {
+                                setError('');
+                            }
+                        }}
                     >
                         <div className="text-left	">
                             <div className="m-4">
@@ -70,6 +82,7 @@ export default function Onboarding({ user }: { user: User }) {
                                 <br />
                                 <input
                                     type="text"
+                                    name="name"
                                     placeholder="Name"
                                     readOnly={true}
                                     value={user!.name!.slice(
@@ -84,7 +97,7 @@ export default function Onboarding({ user }: { user: User }) {
                                 <br />
                                 <input
                                     type="email"
-                                    name=""
+                                    name="email"
                                     placeholder="E-Mail"
                                     readOnly={true}
                                     value={user!.email!}
@@ -96,7 +109,7 @@ export default function Onboarding({ user }: { user: User }) {
                                 <br />
                                 <input
                                     type="text"
-                                    name="number"
+                                    name="reg"
                                     placeholder="Registration Number"
                                     readOnly={true}
                                     value={user!.name!.slice(
@@ -109,14 +122,18 @@ export default function Onboarding({ user }: { user: User }) {
                                 Contact Number:
                                 <br />
                                 <input
-                                    required
-                                    type="number"
-                                    name="number"
+                                    type="tel"
+                                    name="phone"
                                     placeholder="Contact Number"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                    onInput={() => setError('')}
                                     className="border-[1px] border-solid border-[#222222] font-dmSans text-[#b0b0b0] bg-[#27272d] rounded-[5px] h-[1.5rem] w-[50%] min-w-60 text-[1rem] px-[2.5%] py-[1.1%] box-content"
                                 />
+                                  <div className="m-4 text-[#ff0000]">{error}&nbsp;</div>
                             </div>
                         </div>
+
                         <SubmitButton />
                     </form>
                 </section>
@@ -151,7 +168,7 @@ function SubmitButton() {
             type="submit"
             aria-disabled={pending}
             disabled={pending}
-            className="text-white bg-[#3279CB] w-[100px] m-4 rounded p-3"
+            className="text-white bg-[#3279CB] w-[110px] m-4 rounded p-3"
             id="button"
         >
             {pending ? "Submitting.." : "SUBMIT"}
