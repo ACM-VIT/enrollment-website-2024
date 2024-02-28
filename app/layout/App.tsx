@@ -283,7 +283,7 @@ export default function App({
                                             sx={{
                                                 scrollBehavior: "smooth",
                                                 overflowY: "auto",
-                                                height: `calc(100vh - 20px - 33px - 4px)`,
+                                                height: `calc(97.5vh - 20px - 33px - 4px)`,
                                             }}
                                         >
                                             {/* {children} */}
@@ -291,7 +291,7 @@ export default function App({
                                                 <>
                                                     <Box
                                                         sx={{
-                                                            height: "64.4%",
+                                                            height: "65.4%",
                                                             overflow: "auto",
                                                         }}
                                                     >
