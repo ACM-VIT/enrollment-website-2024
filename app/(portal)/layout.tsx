@@ -4,7 +4,7 @@ import App from "@/app/layout/App";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
-import {isDesktop} from "react-device-detect";
+import { isDesktop } from "react-device-detect";
 import Chottahai from "@/app/layout/chottahai";
 
 export default async function Layout({
@@ -26,16 +26,15 @@ export default async function Layout({
             RoundUser: {
                 include: {
                     round: true,
-                }
-            }
+                },
+            },
         },
-
     });
     if (!user || !user.phone) {
         return redirect("/landing");
     }
 
-    if(!isDesktop) return <Chottahai/>
+    if (!isDesktop) return redirect("/phone");
 
     return (
         <SessionProvider>
