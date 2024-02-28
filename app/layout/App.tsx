@@ -14,17 +14,17 @@ import {
     ThemeProvider,
     Typography,
 } from "@mui/material";
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import AppTree from "./AppTree";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import AppButtons from "./AppButtons";
 import BreadCrumbs from "./BreadCrumbs";
-import {pages as pagesGenerator} from "../pages/pages";
-import {isDesktop} from "react-device-detect";
-import {useParams, useRouter} from "next/navigation";
-import {Prisma} from "@prisma/client";
-import {TerminalContextProvider} from "react-terminal";
+import { pages as pagesGenerator } from "../pages/pages";
+import { isDesktop } from "react-device-detect";
+import { useParams, useRouter } from "next/navigation";
+import { Prisma } from "@prisma/client";
+import { TerminalContextProvider } from "react-terminal";
 import ProfileModal from "../components/profileEdit";
 import UserGetPayload = Prisma.UserGetPayload;
 
@@ -50,9 +50,9 @@ interface Page {
 }
 
 export default function App({
-                                user,
-                                children,
-                            }: {
+    user,
+    children,
+}: {
     children: React.ReactNode;
     user: UserGetPayload<{
         include: {
@@ -72,7 +72,9 @@ export default function App({
     const [focusApptree, setFocusApptree] = useState(false);
     const [open, setOpen] = React.useState(false);
 
-    const [pages, setPages] = useState<Page[]>(pagesGenerator(user.RoundUser));
+    const [pages, setPages] = useState<Page[]>(
+        pagesGenerator(user.RoundUser)
+    );
     const [darkMode, setDarkMode] = useState(
         localStorage ? localStorage.getItem("theme") === "dark" : false
     );
@@ -118,16 +120,15 @@ export default function App({
         },
     });
 
-    const handleThemeChange = (() => {
-        setDarkMode(prev => !prev);
+    const handleThemeChange = () => {
+        setDarkMode((prev) => !prev);
         localStorage.setItem("theme", darkMode ? "light" : "dark");
-        console.log('theme change', darkMode);
-    })
-
+        console.log("theme change", darkMode);
+    };
 
     useEffect(() => {
-        setOpenPages(
-            prevState => prevState.filter((x) => pages.find((y) => y.index === x.index))
+        setOpenPages((prevState) =>
+            prevState.filter((x) => pages.find((y) => y.index === x.index))
         );
     }, [pages]);
 
@@ -194,7 +195,7 @@ export default function App({
                     }}
                 >
                     <TerminalContextProvider>
-                        <CssBaseline enableColorScheme/>
+                        <CssBaseline enableColorScheme />
                         <Container
                             sx={{
                                 m: 0,
@@ -207,11 +208,11 @@ export default function App({
                         >
                             <Grid
                                 container
-                                sx={{overflow: "auto", overflowY: "hidden"}}
+                                sx={{ overflow: "auto", overflowY: "hidden" }}
                                 onClick={() => setFocusApptree(false)}
                             >
-                                <Grid container sx={{overflow: "auto"}}>
-                                    <Grid item sx={{width: 50}}>
+                                <Grid container sx={{ overflow: "auto" }}>
+                                    <Grid item sx={{ width: 50 }}>
                                         <Sidebar
                                             setExpanded={setShowExplorer}
                                             expanded={showExplorer}
@@ -239,11 +240,11 @@ export default function App({
                                                 setFocusApptree(true);
                                             }}
                                         >
-                                            <Stack sx={{mt: 1}}>
+                                            <Stack sx={{ mt: 1 }}>
                                                 <Typography
                                                     variant="caption"
                                                     color="text.secondary"
-                                                    sx={{ml: 4}}
+                                                    sx={{ ml: 4 }}
                                                 >
                                                     EXPLORER
                                                 </Typography>
@@ -266,14 +267,14 @@ export default function App({
                                         <Grid
                                             sx={{
                                                 height: "33px",
-                                                position:"relative"
+                                                position: "relative",
                                             }}
                                         >
-                                            <AppButtons/>
+                                            <AppButtons />
                                         </Grid>
                                         <Grid
                                             sx={{
-                                                height: "4px",
+                                                height: "27px",
                                             }}
                                         >
                                             {currentPage && (
@@ -286,7 +287,7 @@ export default function App({
                                             sx={{
                                                 scrollBehavior: "smooth",
                                                 overflowY: "auto",
-                                                height: `calc(100vh - 20px - 33px - 4px)`,
+                                                height: `calc(97.5vh - 20px - 33px - 4px)`,
                                             }}
                                         >
                                             {/* {children} */}
@@ -294,7 +295,7 @@ export default function App({
                                                 <>
                                                     <Box
                                                         sx={{
-                                                            height: "64.4%",
+                                                            height: "65.4%",
                                                             overflow: "auto",
                                                         }}
                                                     >
@@ -326,7 +327,7 @@ export default function App({
                                     </Grid>
                                 </Grid>
                                 <Grid item lg={12} md={12} sm={12} xs={12}>
-                                    <Footer/>
+                                    <Footer />
                                 </Grid>
                             </Grid>
                         </Container>

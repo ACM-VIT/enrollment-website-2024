@@ -16,7 +16,6 @@ interface Page {
 }
 
 export default function BreadCrumbs({ currentPage }: { currentPage: Page }) {
-
     const theme = useTheme();
 
     return (

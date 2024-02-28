@@ -34,7 +34,7 @@ async function FormContainer({roundId}: { roundId: string }) {
     });
     return (
         <Container maxWidth={false}>
-            <Form questions={questions} roundId={roundId}/>
+            <Form questions={questions} roundId={roundId} />
         </Container>
     );
 }
