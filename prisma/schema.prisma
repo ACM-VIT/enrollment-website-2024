@@ -124,6 +124,7 @@ model FormSubmission {
 
 model Question {
   id         String           @id @default(cuid())
+  serial     Int
   question   String
   helpText   String?
   round      Round            @relation(fields: [roundId], references: [id], onDelete: Cascade)
