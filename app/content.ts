@@ -333,8 +333,8 @@ For **Short & Long Answers**, answer within \`" "\`.<br>
 For **MCQs**, just click on \`true\` or \`false\` for each option. 
 <br>
 
-// >  !! **CAUTION** !!<br>
-// Changes are saved 5 seconds after you've stop editing the form. Please be patient with your responses.
+>  !! **CAUTION** !!<br>
+Changes are saved 5 seconds after you've stop editing the form. Please be patient with your responses.
 
 ## ✔️ Submission
 
