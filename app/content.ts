@@ -117,9 +117,9 @@ We work behind the scenes to ensure all event platforms run smoothly, making it 
 
 Welcome to ACM's \`Management domain\`, where solid planning meets hands-on execution, making things happen efficiently. We are the domain that makes every event easy breezy.
 
-From managing budgets to securing sponsorships that make these events possible, we're the backbone ensuring smooth operations. Meticulously planning and executing each aspect, we ensure that every detail seamlessly integrates into the overarching vision.
+From managing budgets to endless marketing that make these events possible, we're the _smooth operators_ of all ACM events. Meticulously planning and executing each aspect, we ensure that every detail seamlessly integrates into the overarching vision.
 
-In essence, we are the unsung heroes behind the scenes, ensuring that every ACM event is not just successful but unforgettable.
+In essence, we are the unsung heroes behind the scenes, ensuring that every ACM event is not just successful but unforgettable.
 
 _Of course, a Management dude write this :)_
 
@@ -129,26 +129,18 @@ _Of course, a Management dude write this :)_
 For every event we host, we are in charge of making it aesthetic and appealing _(yeah yeah design too)_. We strategize and communicate to other students why this event is the banger of their lives.
 
 - \`Managing Finances 📠\` <br>
-Every event, from graVITas to Yantra and other internal occasions, requires funding to ensure their success and memorability, focusing on meticulous planning and efficient resource management.
+Every event, from graVITas to Yantra and other internal occasions, requires funding to ensure their success and memorability, focusing on meticulous planning and efficient resource management.
 
 - \`Arranging logistics 🚘\` <br>
 From booking auditoriums and arranging extentions to getting required permissions from authorities to run the event smoothly, we ensure that the only thing participants need to focus on is participating!
 
 - \`Content Writing & Curation ✒️\` <br>
-From forming PR calendars and deciding what going up on our social media sites to managing blog posts, anything that deals with content is our headache.<br>
-_No extra marks for creativity :(_
+From designing PR calendars and deciding what goes up on our social media sites to managing blog posts, anything that deals with content is our headache.<br>
+_No points for creativity :(_
 
 - \`Networking & Connections 👔\` <br>
 We regularly reach out to speakers and working professional for multiple companies to establish connections and collaboration opportunities to enrich events in terms of knowledge and logistical capabilities.
 
-
-<!--
-Ever attended an ACM event? We are the domain that makes every event easy breezy. If research is the heartbeat, then we are the rhythm that keeps everything in sync.
-
-We handle everything from finances to the day-to-day operations. From managing budgets to securing sponsorships that make these events possible, we're the backbone ensuring smooth operations. Meticulously planning and executing each aspect, we ensure that every detail seamlessly integrates into the overarching vision.
-
-Our responsibilities extend to overseeing daily logistics, ensuring that everything runs like a well-oiled machine. From coordinating schedules to managing communication channels, we ensure that everyone is on the same page, working towards a common goal.
--->
 `,
         cc: `
 ![Alt text](/Competitive_Coding.jpg)
@@ -192,7 +184,7 @@ Participants tackle real-world challenges, collaborate with peers, and engage wi
 Teams are tasked with reverse engineering and deducing the code based on provided inputs and outputs. It's a test of analytical thinking, coding prowess, and creative problem-solving. 🧩🤔
 
 ![Alt text](/CrypticHunt.jpg)
-\`The Hybrid Cryptic Hunt\` is *ACM-VIT's flagship graVITas event* - an elaborate treasure hunt where our participants will be given questions to solve using skills from the cryptography and cybersecurity domains.
+\`The Hybrid Cryptic Hunt\` is *ACM-VIT's flagship graVITas event* - an elaborate scavenger hunt where our participants will be given questions to solve using skills from the cryptography and cybersecurity domains.
 
 Through the Hunt, the participants will get to explore both the world of cybersec and that of VIT, in search of the answers to your problems in the most unexpected places. 🌐🔒
 
@@ -221,7 +213,7 @@ You are free to apply to as many domains as you like, and each domain will have 
 *However,* you can join only ONE domain!
 
 - \`Who can join ACM?\`<br>
-No matter in which year you are, being a VITian is sufficient.
+Being a VITian is the only criteria. We welcome students from all years and branches.
 
 - \`How can I join ACM?\` <br>
 Complete the website's form; it suffices _:)_
