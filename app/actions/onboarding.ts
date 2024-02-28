@@ -7,7 +7,6 @@ import {redirect} from "next/navigation";
 
 const saveForm = async (formData: FormData) => {
     const prisma = new PrismaClient();
-    // console.log(formData.get('phone'))
 
     await prisma.user.update({
         where: {

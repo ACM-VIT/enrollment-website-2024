@@ -124,7 +124,6 @@ export default function App({
     const handleThemeChange = () => {
         setDarkMode((prev) => !prev);
         localStorage.setItem("theme", darkMode ? "light" : "dark");
-        console.log("theme change", darkMode);
     };
 
     useEffect(() => {

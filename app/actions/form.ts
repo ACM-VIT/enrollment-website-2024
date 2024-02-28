@@ -93,7 +93,6 @@ const saveForm = async (roundId: string, valid: boolean, formData: Record<string
 
 
     const responses = await Promise.allSettled(promises)
-    console.log(responses)
 
     revalidateTag( 'FormContainer')
     return !responses.map((response) => {

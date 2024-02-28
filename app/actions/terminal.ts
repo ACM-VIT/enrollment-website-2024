@@ -196,8 +196,6 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
                 round: true
             }
         })
-        console.log(roundUsers)
-        // revalidatePath(`/forms/${domain}`)
         return {console: {message: 'Form submitted successfully. Proceed to next activity.', type: 'response'}, roundUser: roundUsers}
     }
 

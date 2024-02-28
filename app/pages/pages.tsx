@@ -52,7 +52,6 @@ export const pages = (
             roundId: entry[0].round.id
         }
     }).filter(x=>x!==null) as Page[];
-    console.log(rounds);
     return [
         {
             index: 0,

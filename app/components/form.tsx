@@ -192,8 +192,6 @@ export function Form({
                 }
             }
         }
-        console.log(data);
-        console.log(!Object.entries(data).filter(([, i]) => i.error !== null).length);
         return data;
     }, [questions]);
 

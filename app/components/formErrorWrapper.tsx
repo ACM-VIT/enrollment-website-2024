@@ -60,7 +60,6 @@ export function FormErrorWrapper(props: ErrorProps) {
     return (
         <div>
         <span style={props.error ? errStyle : {}} onClick={() => {
-            console.log('cp');
             if (props.spanRef?.current) {
                 props.spanRef.current.focus();
             }
