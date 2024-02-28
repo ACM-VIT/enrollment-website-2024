@@ -276,7 +276,7 @@ In the bottom left corner of your screen, you will see three icons: <br>
 Your ACM journey begins with the **ACM Mainframe Terminal.** <br> <br>
 
 1. Click on the last icon \`Terminal\` on the bottom-left corner of the website. <br><br>
-![Alt text](/terminal.jpg)
+![Alt text](/terminal.png)
 
 2. As requested, you can see all the commands at your disposal using \`help\` <br><br>
 ![Alt text](/help.png)
@@ -289,6 +289,8 @@ There are 5 commands, and you've now already tested \`help\`. Here's what the re
 |\`formsubmit\` \`domain\`| You'll use this to submit your domain forms|
 |\`exit\`| If your work is done or terminal is hindering view|
 
+PS: Don't even think of typing \`board\` in the terminal :)
+<br>
 Now, to the main course... 
 
 <!-- Section ends here -->
@@ -299,6 +301,8 @@ Before filling out your forms, <b>we highly encourage</b> you to go through each
 <br>
 On the top-left corner of our website, do the following: <br>
 underneath \`EXPLORER\` -> \`domains\` -> read through all \`.md\` files.
+
+![Alt text](/domains.png)
 
 > **NOTE** <br>
 Irrespective of how many domains you apply to, if selected, you will be assigned to only one particular domain.
