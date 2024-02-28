@@ -50,17 +50,17 @@ export const registerDomain = async (domain: Domain): Promise<consoleResponse> =
                 round: true
             }
         })
-        return {console: {message: 'Registration successful', type: 'response'}, roundUser}
+        return {console: {message: 'Well, registration successfull! You can proceed to form-filling...', type: 'response'}, roundUser}
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2002') {
-                return {console: {message: 'User already registered for this domain', type: 'error'}}
+                return {console: {message: 'Since you have have already registered for this domain previously, you cannot re-register again.', type: 'error'}}
             }
         }
         console.error(error)
         return {
             console: {
-                message: 'Registration failed due to an unknown error. Please try again later or reach out to us.',
+                message: 'Registration failed due to an unknown error. Please try again later or reach out to us :)',
                 type: 'error'
             }
         }
@@ -71,7 +71,7 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
     const prisma = new PrismaClient();
 
     const session = await auth();
-    if (!session || !session.user) return {console: {message: 'User not logged in', type: 'error'}}
+    if (!session || !session.user) return {console: {message: 'Please log in again', type: 'error'}}
 
     const user = await prisma.user.findUniqueOrThrow({
         where: {
@@ -100,7 +100,7 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
 
     if (user.RoundUser.length === 0) return {
         console: {
-            message: 'You have not registered for this domain',
+            message: 'Seems like you have not registered for this domain...',
             type: 'error'
         }
     };
@@ -110,35 +110,35 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
 
     if (roundUser.round.type !== RoundType.form) return {
         console: {
-            message: 'There is no active form to be submitted',
+            message: 'Seems like there is no active form to be submitted...',
             type: 'error'
         }
     };
 
     if (!roundUser.round.active) return {
         console: {
-            message: 'Form submissions for this round have been closed',
+            message: 'You just missed! Form submissions for this round have closed!',
             type: 'error'
         }
     };
 
     if (roundUser.status !== RoundStatus.pending) return {
         console: {
-            message: 'Already submitted form for this round',
+            message: 'Seems like you have already submitted the form for this round...',
             type: 'error'
         }
     }
 
     if (!roundUser.formSubmission) return {
         console: {
-            message: 'You have not filled the form',
+            message: 'Please fill the form before submitting it!',
             type: 'error'
         }
     }
 
     if (!roundUser.formSubmission.valid) return {
         console: {
-            message: 'Form is invalid. Please check your responses and try again',
+            message: 'There is something incomplete or wrong in the form that you need to recheck. Please try again',
             type: 'error'
         }
     }
@@ -161,7 +161,7 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
             }
         })
 
-        return {console: {message: 'Form submitted successfully. Wait for results.', type: 'response'}, roundUser: roundUsers}
+        return {console: {message: 'Letsgoo! Form submitted successfully. You can check your status using the fork icon on the top-left corner.', type: 'response'}, roundUser: roundUsers}
     } else {
         await Promise.allSettled([prisma.roundUser.update({
             where: {
@@ -196,7 +196,7 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
                 round: true
             }
         })
-        return {console: {message: 'Form submitted successfully. Proceed to next activity.', type: 'response'}, roundUser: roundUsers}
+        return {console: {message: 'Letsgoo! Form submitted successfully. You can check your status using the fork icon on the top-left corner.', type: 'response'}, roundUser: roundUsers}
     }
 
 
