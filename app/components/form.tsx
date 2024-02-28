@@ -130,23 +130,23 @@ export function Form({
         }
     }, [formData, lastSaved, preventSave, setUnsavedChanges]);
 
-    const [lines, setLines] = useState<number[]>([]);
-    useEffect(() => {
-        if (!form.current) return;
-        const resizeObserver = new ResizeObserver(() => {
-            if (form.current) {
-                const { current } = form;
-                const boundingRect = current.getBoundingClientRect();
-                const { height } = boundingRect;
-                const lineHeight = 21;
-                const numLines = Math.floor(height / lineHeight);
-                const lines = Array.from(Array(numLines).keys());
-                setLines(lines);
-            }
-        });
-        resizeObserver.observe(form.current);
-        return () => resizeObserver.disconnect();
-    }, [form]);
+    // const [lines, setLines] = useState<number[]>([]);
+    // useEffect(() => {
+    //     if (!form.current) return;
+    //     const resizeObserver = new ResizeObserver(() => {
+    //         if (form.current) {
+    //             const { current } = form;
+    //             const boundingRect = current.getBoundingClientRect();
+    //             const { height } = boundingRect;
+    //             const lineHeight = 21;
+    //             const numLines = Math.floor(height / lineHeight);
+    //             const lines = Array.from(Array(numLines).keys());
+    //             setLines(lines);
+    //         }
+    //     });
+    //     resizeObserver.observe(form.current);
+    //     return () => resizeObserver.disconnect();
+    // }, [form]);
 
     const theme = useTheme();
     const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
@@ -376,8 +376,8 @@ export function Form({
                     ))}
                 </div> */}
                 <form ref={form} onChange={debouncedSave} className="code">
-                    {arts[round.domain].map((line) => (
-                        <ASCIILine text={line} styles={styles} />
+                    {arts[round.domain].map((line, index) => (
+                        <ASCIILine text={line} styles={styles} key={"ascii-line"+index}/>
                     ))}
                     <code style={{ display: "block" }}></code>
                     {questions.map((question) => {
