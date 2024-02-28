@@ -199,7 +199,9 @@ function Terminal({
             <Container
                 sx={{
                     height: "85%",
+                    paddingLeft: "24px"
                 }}
+                disableGutters={true}
                 maxWidth={false}
             >
                 <div className={TerminalStyle.terminal}>

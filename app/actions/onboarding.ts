@@ -1,4 +1,5 @@
 'use server';
+import parsePhoneNumber from 'libphonenumber-js'
 
 import {PrismaClient} from "@prisma/client";
 import {auth} from "@/lib/auth";
@@ -13,7 +14,7 @@ const saveForm = async (formData: FormData) => {
             email: (await auth())!.user!.email!
         },
         data: {
-            phone: formData.get('phone')?.toString() as string
+            phone: parsePhoneNumber(formData.get('phone')?.toString() as string, 'IN')!.format('INTERNATIONAL')
         }
     })
 

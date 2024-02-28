@@ -131,17 +131,17 @@ export function Form({
                         }
                     }
                     if (question.type === Type.mcq && validator.ruleType === RuleType.min) {
-                        if (Object.keys(data[i].response as {
+                        if (Object.entries(data[i].response as {
                             [key: string]: boolean
-                        }).length < JSON.parse(validator.ruleValue!)) {
+                        }).filter(([, value])=>value).length < JSON.parse(validator.ruleValue!)) {
                             data[i].error = {message: validator.helpText, title: validator.helpTitle};
                             break;
                         }
                     }
                     if (question.type === Type.mcq && validator.ruleType === RuleType.max) {
-                        if (Object.keys(data[i].response as {
+                        if (Object.entries(data[i].response as {
                             [key: string]: boolean
-                        }).length > JSON.parse(validator.ruleValue!)) {
+                        }).filter(([, value])=>value).length > JSON.parse(validator.ruleValue!)) {
                             data[i].error = {message: validator.helpText, title: validator.helpTitle};
                             break;
                         }
