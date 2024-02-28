@@ -19,24 +19,78 @@ import { Box } from "@mui/system";
 import PagesContext from "@/lib/PagesContext";
 import "./form.css";
 
+const arts = {
+    cc: [
+        " ██████╗ ██████╗",
+        "██╔════╝██╔════╝",
+        "██║     ██║     ",
+        "██║     ██║     ",
+        "╚██████╗╚██████╗",
+        " ╚═════╝ ╚═════╝",
+    ],
+    web: [
+        "██╗    ██╗███████╗██████╗ ",
+        "██║    ██║██╔════╝██╔══██╗",
+        "██║ █╗ ██║█████╗  ██████╔╝",
+        "██║███╗██║██╔══╝  ██╔══██╗",
+        "╚███╔███╔╝███████╗██████╔╝",
+        " ╚══╝╚══╝ ╚══════╝╚═════╝ ",
+    ],
+    design: [
+        "██████╗ ███████╗███████╗██╗ ██████╗ ███╗   ██╗",
+        "██╔══██╗██╔════╝██╔════╝██║██╔════╝ ████╗  ██║",
+        "██║  ██║█████╗  ███████╗██║██║  ███╗██╔██╗ ██║",
+        "██║  ██║██╔══╝  ╚════██║██║██║   ██║██║╚██╗██║",
+        "██████╔╝███████╗███████║██║╚██████╔╝██║ ╚████║",
+        "╚═════╝ ╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝",
+    ],
+    research: [
+        "██████╗ ███████╗███████╗███████╗ █████╗ ██████╗  ██████╗██╗  ██╗",
+        "██╔══██╗██╔════╝██╔════╝██╔════╝██╔══██╗██╔══██╗██╔════╝██║  ██║",
+        "██████╔╝█████╗  ███████╗█████╗  ███████║██████╔╝██║     ███████║",
+        "██╔══██╗██╔══╝  ╚════██║██╔══╝  ██╔══██║██╔══██╗██║     ██╔══██║",
+        "██║  ██║███████╗███████║███████╗██║  ██║██║  ██║╚██████╗██║  ██║",
+        "╚═╝  ╚═╝╚══════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝",
+    ],
+    app: [
+        " █████╗ ██████╗ ██████╗ ",
+        "██╔══██╗██╔══██╗██╔══██╗",
+        "███████║██████╔╝██████╔╝",
+        "██╔══██║██╔═══╝ ██╔═══╝ ",
+        "██║  ██║██║     ██║     ",
+        "╚═╝  ╚═╝╚═╝     ╚═╝     ",
+    ],
+    management: [
+        "███╗   ███╗ █████╗ ███╗   ██╗ █████╗  ██████╗ ███████╗███╗   ███╗███████╗███╗   ██╗████████╗",
+        "████╗ ████║██╔══██╗████╗  ██║██╔══██╗██╔════╝ ██╔════╝████╗ ████║██╔════╝████╗  ██║╚══██╔══╝",
+        "██╔████╔██║███████║██╔██╗ ██║███████║██║  ███╗█████╗  ██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ",
+        "██║╚██╔╝██║██╔══██║██║╚██╗██║██╔══██║██║   ██║██╔══╝  ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ",
+        "██║ ╚═╝ ██║██║  ██║██║ ╚████║██║  ██║╚██████╔╝███████╗██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ",
+        "╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ",
+    ],
+};
 export function Form({
-    questions,
-    roundId
-                     }: {
-    roundId: string;
-    questions: Prisma.QuestionGetPayload<{ include: { responses: true; validators: true; } }>[];
+    round,
+}: {
+    round: Prisma.RoundGetPayload<{
+        include: {
+            Question: { include: { responses: true; validators: true } };
+        };
+    }>;
 }) {
+    const questions = round.Question;
+    const roundId = round.id;
+
     const [, startSave] = useTransition();
     const { setUnsavedChanges } = useContext(PagesContext);
     const [formData, setFormData] = useState<{
-        [key: string]:
-            {
-                response: string | { [key: string]: boolean };
-                error: {
-                    message: string;
-                    title: string
-                } | null;
-            }
+        [key: string]: {
+            response: string | { [key: string]: boolean };
+            error: {
+                message: string;
+                title: string;
+            } | null;
+        };
     }>(
         Object.fromEntries(
             questions.map((question) => [
@@ -49,7 +103,9 @@ export function Form({
                         : Object.fromEntries(
                               question.options.map((option) => [option, false])
                           ),
-                    error: JSON.parse(question.responses[0]?.error as string || "null")
+                    error: JSON.parse(
+                        (question.responses[0]?.error as string) || "null"
+                    ),
                 },
             ])
         )
@@ -59,8 +115,10 @@ export function Form({
 
     const form = createRef<HTMLFormElement>();
 
-    const preventSave = useCallback(() => 'Are you sure you want to leave?', [])
-
+    const preventSave = useCallback(
+        () => "Are you sure you want to leave?",
+        []
+    );
 
     useEffect(() => {
         if (JSON.stringify(formData) === JSON.stringify(lastSaved)) {
@@ -98,112 +156,210 @@ export function Form({
         // (form!.current! as HTMLFormElement).requestSubmit();
         startSave(() => {
             const temp = { ...formData };
-            saveForm(roundId, !Object.entries(temp).filter(([, i]) => i.error !== null).length, temp).then((res) => {
+            saveForm(
+                roundId,
+                !Object.entries(temp).filter(([, i]) => i.error !== null)
+                    .length,
+                temp
+            ).then((res) => {
                 if (!res) alert("Error in saving");
                 else setLastSaved({ ...temp });
             });
         });
     }, 5000);
 
-    const validate = useCallback((
-        data: Record<
-            string,
-            {
-                response: string | { [key: string]: boolean };
-                error: { message: string; title: string } | null;
-            }
-        >
-    ) => {
+    const validate = useCallback(
+        (
+            data: Record<
+                string,
+                {
+                    response: string | { [key: string]: boolean };
+                    error: { message: string; title: string } | null;
+                }
+            >
+        ) => {
+            for (const i in data) {
+                const question = questions.find((q) => q.id === i)!;
+                const _validators = question.validators;
 
-        for (const i in data) {
-            const question = questions.find((q) => q.id === i)!;
-            const _validators = question.validators;
+                data[i].error = null;
 
-            data[i].error = null;
-
-            if (_validators.length) {
-                for (const validator of _validators) {
-                    if (question.type === Type.stq && validator.ruleType === RuleType.pattern) {
-                        const regex = new RegExp(validator.ruleValue!);
-                        if (!regex.test(data[i].response as string)) {
-                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
-                            break;
-                        }
-                    }
-                    if (question.type === Type.mcq && validator.ruleType === RuleType.min) {
-                        if (Object.entries(data[i].response as {
-                            [key: string]: boolean
-                        }).filter(([, value])=>value).length < JSON.parse(validator.ruleValue!)) {
-                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
-                            break;
-                        }
-                    }
-                    if (question.type === Type.mcq && validator.ruleType === RuleType.max) {
-                        if (Object.entries(data[i].response as {
-                            [key: string]: boolean
-                        }).filter(([, value])=>value).length > JSON.parse(validator.ruleValue!)) {
-                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
-                            break;
-                        }
-                    }
-                    if (validator.ruleType === RuleType.required) {
-                        if (question.type === Type.stq && !data[i].response?.length) {
-                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
-                            break;
-                        }
-                        if (question.type === Type.ltq && !data[i].response?.length) {
-                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
-                            break;
-                        }
-                        if (question.type === Type.mcq && !Object.values(data[i].response as {
-                            [key: string]: boolean
-                        }).includes(true)) {
-                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
-                            break;
-                        }
-                        if (question.type === Type.scq && !data[i].response) {
-                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
-                            break;
-                        }
-                    }
-                    if (validator.ruleType === RuleType.requiredIf) {
-                        const deps = JSON.parse(validator.ruleValue!) as { question: string, selected: string };
-                        if ((data[deps.question].response as { [key: string]: boolean })[deps.selected]) {
-                            if (question.type === Type.stq && !data[i].response) {
-                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                if (_validators.length) {
+                    for (const validator of _validators) {
+                        if (
+                            question.type === Type.stq &&
+                            validator.ruleType === RuleType.pattern
+                        ) {
+                            const regex = new RegExp(validator.ruleValue!);
+                            if (!regex.test(data[i].response as string)) {
+                                data[i].error = {
+                                    message: validator.helpText,
+                                    title: validator.helpTitle,
+                                };
                                 break;
                             }
-                            if (question.type === Type.ltq && !data[i].response) {
-                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                        }
+                        if (
+                            question.type === Type.mcq &&
+                            validator.ruleType === RuleType.min
+                        ) {
+                            if (
+                                Object.entries(
+                                    data[i].response as {
+                                        [key: string]: boolean;
+                                    }
+                                ).filter(([, value]) => value).length <
+                                JSON.parse(validator.ruleValue!)
+                            ) {
+                                data[i].error = {
+                                    message: validator.helpText,
+                                    title: validator.helpTitle,
+                                };
                                 break;
                             }
-                            if (question.type === Type.mcq && !Object.values(data[i].response as {
-                                [key: string]: boolean
-                            }).includes(true)) {
-                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                        }
+                        if (
+                            question.type === Type.mcq &&
+                            validator.ruleType === RuleType.max
+                        ) {
+                            if (
+                                Object.entries(
+                                    data[i].response as {
+                                        [key: string]: boolean;
+                                    }
+                                ).filter(([, value]) => value).length >
+                                JSON.parse(validator.ruleValue!)
+                            ) {
+                                data[i].error = {
+                                    message: validator.helpText,
+                                    title: validator.helpTitle,
+                                };
                                 break;
                             }
-                            if (question.type === Type.scq && !data[i].response) {
-                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                        }
+                        if (validator.ruleType === RuleType.required) {
+                            if (
+                                question.type === Type.stq &&
+                                !data[i].response?.length
+                            ) {
+                                data[i].error = {
+                                    message: validator.helpText,
+                                    title: validator.helpTitle,
+                                };
                                 break;
+                            }
+                            if (
+                                question.type === Type.ltq &&
+                                !data[i].response?.length
+                            ) {
+                                data[i].error = {
+                                    message: validator.helpText,
+                                    title: validator.helpTitle,
+                                };
+                                break;
+                            }
+                            if (
+                                question.type === Type.mcq &&
+                                !Object.values(
+                                    data[i].response as {
+                                        [key: string]: boolean;
+                                    }
+                                ).includes(true)
+                            ) {
+                                data[i].error = {
+                                    message: validator.helpText,
+                                    title: validator.helpTitle,
+                                };
+                                break;
+                            }
+                            if (
+                                question.type === Type.scq &&
+                                !data[i].response
+                            ) {
+                                data[i].error = {
+                                    message: validator.helpText,
+                                    title: validator.helpTitle,
+                                };
+                                break;
+                            }
+                        }
+                        if (validator.ruleType === RuleType.requiredIf) {
+                            const deps = JSON.parse(validator.ruleValue!) as {
+                                question: string;
+                                selected: string;
+                            };
+                            if (
+                                (
+                                    data[deps.question].response as {
+                                        [key: string]: boolean;
+                                    }
+                                )[deps.selected]
+                            ) {
+                                if (
+                                    question.type === Type.stq &&
+                                    !data[i].response
+                                ) {
+                                    data[i].error = {
+                                        message: validator.helpText,
+                                        title: validator.helpTitle,
+                                    };
+                                    break;
+                                }
+                                if (
+                                    question.type === Type.ltq &&
+                                    !data[i].response
+                                ) {
+                                    data[i].error = {
+                                        message: validator.helpText,
+                                        title: validator.helpTitle,
+                                    };
+                                    break;
+                                }
+                                if (
+                                    question.type === Type.mcq &&
+                                    !Object.values(
+                                        data[i].response as {
+                                            [key: string]: boolean;
+                                        }
+                                    ).includes(true)
+                                ) {
+                                    data[i].error = {
+                                        message: validator.helpText,
+                                        title: validator.helpTitle,
+                                    };
+                                    break;
+                                }
+                                if (
+                                    question.type === Type.scq &&
+                                    !data[i].response
+                                ) {
+                                    data[i].error = {
+                                        message: validator.helpText,
+                                        title: validator.helpTitle,
+                                    };
+                                    break;
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        return data;
-    }, [questions]);
+            return data;
+        },
+        [questions]
+    );
 
-    const updateResponse = useCallback((id: string, response: string) => {
+    const updateResponse = useCallback(
+        (id: string, response: string) => {
             setFormData((prev) => {
                 return validate({
                     ...prev,
-                    [id]: {...prev[id], response},
+                    [id]: { ...prev[id], response },
                 });
             });
-        }, [validate]
-    )
+        },
+        [validate]
+    );
 
     return (
         <Box
@@ -220,6 +376,10 @@ export function Form({
                     ))}
                 </div> */}
                 <form ref={form} onChange={debouncedSave} className="code">
+                    {arts[round.domain].map((line) => (
+                        <ASCIILine text={line} styles={styles} />
+                    ))}
+                    <code style={{ display: "block" }}></code>
                     {questions.map((question) => {
                         switch (question.type) {
                             case "stq":
@@ -278,7 +438,9 @@ export function Form({
                                             triggerSave={debouncedSave}
                                             data={
                                                 formData[question.id] as {
-                                                    response: { [key: string]: boolean };
+                                                    response: {
+                                                        [key: string]: boolean;
+                                                    };
                                                     error: {
                                                         message: string;
                                                         title: string;
@@ -301,8 +463,7 @@ export function Form({
                                             triggerSave={debouncedSave}
                                             data={
                                                 formData[question.id] as {
-                                                    response:
-                                                        string;
+                                                    response: string;
                                                     error: {
                                                         message: string;
                                                         title: string;
@@ -320,5 +481,21 @@ export function Form({
                 </form>
             </div>
         </Box>
+    );
+}
+
+function ASCIILine({
+    text,
+    styles,
+}: {
+    text: string;
+    styles: typeof styles_dark | typeof styles_light;
+}) {
+    return (
+        <code style={{ display: "block" }}>
+            <span className={styles.comment}>
+                # <pre style={{ display: "inline" }}>{text}</pre>
+            </span>
+        </code>
     );
 }
