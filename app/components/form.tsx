@@ -130,23 +130,23 @@ export function Form({
         }
     }, [formData, lastSaved, preventSave, setUnsavedChanges]);
 
-    const [lines, setLines] = useState<number[]>([]);
-    useEffect(() => {
-        if (!form.current) return;
-        const resizeObserver = new ResizeObserver(() => {
-            if (form.current) {
-                const { current } = form;
-                const boundingRect = current.getBoundingClientRect();
-                const { height } = boundingRect;
-                const lineHeight = 21;
-                const numLines = Math.floor(height / lineHeight);
-                const lines = Array.from(Array(numLines).keys());
-                setLines(lines);
-            }
-        });
-        resizeObserver.observe(form.current);
-        return () => resizeObserver.disconnect();
-    }, [form]);
+    // const [lines, setLines] = useState<number[]>([]);
+    // useEffect(() => {
+    //     if (!form.current) return;
+    //     const resizeObserver = new ResizeObserver(() => {
+    //         if (form.current) {
+    //             const { current } = form;
+    //             const boundingRect = current.getBoundingClientRect();
+    //             const { height } = boundingRect;
+    //             const lineHeight = 21;
+    //             const numLines = Math.floor(height / lineHeight);
+    //             const lines = Array.from(Array(numLines).keys());
+    //             setLines(lines);
+    //         }
+    //     });
+    //     resizeObserver.observe(form.current);
+    //     return () => resizeObserver.disconnect();
+    // }, [form]);
 
     const theme = useTheme();
     const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
