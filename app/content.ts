@@ -306,7 +306,6 @@ Now, to the main course...
 
 ACM-VIT have several domains that may interest you. <br>
 Before filling out your forms, <b>we highly encourage</b> you to go through each of our domains and what we do. <br>
-<br>
 On the top-left corner of our website, do the following: <br>
 underneath \`EXPLORER\` -> \`domains\` -> read through all \`.md\` files.
 
