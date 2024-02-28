@@ -376,8 +376,8 @@ export function Form({
                     ))}
                 </div> */}
                 <form ref={form} onChange={debouncedSave} className="code">
-                    {arts[round.domain].map((line) => (
-                        <ASCIILine text={line} styles={styles} />
+                    {arts[round.domain].map((line, index) => (
+                        <ASCIILine text={line} styles={styles} key={"ascii-line"+index}/>
                     ))}
                     <code style={{ display: "block" }}></code>
                     {questions.map((question) => {
