@@ -27,6 +27,7 @@ import { Prisma } from "@prisma/client";
 import { TerminalContextProvider } from "react-terminal";
 import ProfileModal from "../components/profileEdit";
 import UserGetPayload = Prisma.UserGetPayload;
+import Chottahai from "@/app/layout/chottahai";
 
 const style = {
     position: "absolute",
@@ -56,8 +57,12 @@ export default function App({
     children: React.ReactNode;
     user: UserGetPayload<{
         include: {
-            registrations: true;
-        };
+            RoundUser: {
+                include: {
+                    round: true,
+                }
+            }
+        },
     }>;
 }) {
     const params = useParams<{ folder: string; file: string }>();
@@ -69,7 +74,7 @@ export default function App({
     const [open, setOpen] = React.useState(false);
 
     const [pages, setPages] = useState<Page[]>(
-        pagesGenerator(user.registrations)
+        pagesGenerator(user.RoundUser)
     );
     const [darkMode, setDarkMode] = useState(
         localStorage ? localStorage.getItem("theme") === "dark" : false
@@ -119,7 +124,6 @@ export default function App({
     const handleThemeChange = () => {
         setDarkMode((prev) => !prev);
         localStorage.setItem("theme", darkMode ? "light" : "dark");
-        console.log("theme change", darkMode);
     };
 
     useEffect(() => {
@@ -291,7 +295,7 @@ export default function App({
                                                 <>
                                                     <Box
                                                         sx={{
-                                                            height: "65.4%",
+                                                            height: "64.4%",
                                                             overflow: "auto",
                                                         }}
                                                     >

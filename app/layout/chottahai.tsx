@@ -2,7 +2,7 @@ import React from "react";
 import "./chottahai.css";
 import Image from "next/image";
 import dots from "../landing/assets/Dots.png";
-
+import "../tailwind.css";
 export default function Chottahai() {
     return (
         <div className="flex flex-col h-screen w-screen" id="page">

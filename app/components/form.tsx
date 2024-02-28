@@ -13,7 +13,7 @@ import styles_dark from "./questions_dark.module.css";
 import { useTheme } from "@mui/material";
 import { useDebouncedCallback } from "use-debounce";
 import { Prisma } from ".prisma/client";
-import { Domain } from "@prisma/client";
+import { RuleType, Type } from "@prisma/client";
 import { STQ, LTQ, MCQ, SCQ } from "@/app/components/questions";
 import { Box } from "@mui/system";
 import PagesContext from "@/lib/PagesContext";
@@ -21,22 +21,23 @@ import "./form.css";
 
 export function Form({
     questions,
-    domain,
-}: {
-    questions: Prisma.QuestionGetPayload<{ include: { responses: true } }>[];
-    domain: Domain;
+    roundId
+                     }: {
+    roundId: string;
+    questions: Prisma.QuestionGetPayload<{ include: { responses: true; validators: true; } }>[];
 }) {
     const [, startSave] = useTransition();
     const { setUnsavedChanges } = useContext(PagesContext);
-    const [formData, setFormData] = useState<
-        Record<
-            string,
+    const [formData, setFormData] = useState<{
+        [key: string]:
             {
-                response: string | Record<string, boolean>;
-                error: { message: string; title: string } | null;
+                response: string | { [key: string]: boolean };
+                error: {
+                    message: string;
+                    title: string
+                } | null;
             }
-        >
-    >(
+    }>(
         Object.fromEntries(
             questions.map((question) => [
                 question.id,
@@ -48,7 +49,7 @@ export function Form({
                         : Object.fromEntries(
                               question.options.map((option) => [option, false])
                           ),
-                    error: null,
+                    error: JSON.parse(question.responses[0]?.error as string || "null")
                 },
             ])
         )
@@ -58,7 +59,8 @@ export function Form({
 
     const form = createRef<HTMLFormElement>();
 
-    const preventSave = useCallback(() => "Warning here.....", []);
+    const preventSave = useCallback(() => 'Are you sure you want to leave?', [])
+
 
     useEffect(() => {
         if (JSON.stringify(formData) === JSON.stringify(lastSaved)) {
@@ -94,36 +96,114 @@ export function Form({
     const debouncedSave = useDebouncedCallback(() => {
         // submit the form
         // (form!.current! as HTMLFormElement).requestSubmit();
-        console.log(formData);
         startSave(() => {
             const temp = { ...formData };
-            saveForm(domain, temp).then((res) => {
+            saveForm(roundId, !Object.entries(temp).filter(([, i]) => i.error !== null).length, temp).then((res) => {
                 if (!res) alert("Error in saving");
                 else setLastSaved({ ...temp });
             });
         });
     }, 5000);
 
-    const updateResponse = useCallback((id: string, response: string) => {
-        setFormData((prev) => {
-            return validate({
-                ...prev,
-                [id]: { ...prev[id], response },
-            });
-        });
-    }, []);
-
-    function validate(
+    const validate = useCallback((
         data: Record<
             string,
             {
-                response: string | Record<string, boolean>;
+                response: string | { [key: string]: boolean };
                 error: { message: string; title: string } | null;
             }
         >
-    ) {
+    ) => {
+
+        for (const i in data) {
+            const question = questions.find((q) => q.id === i)!;
+            const _validators = question.validators;
+
+            data[i].error = null;
+
+            if (_validators.length) {
+                for (const validator of _validators) {
+                    if (question.type === Type.stq && validator.ruleType === RuleType.pattern) {
+                        const regex = new RegExp(validator.ruleValue!);
+                        if (!regex.test(data[i].response as string)) {
+                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                            break;
+                        }
+                    }
+                    if (question.type === Type.mcq && validator.ruleType === RuleType.min) {
+                        if (Object.entries(data[i].response as {
+                            [key: string]: boolean
+                        }).filter(([, value])=>value).length < JSON.parse(validator.ruleValue!)) {
+                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                            break;
+                        }
+                    }
+                    if (question.type === Type.mcq && validator.ruleType === RuleType.max) {
+                        if (Object.entries(data[i].response as {
+                            [key: string]: boolean
+                        }).filter(([, value])=>value).length > JSON.parse(validator.ruleValue!)) {
+                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                            break;
+                        }
+                    }
+                    if (validator.ruleType === RuleType.required) {
+                        if (question.type === Type.stq && !data[i].response?.length) {
+                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                            break;
+                        }
+                        if (question.type === Type.ltq && !data[i].response?.length) {
+                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                            break;
+                        }
+                        if (question.type === Type.mcq && !Object.values(data[i].response as {
+                            [key: string]: boolean
+                        }).includes(true)) {
+                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                            break;
+                        }
+                        if (question.type === Type.scq && !data[i].response) {
+                            data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                            break;
+                        }
+                    }
+                    if (validator.ruleType === RuleType.requiredIf) {
+                        const deps = JSON.parse(validator.ruleValue!) as { question: string, selected: string };
+                        if ((data[deps.question].response as { [key: string]: boolean })[deps.selected]) {
+                            if (question.type === Type.stq && !data[i].response) {
+                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                                break;
+                            }
+                            if (question.type === Type.ltq && !data[i].response) {
+                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                                break;
+                            }
+                            if (question.type === Type.mcq && !Object.values(data[i].response as {
+                                [key: string]: boolean
+                            }).includes(true)) {
+                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                                break;
+                            }
+                            if (question.type === Type.scq && !data[i].response) {
+                                data[i].error = {message: validator.helpText, title: validator.helpTitle};
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return data;
-    }
+    }, [questions]);
+
+    const updateResponse = useCallback((id: string, response: string) => {
+            setFormData((prev) => {
+                return validate({
+                    ...prev,
+                    [id]: {...prev[id], response},
+                });
+            });
+        }, [validate]
+    )
 
     return (
         <Box
@@ -198,10 +278,7 @@ export function Form({
                                             triggerSave={debouncedSave}
                                             data={
                                                 formData[question.id] as {
-                                                    response: Record<
-                                                        string,
-                                                        boolean
-                                                    >;
+                                                    response: { [key: string]: boolean };
                                                     error: {
                                                         message: string;
                                                         title: string;
@@ -224,10 +301,8 @@ export function Form({
                                             triggerSave={debouncedSave}
                                             data={
                                                 formData[question.id] as {
-                                                    response: Record<
-                                                        string,
-                                                        boolean
-                                                    >;
+                                                    response:
+                                                        string;
                                                     error: {
                                                         message: string;
                                                         title: string;

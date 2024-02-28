@@ -13,7 +13,6 @@ async function Page() {
         if ((await prisma.user.findUnique({where: {email: user!.email!}}))?.phone) {
             return redirect('/')
         } else {
-            const prisma = new PrismaClient();
             const user = await prisma.user.findUnique({where:{email:(await auth())!.user!.email!}});
 
             return <Onboarding user={user!}/>
