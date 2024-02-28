@@ -44,12 +44,13 @@
   font-size: 18px;
   margin-top: 10px;
   color: #005a9e;
-
-  img {
-    margin-top: 5px;
-    margin-inline: 9px;
-  }
 }
+
+.error img {
+  margin-top: 5px;
+  margin-inline: 9px;
+}
+
 
 .details {
   margin-left: 65px;
@@ -67,19 +68,20 @@
   background-color: #eeeeee;
   padding: 5px;
   border-radius: 0 0 8px 8px;
-
-  button {
-    background-color: white;
-    border: 1px solid #005a9e;
-    border-radius: 3px;
-    cursor: pointer;
-    height: 28px;
-    width: 90px;
-    font-family: "MS Shell Dlg", "Helvetica";
-    font-size: 14px;
-    outline: none;
-  }
 }
+
+.okay-button  button {
+  background-color: white;
+  border: 1px solid #005a9e;
+  border-radius: 3px;
+  cursor: pointer;
+  height: 28px;
+  width: 90px;
+  font-family: "MS Shell Dlg", "Helvetica";
+  font-size: 14px;
+  outline: none;
+}
+
 
 .red {
   z-index: 1;

@@ -18,6 +18,23 @@ model Config {
   updatedAt DateTime   @updatedAt
 }
 
+
+model Round {
+  id     String    @id @default(cuid())
+  number Int
+  domain Domain
+  active Boolean
+  type   RoundType
+
+  @@unique([domain, number])
+}
+
+enum RoundType {
+  form
+  interview
+  task
+}
+
 enum ConfigKeys {
   accept_form_responses
   round1_results_announced
@@ -51,15 +68,27 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
-  name          String?
-  email         String?        @unique
-  emailVerified DateTime?
-  image         String?
-  phone         String?
-  accounts      Account[]
-  sessions      Session[]
-  registrations Registration[]
+  id                 String         @id @default(cuid())
+  name               String?
+  email              String?        @unique
+  emailVerified      DateTime?
+  image              String?
+  phone              String?
+  accounts           Account[]
+  sessions           Session[]
+  registrations      Registration[]
+  push_subscriptions Subscription[]
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  endpoint  String
+  p256dh    String
+  auth      String
+  userId    String
+  User      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Domain {
@@ -85,16 +114,16 @@ model Registration {
 }
 
 model Question {
-  id             String           @id @default(cuid())
-  question       String
-  domain         Domain
-  type           Type
-  options        String[]
-  varName        String
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  responses      Response[]
-  ValidationRule ValidationRule[]
+  id         String           @id @default(cuid())
+  question   String
+  domain     Domain
+  type       Type
+  options    String[]
+  varName    String
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  responses  Response[]
+  validators ValidationRule[]
 }
 
 enum Type {
@@ -120,8 +149,9 @@ model Response {
 
 model ValidationRule {
   id         String   @id @default(cuid())
-  question   Question @relation(fields: [questionId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
   ruleType   String
   ruleValue  Json
 }
+

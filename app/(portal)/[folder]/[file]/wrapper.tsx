@@ -13,11 +13,6 @@ interface Page {
 function Wrapper({page, children}: { page: Page, children: React.ReactNode }) {
     const {pages} = useContext(PagesContext)
 
-    // useEffect(() => {
-    //     if(pages.find(p=>p.index === page.index)) setNextPage(page);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
     if(!pages.find(p=>p.index === page.index)) return notFound();
 
     return children;

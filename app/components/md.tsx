@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
     Alert,
@@ -13,19 +13,19 @@ import {
     TableRow,
     Typography,
 } from "@mui/material";
-import {ReactNode} from "react";
-import {Prism as SyntaxHighlighter} from "react-syntax-highlighter";
+import { ReactNode } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
     materialLight,
     materialDark,
 } from "react-syntax-highlighter/dist/esm/styles/prism";
-import {ReactElement} from "react-markdown/lib/react-markdown";
-import {useTheme} from "@mui/material/styles";
-import {tableCellClasses} from "@mui/material/TableCell";
-import {styled} from "@mui/material/styles";
+import { ReactElement } from "react-markdown/lib/react-markdown";
+import { useTheme } from "@mui/material/styles";
+import { tableCellClasses } from "@mui/material/TableCell";
+import { styled } from "@mui/material/styles";
+import Image from "next/image";
 
-
-export const StyledTableCell = styled(TableCell)(({theme}) => ({
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
@@ -35,7 +35,7 @@ export const StyledTableCell = styled(TableCell)(({theme}) => ({
     },
 }));
 
-export const StyledTableRow = styled(TableRow)(({theme}) => ({
+export const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
         backgroundColor: theme.palette.action.hover,
     },
@@ -66,7 +66,7 @@ export function MarkdownTable(props: { children: ReactNode }) {
 export function MarkdownTableCell(props: any): ReactElement {
     if (props.style && props.style.textAlign === "right") {
         return (
-            <StyledTableCell sx={{textAlign: "right"}}>
+            <StyledTableCell sx={{ textAlign: "right" }}>
                 {props.children}
             </StyledTableCell>
         );
@@ -83,7 +83,15 @@ export function MarkdownCode(props: any): ReactElement {
     const theme = useTheme();
     const isDarkMode = theme.palette.mode === "dark";
     if (props.inline) {
-        return <Chip size="small" label={props.children?.toString()}/>;
+        return (
+            <Chip
+                sx={{
+                    borderRadius: "6px",
+                }}
+                size="small"
+                label={props.children?.toString()}
+            />
+        );
     } else if (props.className) {
         const language = props.className.split("-")[1];
         return (
@@ -114,9 +122,9 @@ export function MarkdownDivider() {
     return (
         <>
             {isDarkMode ? (
-                <Divider sx={{bgcolor: "#393939"}}/>
+                <Divider sx={{ bgcolor: "#393939" }} />
             ) : (
-                <Divider sx={{bgcolor: "#eeeeee"}}/>
+                <Divider sx={{ bgcolor: "#eeeeee" }} />
             )}
         </>
     );
@@ -138,7 +146,7 @@ export function MarkdownH1(props: { children: ReactNode }) {
             >
                 {props.children}
             </Typography>
-            <MarkdownDivider/>
+            <MarkdownDivider />
         </>
     );
 }
@@ -159,14 +167,14 @@ export function MarkdownH2(props: { children: ReactNode }) {
             >
                 {props.children}
             </Typography>
-            <MarkdownDivider/>
+            <MarkdownDivider />
         </>
     );
 }
 
 export function MarkdownBlockquote(props: any): ReactElement {
     return (
-        <Box sx={{borderLeft: 3, borderColor: "#eeeeee"}}>
+        <Box sx={{ borderLeft: 3, borderColor: "#eeeeee" }}>
             <blockquote>{props.children}</blockquote>
         </Box>
     );
@@ -190,7 +198,7 @@ export function MarkdownBlockquote(props: any): ReactElement {
 // }
 
 export function MarkdownImage(props: any) {
-    return <img src={props.src} alt={props.alt}/>;
+    return <img src={props.src} alt={props.alt} />;
 }
 
 export function MarkdownParagraph(props: any): ReactElement {
@@ -238,4 +246,3 @@ export function MarkdownParagraph(props: any): ReactElement {
     }
     return <p>{props.children}</p>;
 }
-

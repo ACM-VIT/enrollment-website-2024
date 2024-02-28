@@ -2,10 +2,11 @@ import React, {useContext} from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {TreeItem, TreeView} from "@mui/x-tree-view";
-import {useRouter} from 'next/navigation'
+import {useRouter} from "next/navigation";
 import {useTheme} from "@mui/material/styles";
 import {VscMarkdown} from "react-icons/vsc";
 import PagesContext from "@/lib/PagesContext";
+import {FaPython} from "react-icons/fa";
 
 const groupBy = function (xs: any[], key: string | number | Function) {
     return xs.reduce(function (rv, x) {
@@ -15,14 +16,16 @@ const groupBy = function (xs: any[], key: string | number | Function) {
     }, {});
 };
 
-export default function AppTree({focusApptree}: { focusApptree: boolean}) {
-    const {pages, currentPage} = useContext(PagesContext);
-    const router = useRouter()
+export default function AppTree({focusApptree}: { focusApptree: boolean }) {
+    const {pages, currentPage, unsavedChanges} = useContext(PagesContext);
+    const router = useRouter();
     const theme = useTheme();
 
     function renderTreeItemBgColor(index: number) {
         if (theme.palette.mode === "dark") {
-            return currentPage?.index === index ? "rgba(144,202,249,0.16)" : "#252527";
+            return currentPage?.index === index
+                ? "rgba(144,202,249,0.16)"
+                : "#252527";
         } else {
             return currentPage?.index === index ? "#295fbf" : "#f3f3f3";
         }
@@ -45,37 +48,54 @@ export default function AppTree({focusApptree}: { focusApptree: boolean}) {
             defaultExpandIcon={<ChevronRightIcon/>}
             sx={{minWidth: 220}}
             defaultExpanded={["-1"]}
-            // sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
         >
-
-            {Object.keys(groupBy(pages, 'group')).map((group) => (
-                pages.filter(i => i.group === group).length > 0 &&
-                <TreeItem
-                    key={group}
-                    nodeId={group}
-                    label={group}
-                    color="#bdc3cf"
-                >
-                    {pages.filter(i => i.group === group).map(({index, name, route}) => (
+            {Object.keys(groupBy(pages, "group")).map(
+                (group) =>
+                    pages.filter((i) => i.group === group).length > 0 && (
                         <TreeItem
-                            key={index}
-                            nodeId={index.toString()}
-                            label={name}
-                            sx={{
-                                color: renderTreeItemColor(index),
-                                backgroundColor: renderTreeItemBgColor(index),
-                                "&& .Mui-selected": {
-                                    backgroundColor: renderTreeItemBgColor(index),
-                                },
-                            }}
-                            icon={<VscMarkdown color="#6997d5"/>}
-                            onClick={() => {
-                                router.push(`/${group}/${route}`);
-                            }}
-                        />
-                    ))}
-                </TreeItem>
-            ))}
+                            key={group}
+                            nodeId={group}
+                            label={group}
+                            color="#bdc3cf"
+                        >
+                            {pages
+                                .filter((i) => i.group === group)
+                                .map(({index, name, route, type}) => (
+                                    <TreeItem
+                                        key={index}
+                                        nodeId={index.toString()}
+                                        label={name}
+                                        sx={{
+                                            color: renderTreeItemColor(index),
+                                            backgroundColor:
+                                                renderTreeItemBgColor(index),
+                                            "&& .Mui-selected": {
+                                                backgroundColor:
+                                                    renderTreeItemBgColor(
+                                                        index
+                                                    ),
+                                            },
+                                        }}
+                                        icon={
+                                            <>
+                                                {type === "md" && (
+                                                    <VscMarkdown color="#6997d5"/>
+                                                )}
+                                                {type === "py" && (
+                                                    <FaPython color="#6997d5"/>
+                                                )}
+                                            </>
+                                        }
+                                        onClick={() => {
+                                            if (!unsavedChanges) return router.push(`/${group}/${route}`);
+                                            if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                                                router.push(`/${group}/${route}`);
+                                        }}
+                                    />
+                                ))}
+                        </TreeItem>
+                    )
+            )}
         </TreeView>
     );
 }

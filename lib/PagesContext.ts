@@ -6,6 +6,7 @@ interface Page {
     name: string;
     route: string;
     group: string;
+    type: string;
 }
 
 const defaultFn = () => {
@@ -17,10 +18,14 @@ export default createContext({
     openPages: [],
     setOpenPages: defaultFn,
     currentPage: null,
+    unsavedChanges: false,
+    setUnsavedChanges: defaultFn,
 } as {
     pages: Page[];
     setPages: (pages: Page[]) => void;
     openPages: Page[];
     setOpenPages: (pages: Page[]) => void;
     currentPage: Page|null;
+    unsavedChanges: boolean;
+    setUnsavedChanges: (unsaved: boolean) => void;
 });

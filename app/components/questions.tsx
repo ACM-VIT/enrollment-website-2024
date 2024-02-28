@@ -1,267 +1,446 @@
 "use client";
 
-import React, { FormEvent, KeyboardEvent, useEffect, useRef } from "react";
+import React, {
+    FormEvent,
+    KeyboardEvent,
+    useCallback,
+    useEffect,
+    useRef,
+} from "react";
 import styles_light from "./questions_light.module.css";
 import styles_dark from "./questions_dark.module.css";
 import { useTheme } from "@mui/material";
 import { Prisma } from "@prisma/client";
 
-export const STQ = ({
-  question,
-  data,
-  updateResponse,
-  triggerSave,
+function Comment({
+    text,
+    styles,
 }: {
-  question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
-  triggerSave: Function;
-  updateResponse: Function;
-  data: {
-    response: string;
-    error: { message: string } | null;
-  };
-}) => {
-  const spanRef = useRef<HTMLSpanElement>(null);
-  const theme = useTheme();
+    text: string;
+    styles: typeof styles_dark | typeof styles_light;
+}) {
+    return (
+        <code style={{ display: "block" }}>
+            <span className={styles.comment}># {text}</span>
+        </code>
+    );
+}
 
-  const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+function PrintLine({
+    text,
+    styles,
+}: {
+    text: string;
+    styles: typeof styles_dark | typeof styles_light;
+}) {
+    return (
+        <code style={{ display: "block" }}>
+            <span className={styles.print}>print</span>
+            <span className={styles.bracket}>(</span>
+            <span className={styles.questioneach}>&quot;{text}&quot;</span>
+            <span className={styles.bracket}>)</span>
+        </code>
+    );
+}
 
-  useEffect(() => {
-    const span = spanRef.current!;
-    span.textContent = data.response ?? "";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+function InputLines({
+    variable,
+    data,
+    updateResponse,
+    triggerSave,
+    questionId,
+    options,
+    styles,
+    type,
+}: {
+    variable: string;
+    styles: typeof styles_dark | typeof styles_light;
+    type: "stq" | "ltq" | "mcq" | "scq";
+    questionId: string;
+    options: string[] | undefined;
+    data: any;
+    updateResponse: Function;
+    triggerSave: Function;
+}) {
+    return [
+        <code key={"q" + questionId} style={{ display: "block" }}>
+            <span className={styles.variable}>{variable}</span>
+            &nbsp;=&nbsp;
+            {type === "stq" && (
+                <ST_input
+                    initialValue={data.response}
+                    styles={styles}
+                    updateResponse={updateResponse}
+                    triggerSave={triggerSave}
+                    questionId={questionId}
+                />
+            )}
+            {type === "ltq" && (
+                <LT_input
+                    initialValue={data.response}
+                    styles={styles}
+                    updateResponse={updateResponse}
+                    triggerSave={triggerSave}
+                    questionId={questionId}
+                />
+            )}
+            {type === "mcq" && <span className={styles.bracket}>&#123;</span>}
+            {type === "scq" && <span className={styles.bracket}>&#123;</span>}
+        </code>,
+        type === "mcq" && (
+            <MCQ_input
+                response={data.response}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={questionId}
+                options={options!}
+                styles={styles}
+            />
+        ),
+        type === "scq" && (
+            <SCQ_input
+                response={data.response}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={questionId}
+                options={options!}
+                styles={styles}
+            />
+        ),
+        type === "mcq" && (
+            <code style={{ display: "block" }} key={"bc"}>
+                <span className={styles.bracket}>&#125;</span>
+            </code>
+        ),
+        type === "scq" && (
+            <code style={{ display: "block" }} key={"bc"}>
+                <span className={styles.bracket}>&#125;</span>
+            </code>
+        ),
+    ];
+}
 
-  return (
-    <div className={styles.question}>
-      <label htmlFor="name">
-        <input
-          type="text"
-          name={question.id}
-          hidden={true}
-          value={data.response}
-          readOnly={true}
-        />
-        <span className={styles.print}>print</span>
-        <span className={styles.bracket}>(</span>
-        <span className={styles.questioneach}>
-          &quot;{question.question}&quot;
-        </span>
-        <span className={styles.bracket}>)</span>
-      </label>
-      <span className={styles.variable}>{question.varName}</span>=&quot;
-      <span
-        ref={spanRef}
-        className={styles.textBox}
-        onInput={(event: FormEvent) => {
-          updateResponse(
-            question.id,
-            (event.target as HTMLSpanElement).textContent ?? ""
-          );
-          triggerSave();
-        }}
-        onKeyDown={(event: KeyboardEvent) => {
-          if (event.key === "Enter") {
+function ST_input({
+    initialValue,
+    styles,
+    questionId,
+    triggerSave,
+    updateResponse,
+}: {
+    initialValue: string;
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
+}) {
+    const spanRef = useRef<HTMLSpanElement>(null);
+    const handleInput = useCallback((event: FormEvent) => {
+        const isFocused = document.activeElement === spanRef.current;
+        updateResponse(
+            questionId,
+            (event.target as HTMLSpanElement).textContent ?? "",
+            isFocused
+        );
+        triggerSave();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    const handleKeyDown = useCallback((event: KeyboardEvent) => {
+        if (event.key === "Enter") {
             event.preventDefault();
-          }
-        }}
-        contentEditable="true"
-      ></span>
-      &quot;
-    </div>
-  );
-};
+        }
+    }, []);
 
-export const LTQ = ({
-  question,
-  data,
-  updateResponse,
-  triggerSave,
+    useEffect(() => {
+        const span = spanRef.current!;
+        span.textContent = initialValue ?? "";
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return [
+        '"',
+        <span
+            key={"span"}
+            ref={spanRef}
+            className={styles.textBox}
+            onInput={handleInput}
+            onKeyDown={handleKeyDown}
+            contentEditable="true"
+        ></span>,
+        '"',
+    ];
+}
+
+function LT_input({
+    initialValue,
+    styles,
+    updateResponse,
+    triggerSave,
+    questionId,
 }: {
-  question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
-  triggerSave: Function;
-  updateResponse: Function;
-  data: {
-    response: string;
-    error: { message: string } | null;
-  };
-}) => {
-  const spanRef = useRef<HTMLSpanElement>(null);
-  const theme = useTheme();
+    initialValue: string;
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
+}) {
+    const spanRef = useRef<HTMLSpanElement>(null);
+    const handleInput = useCallback((event: FormEvent) => {
+        const isFocused = document.activeElement === spanRef.current;
+        updateResponse(
+            questionId,
+            (event.target as HTMLSpanElement).textContent ?? "",
+            isFocused
+        );
+        triggerSave();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+    useEffect(() => {
+        const span = spanRef.current!;
+        span.textContent = initialValue ?? "";
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  useEffect(() => {
-    const span = spanRef.current!;
-    span.textContent = data.response ?? "";
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    return [
+        '""" ',
+        <span
+            key={"span"}
+            ref={spanRef}
+            className={styles.textBox}
+            onInput={handleInput}
+            contentEditable="true"
+        ></span>,
+        ' """',
+    ];
+}
 
-  return (
-    <div className={styles.question}>
-      <label htmlFor="name">
-        <input
-          type="text"
-          name={question.id}
-          hidden={true}
-          value={data.response}
-          readOnly={true}
-        />
-        <span className={styles.print}>print</span>
-        <span className={styles.bracket}>(</span>
-        <span className={styles.questioneach}>
-          &quot;{question.question}&quot;
-        </span>
-        <span className={styles.bracket}>)</span>
-      </label>
-      <span className={styles.variable}>{question.varName}</span>=&quot;
-      <span
-        ref={spanRef}
-        className={styles.textBox}
-        onInput={(event: FormEvent) => {
-          updateResponse(
-            question.id,
-            (event.target as HTMLSpanElement).textContent ?? ""
-          );
-          triggerSave();
-        }}
-        contentEditable="true"
-      ></span>
-      &quot;
-    </div>
-  );
-};
-
-export const MCQ = ({
-  question,
-  data,
-  updateResponse,
-  triggerSave,
+function MCQ_input({
+    response,
+    updateResponse,
+    triggerSave,
+    questionId,
+    options,
+    styles,
 }: {
-  question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
-  triggerSave: Function;
-  updateResponse: Function;
-  data: {
     response: Record<string, boolean>;
-    error: { message: string } | null;
-  };
-}) => {
-  const theme = useTheme();
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
+    options: string[];
+}) {
+    const handleChange = (event: any) => {
+        const { name, checked } = event.target;
+        updateResponse(questionId, { ...response, [name]: checked }, false);
+        triggerSave();
+    };
 
-  const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+    return options?.map((option) => (
+        <code key={option} style={{display: "block"}}>
+            <label className={styles.questionlabel} htmlFor={option}>
+                <span className={styles.questioneach}>
+                    &nbsp;&nbsp;&nbsp;&quot;{option}
+                </span>
+                &quot;:&nbsp;
+                <input
+                    hidden={true}
+                    type="checkbox"
+                    id={option}
+                    name={option}
+                    checked={response[option]}
+                    onChange={handleChange}
+                />
+                <span className={styles.toggle}>
+                    {response[option].toString()}
+                </span>
+                ,
+            </label>
+        </code>
+    ));
+}
 
-  const handleChange = (event: any) => {
-    const { name, checked } = event.target;
-    updateResponse(question.id, { ...data.response, [name]: checked });
-    triggerSave();
-  };
-
-  return (
-    <div className={styles.question}>
-      <label htmlFor={question.id}>
-        <span className={styles.print}>print</span>
-        <span className={styles.bracket}>(</span>
-        <span className={styles.questioneach}>
-          &quot;{question.question}&quot;
-        </span>
-        <span className={styles.bracket}>)</span>
-      </label>
-      <br />
-      <div className={styles.checkboxContainer}>
-        <span>
-          <span className={styles.variable}>{question.varName}</span>=
-          <span className={styles.bracket}>&#123;</span>
-        </span>
-        {question.options.map((option) => (
-          <label htmlFor={option} key={option}>
-            <span className={styles.questioneach}>
-              &nbsp;&nbsp;&nbsp;&quot;{option}
-            </span>
-            &quot;:&nbsp;
-            <input
-              hidden={true}
-              type="checkbox"
-              id={option}
-              name={option}
-              checked={data.response[option]}
-              onChange={handleChange}
-            />
-            <span className={styles.toggle}>
-              {data.response[option].toString()}
-            </span>
-            ,
-          </label>
-        ))}
-        <span className={styles.bracket}>&#125;</span>
-      </div>
-    </div>
-  );
-};
-
-export const SCQ = ({
-  question,
-  data,
-  updateResponse,
-  triggerSave,
+function SCQ_input({
+    response,
+    updateResponse,
+    triggerSave,
+    questionId,
+    options,
+    styles,
 }: {
-  question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
-  triggerSave: Function;
-  updateResponse: Function;
-  data: {
-    response: Record<string, boolean>;
-    error: { message: string } | null;
-  };
-}) => {
-  const theme = useTheme();
+    response: string | null | undefined;
+    styles: typeof styles_dark | typeof styles_light;
+    updateResponse: Function;
+    triggerSave: Function;
+    questionId: string;
+    options: string[];
+}) {
+    const handleChange = useCallback((event: any) => {
+        updateResponse(questionId, event.target.id, false);
+        triggerSave();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-  const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+    return options?.map((option) => (
+        <code key={option} style={{display: "block"}}>
+            <label className={styles.questionlabel} htmlFor={option}>
+                <span className={styles.questioneach}>
+                    &nbsp;&nbsp;&nbsp;&quot;{option}
+                </span>
+                &quot;:&nbsp;
+                <input
+                    hidden={true}
+                    type="radio"
+                    id={option}
+                    name={questionId}
+                    checked={response === option}
+                    onChange={handleChange}
+                />
+                <span className={styles.toggle}>
+                    {(response === option).toString()}
+                </span>
+                ,
+            </label>
+        </code>
+    ));
+}
 
-  const handleChange = (event: any) => {
-    const { id, checked } = event.target;
-    updateResponse(question.id, {
-      ...Object.fromEntries(question.options.map((i) => [i, false])),
-      [id]: checked,
-    });
-    triggerSave();
-  };
+export function STQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
+    data: {
+        response: string;
+        error: { message: string } | null;
+    };
+}) {
+    const theme = useTheme();
+    const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
 
-  return (
-    <div className={styles.question}>
-      <label htmlFor={question.id}>
-        <span className={styles.print}>print</span>
-        <span className={styles.bracket}>(</span>
-        <span className={styles.questioneach}>
-          &quot;{question.question}&quot;
-        </span>
-        <span className={styles.bracket}>)</span>
-      </label>
-      <br />
-      <div className={styles.checkboxContainer}>
-        <span>
-          <span className={styles.variable}>{question.varName}</span>=
-          <span className={styles.bracket}>&#123;</span>
-        </span>
-        {question.options.map((option) => (
-          <label htmlFor={option} key={option}>
-            <span className={styles.questioneach}>
-              &nbsp;&nbsp;&nbsp;&quot;{option}
-            </span>
-            &quot;:&nbsp;
-            <input
-              hidden={true}
-              type="radio"
-              id={option}
-              name={question.id}
-              checked={data.response[option]}
-              onChange={handleChange}
+    return (
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={undefined}
+                styles={styles}
+                type={"stq"}
             />
-            <span className={styles.toggle}>
-              {data.response[option].toString()}
-            </span>
-            ,
-          </label>
-        ))}
-        <span className={styles.bracket}>&#125;</span>
-      </div>
-    </div>
-  );
-};
+        </>
+    );
+}
+
+export function LTQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
+    data: {
+        response: string;
+        error: { message: string } | null;
+    };
+}) {
+    const theme = useTheme();
+    const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+
+    return (
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={undefined}
+                styles={styles}
+                type={"ltq"}
+            />
+        </>
+    );
+}
+
+export function MCQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
+    data: {
+        response: Record<string, boolean>;
+        error: { message: string } | null;
+    };
+}) {
+    const theme = useTheme();
+    const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+
+    return (
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={question.options}
+                styles={styles}
+                type={"mcq"}
+            />
+        </>
+    );
+}
+
+export function SCQ({
+    question,
+    data,
+    updateResponse,
+    triggerSave,
+}: {
+    question: Prisma.QuestionGetPayload<{ include: { responses: true } }>;
+    triggerSave: Function;
+    updateResponse: Function;
+    data: {
+        response: Record<string, boolean>;
+        error: { message: string } | null;
+    };
+}) {
+    const theme = useTheme();
+    const styles = theme.palette.mode === "light" ? styles_light : styles_dark;
+
+    return (
+        <>
+            <PrintLine text={question.question} styles={styles} />
+            <Comment text={"Help text for question here"} styles={styles} />
+            <InputLines
+                variable={question.varName}
+                data={data}
+                updateResponse={updateResponse}
+                triggerSave={triggerSave}
+                questionId={question.id}
+                options={question.options}
+                styles={styles}
+                type={"scq"}
+            />
+        </>
+    );
+}

@@ -1,31 +1,35 @@
 import React from "react";
-import {SessionProvider} from "next-auth/react";
+import { SessionProvider } from "next-auth/react";
 import App from "@/app/layout/App";
-import {auth} from "@/lib/auth";
-import {redirect} from "next/navigation";
-import {PrismaClient} from "@prisma/client";
+import { auth } from "@/lib/auth";
+import { redirect } from "next/navigation";
+import { PrismaClient } from "@prisma/client";
 
-
-export default async function Layout({children,}: {
-    children: React.ReactNode,
+export default async function Layout({
+    children,
+}: {
+    children: React.ReactNode;
 }) {
     const prisma = new PrismaClient();
 
-    const {user} = (await auth()) ?? {user: undefined};
-    const registrations = await prisma.registration.findMany({
+    const authUser = await auth();
+
+    const user = await prisma.user.findUnique({
         where: {
-            user: {
-                email: user?.email
-            }
-        }
+            email: authUser?.user?.email ?? "",
+        },
+        include: {
+            registrations: true,
+        },
     });
 
-    if (!user || !(await prisma.user.findUnique({where: {email: user!.email!}}))?.phone) {
-        return redirect('/landing')
-    } else
-        return (
-            <SessionProvider>
-                <App registrations={registrations}>{children}</App>
-            </SessionProvider>
-        )
+    if (!user) {
+        return redirect("/landing");
+    }
+
+    return (
+        <SessionProvider>
+            <App user={user}>{children}</App>
+        </SessionProvider>
+    );
 }
