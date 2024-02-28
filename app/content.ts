@@ -70,6 +70,8 @@ We at Research, go above and beyond, challenge the unchallenged, uncover the und
 
 Making an impact in the tech world by being the only chapter in VIT having a dedicated Research domain, we pour our heart and soul into everything we do.
 
+ACM-VIT is the only club to have a research wing!
+
 
 ## WHAT WE DO 🛠️
 
@@ -291,6 +293,7 @@ There are 5 commands, and you've now already tested \`help\`. Here's what the re
 
 PS: Don't even think of typing \`board\` in the terminal :)
 <br>
+
 Now, to the main course... 
 
 <!-- Section ends here -->
@@ -344,7 +347,13 @@ Your \`domain_name.py\` file will automatically disappear from the \`forms\` fol
 ## 🔜 What's Next?
 
 It's alright, boss! You can relax after submitting your forms. <br>
-If you make it through, we will get back to you with updates shortly.
+If you make it through, we will get back to you with updates shortly. <br>
+
+To review your progress and check the status of your onboarding, <br>
+click on the second icon on the top-left corner of the website. <br>
+
+Depending on your submissions and status, it could look something like this:
+![Alt text]()
 
 > **DISCLAIMER** <br>
 Due to the high quantity of incoming forms, it won't be possible for us to give individual feedback for every individual and form.
