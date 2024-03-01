@@ -14,11 +14,14 @@ export const config = {
 };
 
 export default async function middleware(request: NextRequest) {
+    const a = Math.random().toString(36).substring(7);
+    console.log('P1: Middleware', a, new Date().toISOString(), request.url, request.ip);
     // You could alternatively limit based on user ID or similar
     const ip = request.ip ?? '127.0.0.1';
     const { success, pending, limit, reset, remaining } = await ratelimit.limit(
         ip
     );
+    console.log('P2: Middleware', a, new Date().toISOString(), request.url, request.ip);
     return success
         ? NextResponse.next()
         : NextResponse.redirect(new URL('/blocked', request.url));
