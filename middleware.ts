@@ -22,7 +22,6 @@ export default async function middleware(request: NextRequest) {
         ip
     );
     console.log('P2: Middleware', a, new Date().toISOString(), request.url, request.ip);
-    
     return success
         ? NextResponse.next()
         : NextResponse.redirect(new URL('/blocked', request.url));
