@@ -27,7 +27,6 @@ import { Prisma } from "@prisma/client";
 import { TerminalContextProvider } from "react-terminal";
 import ProfileModal from "../components/profileEdit";
 import UserGetPayload = Prisma.UserGetPayload;
-import Chottahai from "@/app/layout/chottahai";
 
 const style = {
     position: "absolute",

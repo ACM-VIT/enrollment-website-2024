@@ -20,7 +20,6 @@ export default async function Layout({
             email: session.user.email!,
         },
         include: {
-            // registrations: true,
             RoundUser: {
                 include: {
                     round: true,

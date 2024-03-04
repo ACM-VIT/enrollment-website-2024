@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import {Prisma} from ".prisma/client";
 import UserGetPayload = Prisma.UserGetPayload;
