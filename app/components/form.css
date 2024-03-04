@@ -6,6 +6,8 @@ form.code::before {
 }
 form.code code {
     counter-increment: listing;
+    padding-left: 55px;
+    text-indent: -55px;
 }
 form.code code::before {
     content: counter(listing);
@@ -13,5 +15,6 @@ form.code code::before {
     width: 1em;
     text-align: right;
     margin-right: 25px;
+    width: 30px;
     color: #858585;
 }
