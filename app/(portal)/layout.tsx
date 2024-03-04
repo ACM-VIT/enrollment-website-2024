@@ -1,11 +1,9 @@
 import React from "react";
 import { SessionProvider } from "next-auth/react";
-import App from "@/app/layout/App";
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
-import { isDesktop } from "react-device-detect";
-import Chottahai from "@/app/layout/chottahai";
+import AppWrapper from "@/app/(portal)/app-wrapper";
 
 export default async function Layout({
     children,
@@ -34,11 +32,10 @@ export default async function Layout({
         return redirect("/landing");
     }
 
-    if (!isDesktop) return redirect("/phone");
 
     return (
         <SessionProvider>
-            <App user={user}>{children}</App>
+            <AppWrapper user={user}>{children}</AppWrapper>
         </SessionProvider>
     );
 }

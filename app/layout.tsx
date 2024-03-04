@@ -1,8 +1,8 @@
 import React from "react";
 import { dm_sans } from "./ui/fonts";
 export const metadata = {
-    title: "ACM Enrolments",
-    description: "ACM Junior Core Enrolments 2024",
+    title: "Association for Computing Machinery",
+    description: "ACM-VIT 2024 Organizing Committee Selections",
 };
 
 export default function RootLayout({
