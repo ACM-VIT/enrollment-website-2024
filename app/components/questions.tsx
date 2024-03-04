@@ -244,8 +244,8 @@ function MCQ_input({
     options: string[];
 }) {
     const handleChange = (event: any) => {
-        const { name, checked } = event.target;
-        updateResponse(questionId, { ...response, [name]: checked }, false);
+        const { id, checked } = event.target;
+        updateResponse(questionId, { ...response, [id]: checked }, false);
         triggerSave();
     };
 
@@ -306,7 +306,7 @@ function SCQ_input({
                     type="radio"
                     id={option + questionId}
                     name={questionId}
-                    checked={response === option}
+                    checked={response === (option + questionId)}
                     onChange={handleChange}
                 />
                 <span className={styles.toggle}>
