@@ -265,7 +265,7 @@ function MCQ_input({
                     onChange={handleChange}
                 />
                 <span className={styles.toggle}>
-                    {response[option].toString()}
+                    {response[(option + questionId)].toString()}
                 </span>
                 ,
             </label>
@@ -310,7 +310,7 @@ function SCQ_input({
                     onChange={handleChange}
                 />
                 <span className={styles.toggle}>
-                    {(response === option).toString()}
+                    {(response === (option + questionId)).toString()}
                 </span>
                 ,
             </label>
