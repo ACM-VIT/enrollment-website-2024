@@ -28,7 +28,7 @@ input[type="number"]::-webkit-outer-spin-button {
         @apply text-center mr-3 flex items-center;
     }
     #button {
-        @apply w-[80px] h-[40px];
+        @apply w-[120px] h-[40px];
     }
     #terminal {
         @apply text-center text-[0.68em] space-x-[0.7em];

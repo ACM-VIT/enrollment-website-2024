@@ -17,7 +17,7 @@ const groupBy = function (xs: any[], key: string | number | Function) {
 };
 
 export default function AppTree({focusApptree}: { focusApptree: boolean }) {
-    const {pages, currentPage, unsavedChanges} = useContext(PagesContext);
+    const {pages, currentPage, unsavedChanges, setUnsavedChanges} = useContext(PagesContext);
     const router = useRouter();
     const theme = useTheme();
 
@@ -88,8 +88,10 @@ export default function AppTree({focusApptree}: { focusApptree: boolean }) {
                                         }
                                         onClick={() => {
                                             if (!unsavedChanges) return router.push(`/${group}/${route}`);
-                                            if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                                            if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?")) {
+                                                setUnsavedChanges(false);
                                                 router.push(`/${group}/${route}`);
+                                            }
                                         }}
                                     />
                                 ))}

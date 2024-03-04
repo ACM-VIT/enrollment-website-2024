@@ -273,7 +273,7 @@ export default function App({
                                         </Grid>
                                         <Grid
                                             sx={{
-                                                height: "27px",
+                                                height: "4.5%",
                                             }}
                                         >
                                             {currentPage && (
@@ -286,7 +286,7 @@ export default function App({
                                             sx={{
                                                 scrollBehavior: "smooth",
                                                 overflowY: "auto",
-                                                height: `calc(97.5vh - 20px - 33px - 4px)`,
+                                                height: `calc(96vh - 20px - 33px - 4px)`,
                                             }}
                                         >
                                             {/* {children} */}

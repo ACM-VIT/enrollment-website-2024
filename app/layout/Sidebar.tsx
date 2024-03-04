@@ -87,39 +87,39 @@ export default function Sidebar({
                             <VscFiles />
                         </Box>
                     </Box>
-                    <Tooltip
-                        title="Source of this project"
-                        arrow
-                        placement="right"
-                    >
-                        <Link
-                            target="_blank"
-                            href={
-                                "https://github.com/ACM-VIT/enrollment-website-2024"
-                            }
-                            underline="none"
-                            color="inherit"
-                            sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}
-                        >
-                            <Box
-                                sx={{
-                                    flexGrow: 0,
-                                    cursor: "pointer",
-                                    color: "#858585",
-                                    fontSize: 24,
-                                    "&:hover": {
-                                        color: "white",
-                                    },
-                                }}
-                                display="flex"
-                                justifyContent="center"
-                            >
-                                <Box mt={0.7}>
-                                    <BiGitBranch />
-                                </Box>
-                            </Box>
-                        </Link>
-                    </Tooltip>
+                    {/*<Tooltip*/}
+                    {/*    title="Source of this project"*/}
+                    {/*    arrow*/}
+                    {/*    placement="right"*/}
+                    {/*>*/}
+                    {/*    <Link*/}
+                    {/*        target="_blank"*/}
+                    {/*        href={*/}
+                    {/*            "https://github.com/ACM-VIT/enrollment-website-2024"*/}
+                    {/*        }*/}
+                    {/*        underline="none"*/}
+                    {/*        color="inherit"*/}
+                    {/*        sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}*/}
+                    {/*    >*/}
+                    {/*        <Box*/}
+                    {/*            sx={{*/}
+                    {/*                flexGrow: 0,*/}
+                    {/*                cursor: "pointer",*/}
+                    {/*                color: "#858585",*/}
+                    {/*                fontSize: 24,*/}
+                    {/*                "&:hover": {*/}
+                    {/*                    color: "white",*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            display="flex"*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <Box mt={0.7}>*/}
+                    {/*                <BiGitBranch />*/}
+                    {/*            </Box>*/}
+                    {/*        </Box>*/}
+                    {/*    </Link>*/}
+                    {/*</Tooltip>*/}
 
                     <Divider sx={{ m: 0.5 }} />
 

@@ -8,7 +8,7 @@ import PagesContext from "@/lib/PagesContext";
 import {FaPython} from "react-icons/fa";
 
 export default function AppButtons() {
-    const {currentPage, openPages, setOpenPages, unsavedChanges} = useContext(PagesContext);
+    const {currentPage, openPages, setOpenPages, unsavedChanges, setUnsavedChanges} = useContext(PagesContext);
     const theme = useTheme();
     const router = useRouter();
 
@@ -83,8 +83,10 @@ export default function AppButtons() {
                     disableFocusRipple
                     onClick={() => {
                         if (!unsavedChanges) return router.push(route);
-                        if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                        if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?")) {
+                            setUnsavedChanges(false);
                             router.push(route);
+                        }
                     }}
                     sx={{
                         borderRadius: 0,
@@ -135,6 +137,7 @@ export default function AppButtons() {
                                     openPages.filter((x) => x.index !== index)
                                 );
                             if (currentPage?.index === index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                                setUnsavedChanges(false);
                                 return setOpenPages(
                                     openPages.filter((x) => x.index !== index)
                                 );

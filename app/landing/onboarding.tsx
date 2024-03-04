@@ -168,7 +168,7 @@ function SubmitButton() {
             type="submit"
             aria-disabled={pending}
             disabled={pending}
-            className="text-white bg-[#3279CB] w-[110px] m-4 rounded p-3"
+            className="text-white bg-[#3279CB] w-[110px] m-4 rounded p-3 text-ellipsis overflow-hidden whitespace-nowrap"
             id="button"
         >
             {pending ? "Submitting.." : "SUBMIT"}
