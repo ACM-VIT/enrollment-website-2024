@@ -67,7 +67,9 @@ function InputLines({
 
     return (
         <FormErrorWrapper error={data.error} spanRef={spanRef}>
-            <code key={"q" + questionId} style={{ display: "block" }}>
+            <code key={"q" + questionId} style={{ display: "block" }} onClick={()=>{
+                if (spanRef.current) spanRef.current.focus( {preventScroll: true} );
+            }}>
                 <span className={styles.variable}>{variable}</span>
                 &nbsp;=&nbsp;
                 {type === "stq" && (

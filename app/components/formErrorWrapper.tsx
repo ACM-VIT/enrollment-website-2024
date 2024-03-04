@@ -89,7 +89,8 @@ export function FormErrorWrapper(props: ErrorProps) {
                         horizontal: "left",
                     }}
                     onClose={handlePopoverClose}
-
+                    disableAutoFocus={true}
+                    disableEnforceFocus={true}
                 >
                     <Typography style={popoverStyle} sx={{p: 1}}>
                         {props.error.message}
