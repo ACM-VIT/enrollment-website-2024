@@ -246,12 +246,13 @@ function MCQ_input({
     const handleChange = (event: any) => {
         const { id, checked } = event.target;
         updateResponse(questionId, { ...response, [id]: checked }, false);
+        console.log(response, id, checked);
         triggerSave();
     };
 
     return options?.map((option) => (
         <code key={option} style={{ display: "block" }}>
-            <label className={styles.questionlabel} htmlFor={option}>
+            <label className={styles.questionlabel} htmlFor={(option + questionId)}>
                 <span className={styles.questioneach}>
                     &nbsp;&nbsp;&nbsp;&quot;{option}
                 </span>
@@ -260,8 +261,8 @@ function MCQ_input({
                     hidden={true}
                     type="checkbox"
                     id={option + questionId}
-                    name={questionId}
-                    checked={response[option]}
+                    name={option + questionId}
+                    checked={response[option + questionId]}
                     onChange={handleChange}
                 />
                 <span className={styles.toggle}>
@@ -290,13 +291,14 @@ function SCQ_input({
 }) {
     const handleChange = useCallback((event: any) => {
         updateResponse(questionId, event.target.id, false);
+        console.log(event.target.id);
         triggerSave();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return options?.map((option) => (
         <code key={option} style={{ display: "block" }}>
-            <label className={styles.questionlabel} htmlFor={option}>
+            <label className={styles.questionlabel} htmlFor={(option + questionId)}>
                 <span className={styles.questioneach}>
                     &nbsp;&nbsp;&nbsp;&quot;{option}
                 </span>
