@@ -265,7 +265,7 @@ function MCQ_input({
                     onChange={handleChange}
                 />
                 <span className={styles.toggle}>
-                    {response[(option + questionId)].toString()}
+                    {Boolean(response[(option + questionId)]).toString()}
                 </span>
                 ,
             </label>
