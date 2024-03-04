@@ -63,7 +63,7 @@ export default function Onboarding({ user }: { user: User }) {
                         Profile
                     </span>
                     <form
-                        className="bg-transparent	flex flex-col"
+                        className="bg-transparent flex flex-col"
                         action={saveForm}
                         id="form"
                         onSubmit={(e) => {
