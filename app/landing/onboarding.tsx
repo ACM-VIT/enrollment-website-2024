@@ -37,7 +37,7 @@ export default function Onboarding({ user }: { user: User }) {
                         className="font-poppins pt-[15%] px-[15%] pb-[0%]"
                         id="info"
                     >
-                        <ul>
+                        <ul className="list-none m-0 p-0">
                             User-Information
                             <li className="listitem">Name</li>
                             <li className="listitem">Registration Number</li>
@@ -53,7 +53,7 @@ export default function Onboarding({ user }: { user: User }) {
                     />
                 </section>
                 <section
-                    className="flex-[2] border-l-4 border-solid border-[#252527] py-[4%] px-[2%] overflow-hidden"
+                    className="flex-[2] border-0 border-l-4 border-solid border-[#252527] py-[4%] px-[2%] overflow-hidden"
                     id="profile"
                 >
                     <span
@@ -128,7 +128,7 @@ export default function Onboarding({ user }: { user: User }) {
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
                                     onInput={() => setError('')}
-                                    className="border-[1px] border-solid border-[#222222] font-dmSans text-[#b0b0b0] bg-[#27272d] rounded-[5px] h-[1.5rem] w-[50%] min-w-60 text-[1rem] px-[2.5%] py-[1.1%] box-content"
+                                    className="border-[1px] border-solid border-[#222222] placeholder:text-[#9CA3AF] font-dmSans text-[#b0b0b0] bg-[#27272d] rounded-[5px] h-[1.5rem] w-[50%] min-w-60 text-[1rem] px-[2.5%] py-[1.1%] box-content"
                                 />
                                   <div className="m-4 text-[#ff0000]">{error}&nbsp;</div>
                             </div>
@@ -168,7 +168,7 @@ function SubmitButton() {
             type="submit"
             aria-disabled={pending}
             disabled={pending}
-            className="text-white bg-[#3279CB] w-[110px] m-4 rounded p-3 text-ellipsis overflow-hidden whitespace-nowrap"
+            className="bg-[#3279CB] w-[110px] m-4 rounded p-3 text-ellipsis overflow-hidden whitespace-nowrap text-[#ffffff] border-none cursor-pointer"
             id="button"
         >
             {pending ? "Submitting.." : "SUBMIT"}
