@@ -1,46 +1,63 @@
 /* phones */
 @media screen and (max-width: 767px) {
     #main {
-        @apply m-0 flex-[6] flex-col;
+        margin: 0;
+        flex: 6;
+        flex-direction: column;
     }
     #header {
-        @apply flex-[0.5];
+        flex: 0.5;
     }
     #profile {
-        @apply flex flex-col pl-0 items-center border-l-0 pr-0;
+        display: flex;
+        flex-direction: column;
+        padding-left: 0;
+        align-items: center;
+        border-left: none;
+        padding-right: 0;
     }
     #terminal {
-        @apply text-center text-[0.68em] space-x-[0.7em];
+        text-align: center;
+        font-size: 0.68em;
+        /* space-x-[0.7em] cannot be directly translated to plain CSS. You might need to apply margin to child elements individually */
     }
     #left-dots {
-        @apply absolute top-[65%];
+        position: absolute;
+        top: 65%;
     }
     #right-dots {
-        @apply top-[10%];
+        top: 10%;
     }
     #sidebar {
-        @apply justify-end;
+        justify-content: flex-end;
     }
     #text {
-        @apply text-xl;
+        font-size: 1.25rem; /* Equivalent to Tailwind's text-xl */
+    }
+    #center {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
 /* tablets */
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     #sidebar {
-        @apply flex-1;
+        flex: 1;
     }
     #terminal {
-        @apply flex-1;
+        flex: 1;
     }
     #header {
-        @apply flex-[0.5];
+        flex: 0.5;
     }
     #left-dots {
-        @apply absolute top-[65%];
+        position: absolute;
+        top: 65%;
     }
     #text {
-        @apply text-3xl;
+        font-size: 1.875rem; /* Equivalent to Tailwind's text-3xl */
     }
 }

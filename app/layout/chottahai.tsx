@@ -2,43 +2,81 @@ import React from "react";
 import "./chottahai.css";
 import Image from "next/image";
 import dots from "../landing/assets/Dots.png";
-import "../tailwind.css";
+
 export default function Chottahai() {
     return (
-        <div className="flex flex-col h-screen w-screen" id="page">
-            <header className="bg-[#040f1a] flex-1" id="header" />
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                height: "100vh",
+                width: "100vw",
+            }}
+            id="page"
+        >
+            <header
+                style={{ backgroundColor: "#040f1a", flex: 1 }}
+                id="header"
+            />
             <main
-                className="bg-[#100f0f] text-[#bcc5d1] flex flex-row flex-[4]"
+                style={{
+                    backgroundColor: "#100f0f",
+                    position: "relative",
+                    color: "#bcc5d1",
+                    display: "flex",
+                    flex: 4,
+                }}
                 id="main"
             >
-                <section
-                    className="flex-[0.5] pl-[1%] flex flex-col text-center justify-center	"
-                    id="sidebar"
+                <Image
+                    style={{ position: "absolute", left: 0, top: "60%" }}
+                    src={dots}
+                    alt="left dots"
+                    id="left-dots"
+                />
+                <div
+                    style={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                    id="center"
                 >
-                    <Image
-                        className=" relative left-0 top-[40%]"
-                        src={dots}
-                        alt="left dots"
-                        id="left-dots"
-                    />
-                    <span id="text" className="font-medium">
+                    <span id="text" style={{ fontWeight: "500" }}>
                         Oops :/ <br /> Please open on desktop
                     </span>
-                    <Image
-                        className="absolute right-0 bottom-[70%]"
-                        src={dots}
-                        alt="right dots"
-                        id="right-dots"
-                    ></Image>
-                </section>
+                </div>
+                <Image
+                    style={{
+                        position: "absolute",
+                        right: 0,
+                        bottom: "70%",
+                    }}
+                    src={dots}
+                    alt="right dots"
+                    id="right-dots"
+                />
             </main>
             <aside
-                className="flex-[1.5] bg-[#040f1a] font-poppins text-[#bbc5d1] py-[0.1%] px-[2%] [word-spacing:1em]"
+                style={{
+                    flex: 1.5,
+                    backgroundColor: "#040f1a",
+                    color: "#bbc5d1",
+                    padding: "0.1% 2%",
+                    wordSpacing: "1em",
+                    fontFamily: "Poppins, sans-serif",
+                }}
                 id="terminal"
             >
                 PROBLEMS{" "}
                 <span
-                    className="underline underline-offset-[6px] text-white font-poppins"
+                    style={{
+                        textDecoration: "underline",
+                        textUnderlineOffset: "6px",
+                        color: "white",
+                        fontFamily: "Poppins, sans-serif",
+                    }}
                     id="underline-offset"
                 >
                     OUTPUT
