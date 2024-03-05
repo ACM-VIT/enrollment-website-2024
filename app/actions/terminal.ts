@@ -68,6 +68,8 @@ export const registerDomain = async (domain: Domain): Promise<consoleResponse> =
 }
 
 export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
+    try {
+
     const prisma = new PrismaClient();
 
     const session = await auth();
@@ -196,7 +198,10 @@ export const submitForm = async (domain: Domain): Promise<consoleResponse> => {
                 round: true
             }
         })
-        return {console: {message: 'Letsgoo! Form submitted successfully. You can check your status using the fork icon on the top-left corner.', type: 'response'}, roundUser: roundUsers}
+        return {console: {message: 'Letsgoo! Form submitted successfully.', type: 'response'}, roundUser: roundUsers}
+    }
+    } catch (error) {
+        return {console: {message: 'Form submission failed due to an unknown error. Please try again later or reach out to us.', type: 'error'}}
     }
 
 

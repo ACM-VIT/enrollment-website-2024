@@ -2,6 +2,10 @@ import React, {useState} from "react";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import CSS from "csstype";
+import { useTheme } from "@mui/material";
+import styles_light from "@/app/components/questions_light.module.css";
+import styles_dark from "@/app/components/questions_dark.module.css";
+
 
 
 interface ErrorProps {
@@ -18,8 +22,20 @@ const errStyle: CSS.Properties = {
 };
 
 
-const popoverStyle: CSS.Properties = {
+const popoverDarkStyle: CSS.Properties = {
     backgroundColor: "rgb(37, 37, 38)",
+    border: "2px solid rgb(90,90,90,0.25)",
+    borderRadius: "0",
+    borderBottom: "0",
+    margin: "0",
+    padding: "2px",
+    paddingLeft: "5px",
+    paddingRight: "5px",
+    fontFamily: "'Monaco', monospace",
+};
+
+const popoverLightStyle: CSS.Properties = {
+    backgroundColor: "#ffffff",
     border: "2px solid rgb(90,90,90,0.25)",
     borderRadius: "0",
     borderBottom: "0",
@@ -41,6 +57,8 @@ const popoverStyle: CSS.Properties = {
 
 
 export function FormErrorWrapper(props: ErrorProps) {
+    const theme = useTheme();
+    const styles = theme.palette.mode === "light" ? popoverLightStyle :popoverDarkStyle ;
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
 
@@ -92,12 +110,12 @@ export function FormErrorWrapper(props: ErrorProps) {
                     disableAutoFocus={true}
                     disableEnforceFocus={true}
                 >
-                    <Typography style={popoverStyle} sx={{p: 1}}>
+                    <Typography style={styles} sx={{p: 1}}>
                         {props.error.message}
                         {"   "}
                         <span style={{color: "grey"}}>ts(2304)</span>
                     </Typography>
-                    <Typography style={popoverStyle} sx={{p: 1}}>
+                    <Typography style={styles} sx={{p: 1}}>
                         {props.error.title}
                     </Typography>
                     {/*<Typography*/}
