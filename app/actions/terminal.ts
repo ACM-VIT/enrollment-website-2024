@@ -50,7 +50,7 @@ export const registerDomain = async (domain: Domain): Promise<consoleResponse> =
                 round: true
             }
         })
-        return {console: {message: 'Well, registration successfull! You can proceed to form-filling...', type: 'response'}, roundUser}
+        return {console: {message: 'Well, registration successful! You can proceed to form-filling...', type: 'response'}, roundUser}
     } catch (error) {
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
             if (error.code === 'P2002') {
