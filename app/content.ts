@@ -352,8 +352,6 @@ If you make it through, we will get back to you with updates shortly. <br>
 To review your progress and check the status of your onboarding, <br>
 click on the second icon on the top-left corner of the website. <br>
 
-Depending on your submissions and status, it could look something like this:
-![Alt text]()
 
 > **DISCLAIMER** <br>
 Due to the high quantity of incoming forms, it won't be possible for us to give individual feedback for every individual and form.
@@ -362,5 +360,8 @@ Due to the high quantity of incoming forms, it won't be possible for us to give 
 `,
     },
 };
+
+// Depending on your submissions and status, it could look something like this:
+// ![Alt text]()
 
 export default content;
