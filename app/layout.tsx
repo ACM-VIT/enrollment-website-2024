@@ -1,9 +1,13 @@
 import React from "react";
 import { dm_sans } from "./ui/fonts";
+
 export const metadata = {
     title: "Association for Computing Machinery",
     description: "ACM-VIT 2024 Organizing Committee Selections",
+    metadataBase: new URL("https://localhost.acmvit.com/"),
 };
+
+export const maxDuration = 120;
 
 export default function RootLayout({
     children,
