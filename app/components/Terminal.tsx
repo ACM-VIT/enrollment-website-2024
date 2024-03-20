@@ -116,56 +116,58 @@ function Terminal({
             </span>
         ),
 
-        register: async (domain: string) => {
-            if (!domain) {
-                return (
-                    <span style={{ color: "#FF443E" }}>
-                        Domain not specified
-                    </span>
-                );
-            }
-            if (!(domain in Domain)) {
-                return (
-                    <span style={{ color: "#FF443E" }}>Domain not found</span>
-                );
-            }
-            const response = await registerDomain(domain as Domain);
-            if (response.roundUser) {
-                setPages(pagesGenerator(response.roundUser));
-            }
-            return response.console.type === "error" ? (
-                <span style={{ color: "#FF443E" }}>
-                    {response.console.message}
-                </span>
-            ) : (
-                response.console.message
-            );
-        },
-        formsubmit: async (domain: string) => {
-            if (!domain) {
-                return (
-                    <span style={{ color: "#FF443E" }}>
-                        Domain not specified
-                    </span>
-                );
-            }
-            if (!(domain in Domain)) {
-                return (
-                    <span style={{ color: "#FF443E" }}>Domain not found</span>
-                );
-            }
-            const response = await submitForm(domain as Domain);
-            if (response.roundUser) {
-                setPages(pagesGenerator(response.roundUser));
-            }
-            return response.console.type === "error" ? (
-                <span style={{ color: "#FF443E" }}>
-                    {response.console.message}
-                </span>
-            ) : (
-                response.console.message
-            );
-        },
+        register: "Registrations are now closed",
+        // async (domain: string) => {
+        //     if (!domain) {
+        //         return (
+        //             <span style={{ color: "#FF443E" }}>
+        //                 Domain not specified
+        //             </span>
+        //         );
+        //     }
+        //     if (!(domain in Domain)) {
+        //         return (
+        //             <span style={{ color: "#FF443E" }}>Domain not found</span>
+        //         );
+        //     }
+        //     const response = await registerDomain(domain as Domain);
+        //     if (response.roundUser) {
+        //         setPages(pagesGenerator(response.roundUser));
+        //     }
+        //     return response.console.type === "error" ? (
+        //         <span style={{ color: "#FF443E" }}>
+        //             {response.console.message}
+        //         </span>
+        //     ) : (
+        //         response.console.message
+        //     );
+        // },
+        formsubmit: "We are now closed for submissions!",
+        // async (domain: string) => {
+        //     if (!domain) {
+        //         return (
+        //             <span style={{ color: "#FF443E" }}>
+        //                 Domain not specified
+        //             </span>
+        //         );
+        //     }
+        //     if (!(domain in Domain)) {
+        //         return (
+        //             <span style={{ color: "#FF443E" }}>Domain not found</span>
+        //         );
+        //     }
+        //     const response = await submitForm(domain as Domain);
+        //     if (response.roundUser) {
+        //         setPages(pagesGenerator(response.roundUser));
+        //     }
+        //     return response.console.type === "error" ? (
+        //         <span style={{ color: "#FF443E" }}>
+        //             {response.console.message}
+        //         </span>
+        //     ) : (
+        //         response.console.message
+        //     );
+        // },
     };
 
     return (
