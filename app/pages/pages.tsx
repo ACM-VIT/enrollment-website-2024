@@ -28,9 +28,11 @@ const map1: { [key: string]: number } = {
 }, map2: { [key: string]: string } = {
     form: 'forms',
     task: 'tasks',
+    interview: 'interviews',
 }, map3: { [key: string]: string } = {
     form: 'py',
-    task: 'cpp',
+    task: 'txt',
+    interview: 'json',
 }
 export const pages = (
     userRounds: RoundUserGetPayload<{ include: { round: true } }>[] | undefined = undefined

@@ -7,8 +7,6 @@ export const metadata = {
     metadataBase: new URL("https://localhost.acmvit.in/"),
 };
 
-export const maxDuration = 120;
-
 export default function RootLayout({
     children,
 }: {

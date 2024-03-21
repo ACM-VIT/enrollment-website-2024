@@ -1,0 +1,20 @@
+.code {
+    white-space: pre-wrap;
+}
+.code::before {
+    counter-reset: listing;
+}
+.code code {
+    counter-increment: listing;
+    padding-left: 55px;
+    text-indent: -55px;
+}
+.code code::before {
+    content: counter(listing);
+    display: inline-block;
+    width: 1em;
+    text-align: right;
+    margin-right: 25px;
+    width: 30px;
+    color: #858585;
+}

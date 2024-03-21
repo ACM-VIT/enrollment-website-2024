@@ -24,6 +24,11 @@ export default async function Layout({
                 include: {
                     round: true,
                 },
+                orderBy: {
+                    round: {
+                        number: "desc",
+                    },
+                }
             },
         },
     });
