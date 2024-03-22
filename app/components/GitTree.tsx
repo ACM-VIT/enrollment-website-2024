@@ -59,7 +59,7 @@ function GitTree({roundUsers}: {
                                                 </ul>
                                             </li>
 
-                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates) {
+                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
                                                 <h5>{roundUser.round.Meet?.title}</h5>
@@ -67,6 +67,16 @@ function GitTree({roundUsers}: {
                                                     <li>Meeting slot has been scheduled.</li>
                                                     <li>Meeting has been attended.</li>
                                                     <li>You have made it to the next Round.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && !roundUser.round.announced) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>{roundUser.round.Meet?.title}</h5>
+                                                <ul>
+                                                    <li>Meeting slot has been scheduled.</li>
+                                                    <li>Meeting has been attended.</li>
+                                                    <li>Your performance is being evaluated.</li>
                                                 </ul>
                                             </li>
                                         } else if (roundUser.status === 'rejected') {
@@ -115,13 +125,22 @@ function GitTree({roundUsers}: {
                                                     <li>Form has been filled.</li>
                                                 </ul>
                                             </li>
-                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates) {
+                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
                                                 <h5>Form</h5>
                                                 <ul>
                                                     <li>Form has been filled.</li>
                                                     <li>You have made it to the next Round.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && !roundUser.round.announced) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>Form</h5>
+                                                <ul>
+                                                    <li>Form has been filled.</li>
+                                                    <li>Your responses are being evaluated.</li>
                                                 </ul>
                                             </li>
                                         } else if (roundUser.status === 'rejected') {
@@ -142,39 +161,49 @@ function GitTree({roundUsers}: {
                                                     <li>Your responses are being evaluated.</li>
                                                 </ul>
                                             </li>
-                                        }
-                                    } else if (roundUser.round.type === 'task') {
-                                        if (roundUser.status === 'pending' && roundUser.round.active) {
-                                            return <li key={roundUser.id}>
-                                                <h4>Round {roundUser.round.number}</h4>
-                                                <h5>Task</h5>
-                                                <ul>
-                                                    <li>Kindly complete the task.</li>
-                                                </ul>
-                                            </li>
-                                        } else if (roundUser.status === 'pending' && !roundUser.round.active) {
-                                            return <li key={roundUser.id}>
-                                                <h4>Round {roundUser.round.number}</h4>
-                                                <h5>Task</h5>
-                                                <ul>
-                                                    <li>The deadline for this round has passed.</li>
-                                                </ul>
-                                            </li>
-                                        } else if (roundUser.status === 'promoted' && !roundUser.round.eliminates) {
-                                            return <li key={roundUser.id}>
-                                                <h4>Round {roundUser.round.number}</h4>
-                                                <h5>Task</h5>
-                                                <ul>
-                                                    <li>Task has been completed.</li>
-                                                </ul>
-                                            </li>
-                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates) {
+
+                                        } else if (roundUser.round.type === 'task') {
+                                            if (roundUser.status === 'pending' && roundUser.round.active) {
+                                                return <li key={roundUser.id}>
+                                                    <h4>Round {roundUser.round.number}</h4>
+                                                    <h5>Task</h5>
+                                                    <ul>
+                                                        <li>Kindly complete the task.</li>
+                                                    </ul>
+                                                </li>
+                                            } else if (roundUser.status === 'pending' && !roundUser.round.active) {
+                                                return <li key={roundUser.id}>
+                                                    <h4>Round {roundUser.round.number}</h4>
+                                                    <h5>Task</h5>
+                                                    <ul>
+                                                        <li>The deadline for this round has passed.</li>
+                                                    </ul>
+                                                </li>
+                                            } else if (roundUser.status === 'promoted' && !roundUser.round.eliminates) {
+                                                return <li key={roundUser.id}>
+                                                    <h4>Round {roundUser.round.number}</h4>
+                                                    <h5>Task</h5>
+                                                    <ul>
+                                                        <li>Task has been completed.</li>
+                                                    </ul>
+                                                </li>
+                                            }
+                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
                                                 <h5>Task</h5>
                                                 <ul>
                                                     <li>Task has been submitted.</li>
                                                     <li>You have made it to the next Round.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && !roundUser.round.announced) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>Task</h5>
+                                                <ul>
+                                                    <li>Task has been submitted.</li>
+                                                    <li>Your task is being evaluated.</li>
                                                 </ul>
                                             </li>
                                         } else if (roundUser.status === 'rejected') {
