@@ -8,6 +8,7 @@
     counter-increment: listing;
     padding-left: 55px;
     text-indent: -55px;
+    display: block;
 }
 .code code::before {
     content: counter(listing);
