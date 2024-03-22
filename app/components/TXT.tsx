@@ -1,17 +1,17 @@
 import React from "react";
-import { PrismaClient } from "@prisma/client";
-import { auth } from "@/lib/auth";
+import {PrismaClient} from "@prisma/client";
+import {auth} from "@/lib/auth";
 import style from "@/app/components/linenos.module.css";
 
-async function Txt({ roundId }: { roundId: string }) {
+async function Txt({roundId}: { roundId: string }) {
     const prisma = new PrismaClient();
-    const task = await prisma.roundUser.findUnique({
+    const task = await prisma.roundUser.findFirst({
         where: {
-            id: roundId,
             user: {
                 email: (await auth())!.user!.email!,
             },
             round: {
+                id: roundId,
                 type: "task",
             },
         },
@@ -36,7 +36,7 @@ async function Txt({ roundId }: { roundId: string }) {
             <code/>
             <code/>
             <code>
-                #To upload task link, type &quot;tasksubmit &lt;link&gt;&quot;
+                #To upload task link, type &quot;tasksubmit &lt;link&gt;&quot; IN TERMINAL
             </code>
         </div>
     );
