@@ -7,6 +7,7 @@ import content from "@/app/content";
 import {notFound} from "next/navigation";
 import {auth} from "@/lib/auth";
 import JSON from "@/app/components/JSONContainer";
+import Txt from "@/app/components/TXT";
 
 async function Page({params}: { params: { file: string, folder: string } }) {
     const prisma = new PrismaClient();
@@ -30,7 +31,7 @@ async function Page({params}: { params: { file: string, folder: string } }) {
     return <Wrapper page={page}>
         {page.type === 'md' && <MDContainer content={content[page.group][page.route]}/>}
         {page.type === 'py' && <FormContainer roundId={page.roundId!}/>}
-        {/*{page.type === 'txt' && <Txt roundId={page.roundId!}/>}*/}
+        {page.type === 'txt' && <Txt roundId={page.roundId!}/>}
         {page.type === 'json' && <JSON roundId={page.roundId!}/>}
     </Wrapper>
 

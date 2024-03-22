@@ -115,7 +115,7 @@ function Terminal({
                 Jain, Kushagra Rohatgi, Srija Puvvada , K Dhanush Baalaji
             </span>
         ),
-
+        
         register: "Registrations are now closed",
         // async (domain: string) => {
         //     if (!domain) {
@@ -168,6 +168,7 @@ function Terminal({
         //         response.console.message
         //     );
         // },
+        tasksubmit: "Task submissions will open soon!",
     };
 
     return (
