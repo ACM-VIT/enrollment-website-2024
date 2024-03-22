@@ -283,7 +283,7 @@ export default function App({
                                                     color="text.secondary"
                                                     sx={{ml: 4}}
                                                 >
-                                                    GIT STATUS
+                                                    ROUND STATUS
                                                 </Typography>
                                                 <GitTree roundUsers={user.RoundUser}/>
                                             </Stack>
