@@ -38,14 +38,17 @@ async function JsonContainer({roundId}: { roundId: string }) {
         where: {
             meet: {
                 roundId: roundId
-            }
+            },
+            from: {
+                lte: new Date(new Date().getTime() + 15 * 60 * 1000)
+            },
         },
         include: {_count: {select: {scheduled: true}}}
     });
 
 
     return (
-        <Json rounduser={rounduser} slots={slots}/>
+        <Json rounduser={rounduser} slots={slots.filter(i=>i.capacity > i._count.scheduled)}/>
     );
 }
 
