@@ -29,13 +29,13 @@ async function Txt({roundId}: { roundId: string }) {
             <code/>
             <code>{task.Task.text}</code>
             <code/>
-            <code/>
             <code>Task deadline</code>
             <code/>
             <code>{task.Task.deadline.toLocaleString()}</code>
             <code/>
-            <code/>
-            <code>
+            <code style={{
+                color:"green"
+            }}>
                 #To upload task link, type &quot;tasksubmit &lt;link&gt;&quot; IN TERMINAL
             </code>
         </div>
