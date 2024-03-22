@@ -5,7 +5,7 @@ import style from "@/app/components/linenos.module.css";
 
 async function Txt({ roundId }: { roundId: string }) {
     const prisma = new PrismaClient();
-    const task = prisma.roundUser.findUnique({
+    const task = await prisma.roundUser.findUnique({
         where: {
             id: roundId,
             user: {
@@ -21,12 +21,20 @@ async function Txt({ roundId }: { roundId: string }) {
         },
     });
 
-    if (!task) return <>Task not yet assigned.</>;
+    if (!task || !task.Task) return <>Task not yet assigned.</>;
 
     return (
         <div className={style.code}>
-            <code>Task assigned: &quot;{}&quot;</code>
-            <code>Task deadline: &quot;{}&quot;</code>
+            <code>Task details</code>
+            <code/>
+            <code>{task.Task.text}</code>
+            <code/>
+            <code/>
+            <code>Task deadline</code>
+            <code/>
+            <code>{task.Task.deadline.toLocaleString()}</code>
+            <code/>
+            <code/>
             <code>
                 #To upload task link, type &quot;tasksubmit &lt;link&gt;&quot;
             </code>
