@@ -22,7 +22,12 @@ export default async function Layout({
         include: {
             RoundUser: {
                 include: {
-                    round: true,
+                    round: {
+                        include: {
+                            Meet: true,
+                        },
+                    },
+                    Meet_User: true
                 },
                 orderBy: {
                     round: {

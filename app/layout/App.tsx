@@ -27,6 +27,7 @@ import {Prisma} from "@prisma/client";
 import {TerminalContextProvider} from "react-terminal";
 import ProfileModal from "../components/profileEdit";
 import UserGetPayload = Prisma.UserGetPayload;
+import GitTree from "@/app/components/GitTree";
 
 const style = {
     position: "absolute",
@@ -58,17 +59,26 @@ export default function App({
         include: {
             RoundUser: {
                 include: {
-                    round: true,
+                    round: {
+                        include: {
+                            Meet: true,
+                        },
+                    },
+                    Meet_User: true
+                },
+                orderBy: {
+                    round: {
+                        number: "desc",
+                    },
                 }
-            }
-        },
-    }>;
+            },
+        }    }>;
 }) {
     const params = useParams<{ folder: string; file: string }>();
     const router = useRouter();
 
     const [showTerminal, setShowTerminal] = useState(false);
-    const [showExplorer, setShowExplorer] = useState(isDesktop);
+    const [showExplorer, setShowExplorer] = useState(isDesktop ? 1 : 0);
     const [focusApptree, setFocusApptree] = useState(false);
     const [open, setOpen] = React.useState(false);
 
@@ -225,7 +235,7 @@ export default function App({
                                             setOpen={setOpen}
                                         />
                                     </Grid>
-                                    {showExplorer && (
+                                    {showExplorer === 1 && (
                                         <Grid
                                             item
                                             sx={{
@@ -250,6 +260,32 @@ export default function App({
                                                 <AppTree
                                                     focusApptree={focusApptree}
                                                 />
+                                            </Stack>
+                                        </Grid>
+                                    )}
+                                    {showExplorer === 2 && (
+                                        <Grid
+                                            item
+                                            sx={{
+                                                backgroundColor: darkMode
+                                                    ? "#252527"
+                                                    : "#f3f3f3",
+                                                width: 220,
+                                            }}
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                setFocusApptree(true);
+                                            }}
+                                        >
+                                            <Stack sx={{mt: 1}}>
+                                                <Typography
+                                                    variant="caption"
+                                                    color="text.secondary"
+                                                    sx={{ml: 4}}
+                                                >
+                                                    GIT STATUS
+                                                </Typography>
+                                                <GitTree roundUsers={user.RoundUser}/>
                                             </Stack>
                                         </Grid>
                                     )}
@@ -293,7 +329,7 @@ export default function App({
                                             <>
                                                 <Box
                                                     sx={{
-                                                        height: showTerminal?"64.4%":"100%",
+                                                        height: showTerminal ? "64.4%" : "100%",
                                                         overflow: "auto",
                                                     }}
                                                 >

@@ -16,8 +16,8 @@ import { signOutAction } from "@/app/actions/auth";
 import { isDesktop } from "react-device-detect";
 
 interface Props {
-    expanded: boolean;
-    setExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+    expanded: number;
+    setExpanded: React.Dispatch<React.SetStateAction<number>>;
     darkMode: boolean;
     handleThemeChange: () => void;
     showTerminal: boolean;
@@ -60,7 +60,7 @@ export default function Sidebar({
                 >
                     <Box
                         sx={{
-                            borderLeft: expanded
+                            borderLeft: expanded === 1
                                 ? "solid 0.12em white"
                                 : darkMode
                                 ? "solid 0.12em #333333"
@@ -68,13 +68,13 @@ export default function Sidebar({
                             cursor: "pointer",
                             WebkitTapHighlightColor: "rgba(0,0,0,0)",
                         }}
-                        onClick={() => setExpanded(!expanded)}
+                        onClick={() => setExpanded(prevState => prevState === 1 ? 0 : 1)}
                     >
                         <Box
                             sx={{
                                 flexGrow: 0,
                                 my: 1.5,
-                                color: expanded ? "white" : "#858585",
+                                color: expanded === 1 ? "white" : "#858585",
                                 fontSize: 24,
                                 outline: "none",
                                 "&:hover": {
@@ -87,39 +87,36 @@ export default function Sidebar({
                             <VscFiles />
                         </Box>
                     </Box>
-                    {/*<Tooltip*/}
-                    {/*    title="Source of this project"*/}
-                    {/*    arrow*/}
-                    {/*    placement="right"*/}
-                    {/*>*/}
-                    {/*    <Link*/}
-                    {/*        target="_blank"*/}
-                    {/*        href={*/}
-                    {/*            "https://github.com/ACM-VIT/enrollment-website-2024"*/}
-                    {/*        }*/}
-                    {/*        underline="none"*/}
-                    {/*        color="inherit"*/}
-                    {/*        sx={{ WebkitTapHighlightColor: "rgba(0,0,0,0)" }}*/}
-                    {/*    >*/}
-                    {/*        <Box*/}
-                    {/*            sx={{*/}
-                    {/*                flexGrow: 0,*/}
-                    {/*                cursor: "pointer",*/}
-                    {/*                color: "#858585",*/}
-                    {/*                fontSize: 24,*/}
-                    {/*                "&:hover": {*/}
-                    {/*                    color: "white",*/}
-                    {/*                },*/}
-                    {/*            }}*/}
-                    {/*            display="flex"*/}
-                    {/*            justifyContent="center"*/}
-                    {/*        >*/}
-                    {/*            <Box mt={0.7}>*/}
-                    {/*                <BiGitBranch />*/}
-                    {/*            </Box>*/}
-                    {/*        </Box>*/}
-                    {/*    </Link>*/}
-                    {/*</Tooltip>*/}
+                    <Box
+                        sx={{
+                            borderLeft: expanded === 2
+                                ? "solid 0.12em white"
+                                : darkMode
+                                ? "solid 0.12em #333333"
+                                : "solid 0.12em #2c2c2c",
+                            cursor: "pointer",
+                            WebkitTapHighlightColor: "rgba(0,0,0,0)",
+                        }}
+                        onClick={() => setExpanded(prevState => prevState === 2 ? 0 : 2)}
+                    >
+                        <Box
+                            sx={{
+                                flexGrow: 0,
+                                my: 1.5,
+                                color: expanded === 2 ? "white" : "#858585",
+                                fontSize: 24,
+                                outline: "none",
+                                "&:hover": {
+                                    color: "white",
+                                },
+                            }}
+                            display="flex"
+                            justifyContent="center"
+                        >
+                            <Tooltip title="Status" arrow placement="right">
+                                <BiGitBranch /></Tooltip>
+                        </Box>
+                    </Box>
 
                     <Divider sx={{ m: 0.5 }} />
 

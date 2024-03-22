@@ -15,10 +15,20 @@ function AppWrapper({
         include: {
             RoundUser: {
                 include: {
-                    round: true,
+                    round: {
+                        include: {
+                            Meet: true,
+                        },
+                    },
+                    Meet_User: true
+                },
+                orderBy: {
+                    round: {
+                        number: "desc",
+                    },
                 }
-            }
-        },
+            },
+        }
     }>;
 }) {
     return isDesktop ? (
