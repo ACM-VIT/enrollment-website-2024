@@ -161,33 +161,33 @@ function GitTree({roundUsers}: {
                                                     <li>Your responses are being evaluated.</li>
                                                 </ul>
                                             </li>
-
-                                        } else if (roundUser.round.type === 'task') {
-                                            if (roundUser.status === 'pending' && roundUser.round.active) {
-                                                return <li key={roundUser.id}>
-                                                    <h4>Round {roundUser.round.number}</h4>
-                                                    <h5>Task</h5>
-                                                    <ul>
-                                                        <li>Kindly complete the task.</li>
-                                                    </ul>
-                                                </li>
-                                            } else if (roundUser.status === 'pending' && !roundUser.round.active) {
-                                                return <li key={roundUser.id}>
-                                                    <h4>Round {roundUser.round.number}</h4>
-                                                    <h5>Task</h5>
-                                                    <ul>
-                                                        <li>The deadline for this round has passed.</li>
-                                                    </ul>
-                                                </li>
-                                            } else if (roundUser.status === 'promoted' && !roundUser.round.eliminates) {
-                                                return <li key={roundUser.id}>
-                                                    <h4>Round {roundUser.round.number}</h4>
-                                                    <h5>Task</h5>
-                                                    <ul>
-                                                        <li>Task has been completed.</li>
-                                                    </ul>
-                                                </li>
-                                            }
+                                        }
+                                    } else if (roundUser.round.type === 'task') {
+                                        if (roundUser.status === 'pending' && roundUser.round.active) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>Task</h5>
+                                                <ul>
+                                                    <li>Kindly complete the task.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'pending' && !roundUser.round.active) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>Task</h5>
+                                                <ul>
+                                                    <li>The deadline for this round has passed.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'promoted' && !roundUser.round.eliminates) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>Task</h5>
+                                                <ul>
+                                                    <li>Task has been completed.</li>
+                                                </ul>
+                                            </li>
+                                            
                                         } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
