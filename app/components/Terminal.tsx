@@ -169,7 +169,9 @@ function Terminal({
         //         response.console.message
         //     );
         // },
-        tasksubmit: async (domain: string, ...content: string[]) => {
+        tasksubmit: async (args: string) => {
+            const domain = args.split(" ")[0];
+            const content = args.split(" ").slice(1);
             if (!domain) {
                 return (
                     <span style={{color: "#FF443E"}}>
