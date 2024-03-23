@@ -18,6 +18,7 @@ model Round {
   type       RoundType
   eliminates Boolean
   announced  Boolean
+  hidden     Boolean     @default(false)
   RoundUser  RoundUser[]
   Question   Question[]
   Meet       Meet?

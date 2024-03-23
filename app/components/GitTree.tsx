@@ -27,6 +27,7 @@ function GitTree({roundUsers}: {
                         </h3>
                         <ul>
                             {roundUsersSorted.filter(i => i.round.domain === domain).map((roundUser) => {
+                                    if (roundUser.round.hidden) return null;
                                     if (roundUser.round.type === 'interview') {
                                         if (roundUser.status === 'pending' && roundUser.round.active) {
                                             return <li key={roundUser.id}>
@@ -187,7 +188,7 @@ function GitTree({roundUsers}: {
                                                     <li>Task has been completed.</li>
                                                 </ul>
                                             </li>
-                                            
+
                                         } else if (roundUser.status === 'promoted' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
