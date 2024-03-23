@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { Container } from "@mui/system";
-import { Box } from "@mui/material";
+import {Container} from "@mui/system";
+import {Box} from "@mui/material";
 import {submitForm, registerDomain, submitTask} from "@/app/actions/terminal";
-import { Domain } from "@prisma/client";
-import { pages as pagesGenerator } from "../pages/pages";
-import { ReactTerminal } from "react-terminal";
+import {Domain} from "@prisma/client";
+import {pages as pagesGenerator} from "../pages/pages";
+import {ReactTerminal} from "react-terminal";
 import TerminalStyle from "@/app/components/terminal.module.css";
 
 const terminalText = (
@@ -22,16 +22,16 @@ const welcomeMessage = (
     <span>
         Welcome to the ACM Mainframe Terminal! Type{" "}
         <strong>&apos;help&apos;</strong> for a list of commands
-        <br />
-        <br />
+        <br/>
+        <br/>
     </span>
 );
 
 function Terminal({
-    setShowTerminal,
-    setPages,
-    dark,
-}: {
+                      setShowTerminal,
+                      setPages,
+                      dark,
+                  }: {
     setShowTerminal: Function;
     showTerminal: boolean;
     setPages: Function;
@@ -40,13 +40,14 @@ function Terminal({
     const commands = {
         help: (
             <span>
-                Available commands: <br />
-                ┝ help - displays this message <br />
-                ┝ clear - clears the terminal <br />
-                ┝ register &lt;domain&gt; - registers a domain <br />┝
-                formsubmit &lt;domain&gt; - submits a form for a domain <br />└
-                exit - exits the terminal
-                <br />
+                Available commands: <br/>
+                ┝ help - displays this message <br/>
+                ┝ clear - clears the terminal <br/>
+                ┝ register &lt;domain&gt; - registers a domain <br/>
+                ┝ formsubmit &lt;domain&gt; - submits a form for a domain <br/>
+                ┝ tasksubmit &lt;domain&gt; &lt;submission content(link/username)&gt; - submits your work for task for a domain <br/>
+                └ exit - exits the terminal
+                <br/>
                 Try writing a few random commands. There maybe something
                 interesting in there...
             </span>
@@ -60,31 +61,31 @@ function Terminal({
         board: (
             <span>
                 - chair
-                <br />
+                <br/>
                 - vc
-                <br />
+                <br/>
                 - techLead
-                <br />
+                <br/>
                 - sec
-                <br />
+                <br/>
                 - researchLead
-                <br />
+                <br/>
                 - designLead
-                <br />
+                <br/>
                 - contentLead
-                <br />
+                <br/>
                 - projectLead
-                <br />
+                <br/>
                 - internalLead
-                <br />
+                <br/>
                 - devRelLead
-                <br />
+                <br/>
                 - wChair
-                <br />
+                <br/>
                 - wVC
-                <br />
+                <br/>
                 - wSec
-                <br />
+                <br/>
             </span>
         ),
         chair: "Manav Muthanna: the one who hustles so hard, he'd even trade his ID card for ACM.",
@@ -110,12 +111,12 @@ function Terminal({
         dev: (
             <span>
                 Kairav Nitin Sheth & Supratim Ghose
-                <br />
+                <br/>
                 Assisted by - Shane Shaji Thomas, Souparnika Jayagopal, Eshita
                 Jain, Kushagra Rohatgi, Srija Puvvada , K Dhanush Baalaji
             </span>
         ),
-        
+
         register: "Registrations are now closed",
         // async (domain: string) => {
         //     if (!domain) {
@@ -171,14 +172,21 @@ function Terminal({
         tasksubmit: async (domain: string, ...content: string[]) => {
             if (!domain) {
                 return (
-                    <span style={{ color: "#FF443E" }}>
+                    <span style={{color: "#FF443E"}}>
                         Domain not specified
                     </span>
                 );
             }
             if (!(domain in Domain)) {
                 return (
-                    <span style={{ color: "#FF443E" }}>Domain not found</span>
+                    <span style={{color: "#FF443E"}}>Domain not found</span>
+                );
+            }
+            if (!content.length) {
+                return (
+                    <span style={{color: "#FF443E"}}>
+                        Submission content not specified
+                    </span>
                 );
             }
             const response = await submitTask(domain as Domain, content.join(" "));
@@ -186,7 +194,7 @@ function Terminal({
                 setPages(pagesGenerator(response.roundUser));
             }
             return response.console.type === "error" ? (
-                <span style={{ color: "#FF443E" }}>
+                <span style={{color: "#FF443E"}}>
                     {response.console.message}
                 </span>
             ) : (
@@ -252,7 +260,7 @@ function Terminal({
                         theme={dark ? "dark1" : "light1"}
                         prompt={terminalText}
                         errorMessage={
-                            <span style={{ color: "#FF443E" }}>
+                            <span style={{color: "#FF443E"}}>
                                 Command not found
                             </span>
                         }
