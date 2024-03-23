@@ -2,7 +2,7 @@
 import React from "react";
 import { Container } from "@mui/system";
 import { Box } from "@mui/material";
-import { submitForm, registerDomain } from "@/app/actions/terminal";
+import {submitForm, registerDomain, submitTask} from "@/app/actions/terminal";
 import { Domain } from "@prisma/client";
 import { pages as pagesGenerator } from "../pages/pages";
 import { ReactTerminal } from "react-terminal";
@@ -168,7 +168,31 @@ function Terminal({
         //         response.console.message
         //     );
         // },
-        tasksubmit: "Task submissions will open soon!",
+        tasksubmit: async (domain: string, ...content: string[]) => {
+            if (!domain) {
+                return (
+                    <span style={{ color: "#FF443E" }}>
+                        Domain not specified
+                    </span>
+                );
+            }
+            if (!(domain in Domain)) {
+                return (
+                    <span style={{ color: "#FF443E" }}>Domain not found</span>
+                );
+            }
+            const response = await submitTask(domain as Domain, content.join(" "));
+            if (response.roundUser) {
+                setPages(pagesGenerator(response.roundUser));
+            }
+            return response.console.type === "error" ? (
+                <span style={{ color: "#FF443E" }}>
+                    {response.console.message}
+                </span>
+            ) : (
+                response.console.message
+            );
+        },
     };
 
     return (
