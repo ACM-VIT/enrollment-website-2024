@@ -34,7 +34,7 @@ async function Txt({roundId}: { roundId: string }) {
             <code>{task.Task.deadline.toLocaleString()}</code>
             <code/>
             <code>
-                #To upload task link, type &quot;tasksubmit &lt;link&gt;&quot; IN TERMINAL
+                #To upload task link, type &quot;tasksubmit &lt;domain&gt; &lt;link/text to submit&gt;&quot; IN TERMINAL
             </code>
         </div>
     );
