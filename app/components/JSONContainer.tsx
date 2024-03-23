@@ -40,7 +40,7 @@ async function JsonContainer({roundId}: { roundId: string }) {
                 roundId: roundId
             },
             from: {
-                lte: new Date(new Date().getTime() + 15 * 60 * 1000)
+                gte: new Date(new Date().getTime() + 15 * 60 * 1000)
             },
         },
         include: {_count: {select: {scheduled: true}}}
