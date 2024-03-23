@@ -1,14 +1,22 @@
-import {Button, Box, Paper} from "@mui/material";
-import React, {useContext} from "react";
-import {VscMarkdown, VscChromeClose,VscCircleFilled} from "react-icons/vsc";
-import {useTheme} from "@mui/material/styles";
-import {Container} from "@mui/system";
-import {useRouter} from "next/navigation";
+import { Button, Box, Paper } from "@mui/material";
+import React, { useContext } from "react";
+import { VscMarkdown, VscChromeClose, VscCircleFilled } from "react-icons/vsc";
+import { useTheme } from "@mui/material/styles";
+import { Container } from "@mui/system";
+import { useRouter } from "next/navigation";
 import PagesContext from "@/lib/PagesContext";
-import {FaPython} from "react-icons/fa";
+import { FaPython } from "react-icons/fa";
+import { VscJson } from "react-icons/vsc";
+import { CiTextAlignLeft } from "react-icons/ci";
 
 export default function AppButtons() {
-    const {currentPage, openPages, setOpenPages, unsavedChanges, setUnsavedChanges} = useContext(PagesContext);
+    const {
+        currentPage,
+        openPages,
+        setOpenPages,
+        unsavedChanges,
+        setUnsavedChanges,
+    } = useContext(PagesContext);
     const theme = useTheme();
     const router = useRouter();
 
@@ -83,7 +91,12 @@ export default function AppButtons() {
                     disableFocusRipple
                     onClick={() => {
                         if (!unsavedChanges) return router.push(route);
-                        if (currentPage?.index !== index && window.confirm("You have unsaved changes. Are you sure you want to leave?")) {
+                        if (
+                            currentPage?.index !== index &&
+                            window.confirm(
+                                "You have unsaved changes. Are you sure you want to leave?"
+                            )
+                        ) {
                             setUnsavedChanges(false);
                             router.push(route);
                         }
@@ -110,8 +123,15 @@ export default function AppButtons() {
                             ml: -1,
                         }}
                     >
-                        {type === "md" && <VscMarkdown color="#6997d5"/>}
-                        {type === "py" && <FaPython color="#6997d5"/>}
+                        {type === "md" && <VscMarkdown color="#6997d5" />}
+                        {type === "py" && <FaPython color="#6997d5" />}
+                        {type === "json" && <VscJson color="yellow" />}
+                        {type === "txt" && (
+                            <CiTextAlignLeft
+                                color="#808080
+"
+                            />
+                        )}
                     </Box>
                     {name}
                     <Box
@@ -136,17 +156,22 @@ export default function AppButtons() {
                                 return setOpenPages(
                                     openPages.filter((x) => x.index !== index)
                                 );
-                            if (currentPage?.index === index && window.confirm("You have unsaved changes. Are you sure you want to leave?"))
+                            if (
+                                currentPage?.index === index &&
+                                window.confirm(
+                                    "You have unsaved changes. Are you sure you want to leave?"
+                                )
+                            )
                                 setUnsavedChanges(false);
-                                return setOpenPages(
-                                    openPages.filter((x) => x.index !== index)
-                                );
+                            return setOpenPages(
+                                openPages.filter((x) => x.index !== index)
+                            );
                         }}
                     >
                         {!unsavedChanges || currentPage?.index !== index ? (
-                            <VscChromeClose/>
+                            <VscChromeClose />
                         ) : (
-                            <VscCircleFilled/>
+                            <VscCircleFilled />
                         )}
                     </Box>
                 </Button>
@@ -176,10 +201,9 @@ export default function AppButtons() {
                     backgroundColor:
                         theme.palette.mode === "dark" ? "#ffffff" : "#8c8c8c",
                 },
-
             }}
         >
-            {openPages.map(({index, name, route, group, type}) =>
+            {openPages.map(({ index, name, route, group, type }) =>
                 renderPageButton(index, name, `/${group}/${route}`, type)
             )}
         </Container>
