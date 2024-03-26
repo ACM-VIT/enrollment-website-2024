@@ -80,7 +80,7 @@ function GitTree({roundUsers}: {
                                                     <li>Your performance is being evaluated.</li>
                                                 </ul>
                                             </li>
-                                        } else if (roundUser.status === 'rejected') {
+                                        } else if (roundUser.status === 'rejected' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
                                                 <h5>{roundUser.round.Meet?.title}</h5>
@@ -88,6 +88,16 @@ function GitTree({roundUsers}: {
                                                     <li>Meeting slot has been scheduled.</li>
                                                     <li>Meeting has been attended.</li>
                                                     <li>We&apos;re sorry. You have not made it to the next round.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'evaluate' && roundUser.round.eliminates && roundUser.round.announced) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>{roundUser.round.Meet?.title}</h5>
+                                                <ul>
+                                                    <li>Meeting slot has been scheduled.</li>
+                                                    <li>Meeting has been attended.</li>
+                                                    <li>Your performance is being evaluated.</li>
                                                 </ul>
                                             </li>
                                         } else if (roundUser.status === 'evaluate') {
@@ -144,13 +154,22 @@ function GitTree({roundUsers}: {
                                                     <li>Your responses are being evaluated.</li>
                                                 </ul>
                                             </li>
-                                        } else if (roundUser.status === 'rejected') {
+                                        } else if (roundUser.status === 'rejected' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
                                                 <h5>Form</h5>
                                                 <ul>
                                                     <li>Form has been filled.</li>
                                                     <li>We&apos;re sorry. You have not made it to the next round.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'rejected' && roundUser.round.eliminates && !roundUser.round.announced) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>Form</h5>
+                                                <ul>
+                                                    <li>Form has been filled.</li>
+                                                    <li>Your responses are being evaluated.</li>
                                                 </ul>
                                             </li>
                                         } else if (roundUser.status === 'evaluate') {
@@ -207,13 +226,22 @@ function GitTree({roundUsers}: {
                                                     <li>Your task is being evaluated.</li>
                                                 </ul>
                                             </li>
-                                        } else if (roundUser.status === 'rejected') {
+                                        } else if (roundUser.status === 'rejected' && roundUser.round.eliminates && roundUser.round.announced) {
                                             return <li key={roundUser.id}>
                                                 <h4>Round {roundUser.round.number}</h4>
                                                 <h5>Task</h5>
                                                 <ul>
                                                     <li>Task has been submitted.</li>
                                                     <li>We&apos;re sorry. You have not made it to the next round.</li>
+                                                </ul>
+                                            </li>
+                                        } else if (roundUser.status === 'rejected' && roundUser.round.eliminates && !roundUser.round.announced) {
+                                            return <li key={roundUser.id}>
+                                                <h4>Round {roundUser.round.number}</h4>
+                                                <h5>Task</h5>
+                                                <ul>
+                                                    <li>Task has been submitted.</li>
+                                                    <li>Your task is being evaluated.</li>
                                                 </ul>
                                             </li>
                                         } else if (roundUser.status === 'evaluate') {
