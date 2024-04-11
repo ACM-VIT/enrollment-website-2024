@@ -1,15 +1,16 @@
-form.code {
+.code {
     white-space: pre-wrap;
 }
-form.code::before {
+.code::before {
     counter-reset: listing;
 }
-form.code code {
+.code code {
     counter-increment: listing;
     padding-left: 55px;
     text-indent: -55px;
+    display: block;
 }
-form.code code::before {
+.code code::before {
     content: counter(listing);
     display: inline-block;
     width: 1em;

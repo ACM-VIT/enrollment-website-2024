@@ -14,7 +14,7 @@ export default function Page() {
             direction="column"
             alignItems="center"
             justifyContent="center"
-            sx={{ minHeight: `calc(100vh - 20px - 33px)` }}
+            height="100%"
         >
             <Image
                 src="/AcmLogo.svg"

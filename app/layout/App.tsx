@@ -14,20 +14,20 @@ import {
     ThemeProvider,
     Typography,
 } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import AppTree from "./AppTree";
 import Footer from "./Footer";
 import Sidebar from "./Sidebar";
 import AppButtons from "./AppButtons";
 import BreadCrumbs from "./BreadCrumbs";
-import { pages as pagesGenerator } from "../pages/pages";
-import { isDesktop } from "react-device-detect";
-import { useParams, useRouter } from "next/navigation";
-import { Prisma } from "@prisma/client";
-import { TerminalContextProvider } from "react-terminal";
+import {pages as pagesGenerator} from "../pages/pages";
+import {isDesktop} from "react-device-detect";
+import {useParams, useRouter} from "next/navigation";
+import {Prisma} from "@prisma/client";
+import {TerminalContextProvider} from "react-terminal";
 import ProfileModal from "../components/profileEdit";
 import UserGetPayload = Prisma.UserGetPayload;
-import Chottahai from "@/app/layout/chottahai";
+import GitTree from "@/app/components/GitTree";
 
 const style = {
     position: "absolute",
@@ -51,25 +51,34 @@ interface Page {
 }
 
 export default function App({
-    user,
-    children,
-}: {
+                                user,
+                                children,
+                            }: {
     children: React.ReactNode;
     user: UserGetPayload<{
         include: {
             RoundUser: {
                 include: {
-                    round: true,
+                    round: {
+                        include: {
+                            Meet: true,
+                        },
+                    },
+                    Meet_User: true
+                },
+                orderBy: {
+                    round: {
+                        number: "desc",
+                    },
                 }
-            }
-        },
-    }>;
+            },
+        }    }>;
 }) {
     const params = useParams<{ folder: string; file: string }>();
     const router = useRouter();
 
     const [showTerminal, setShowTerminal] = useState(false);
-    const [showExplorer, setShowExplorer] = useState(isDesktop);
+    const [showExplorer, setShowExplorer] = useState(isDesktop ? 1 : 0);
     const [focusApptree, setFocusApptree] = useState(false);
     const [open, setOpen] = React.useState(false);
 
@@ -195,7 +204,7 @@ export default function App({
                     }}
                 >
                     <TerminalContextProvider>
-                        <CssBaseline enableColorScheme />
+                        <CssBaseline enableColorScheme/>
                         <Container
                             sx={{
                                 m: 0,
@@ -208,11 +217,11 @@ export default function App({
                         >
                             <Grid
                                 container
-                                sx={{ overflow: "auto", overflowY: "hidden" }}
+                                sx={{overflow: "auto", overflowY: "hidden"}}
                                 onClick={() => setFocusApptree(false)}
                             >
-                                <Grid container sx={{ overflow: "auto" }}>
-                                    <Grid item sx={{ width: 50 }}>
+                                <Grid container sx={{overflow: "auto"}}>
+                                    <Grid item sx={{width: 50}}>
                                         <Sidebar
                                             setExpanded={setShowExplorer}
                                             expanded={showExplorer}
@@ -226,7 +235,7 @@ export default function App({
                                             setOpen={setOpen}
                                         />
                                     </Grid>
-                                    {showExplorer && (
+                                    {showExplorer === 1 && (
                                         <Grid
                                             item
                                             sx={{
@@ -240,17 +249,43 @@ export default function App({
                                                 setFocusApptree(true);
                                             }}
                                         >
-                                            <Stack sx={{ mt: 1 }}>
+                                            <Stack sx={{mt: 1}}>
                                                 <Typography
                                                     variant="caption"
                                                     color="text.secondary"
-                                                    sx={{ ml: 4 }}
+                                                    sx={{ml: 4}}
                                                 >
                                                     EXPLORER
                                                 </Typography>
                                                 <AppTree
                                                     focusApptree={focusApptree}
                                                 />
+                                            </Stack>
+                                        </Grid>
+                                    )}
+                                    {showExplorer === 2 && (
+                                        <Grid
+                                            item
+                                            sx={{
+                                                backgroundColor: darkMode
+                                                    ? "#252527"
+                                                    : "#f3f3f3",
+                                                width: 220,
+                                            }}
+                                            onClick={(event) => {
+                                                event.stopPropagation();
+                                                setFocusApptree(true);
+                                            }}
+                                        >
+                                            <Stack sx={{mt: 1}}>
+                                                <Typography
+                                                    variant="caption"
+                                                    color="text.secondary"
+                                                    sx={{ml: 4}}
+                                                >
+                                                    ROUND STATUS
+                                                </Typography>
+                                                <GitTree roundUsers={user.RoundUser}/>
                                             </Stack>
                                         </Grid>
                                     )}
@@ -270,11 +305,11 @@ export default function App({
                                                 position: "relative",
                                             }}
                                         >
-                                            <AppButtons />
+                                            <AppButtons/>
                                         </Grid>
                                         <Grid
                                             sx={{
-                                                height: "27px",
+                                                height: "4.5%",
                                             }}
                                         >
                                             {currentPage && (
@@ -287,20 +322,20 @@ export default function App({
                                             sx={{
                                                 scrollBehavior: "smooth",
                                                 overflowY: "auto",
-                                                height: `calc(97.5vh - 20px - 33px - 4px)`,
+                                                height: `calc(96vh - 20px - 33px - 4px)`,
                                             }}
                                         >
                                             {/* {children} */}
-                                            {showTerminal ? (
-                                                <>
-                                                    <Box
-                                                        sx={{
-                                                            height: "64.4%",
-                                                            overflow: "auto",
-                                                        }}
-                                                    >
-                                                        {children}
-                                                    </Box>
+                                            <>
+                                                <Box
+                                                    sx={{
+                                                        height: showTerminal ? "64.4%" : "100%",
+                                                        overflow: "auto",
+                                                    }}
+                                                >
+                                                    {children}
+                                                </Box>
+                                                {showTerminal ? (
                                                     <Box
                                                         component={Paper}
                                                         sx={{
@@ -319,15 +354,13 @@ export default function App({
                                                             setPages={setPages}
                                                         ></Terminal>
                                                     </Box>
-                                                </>
-                                            ) : (
-                                                children
-                                            )}
+                                                ) : null}
+                                            </>
                                         </Grid>
                                     </Grid>
                                 </Grid>
                                 <Grid item lg={12} md={12} sm={12} xs={12}>
-                                    <Footer />
+                                    <Footer/>
                                 </Grid>
                             </Grid>
                         </Container>

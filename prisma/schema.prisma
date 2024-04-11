@@ -18,8 +18,10 @@ model Round {
   type       RoundType
   eliminates Boolean
   announced  Boolean
+  hidden     Boolean     @default(false)
   RoundUser  RoundUser[]
   Question   Question[]
+  Meet       Meet?
 
   @@unique([domain, number])
 }
@@ -40,6 +42,9 @@ model RoundUser {
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   formSubmission FormSubmission?
+  Task           Task?
+  Meet_User      Meet_User?
+  TaskSubmission TaskSubmission?
 
   @@unique([roundId, userId])
 }
@@ -89,6 +94,7 @@ model User {
   sessions           Session[]
   push_subscriptions Subscription[]
   RoundUser          RoundUser[]
+  Comments           Comments[]
 }
 
 model Subscription {
@@ -177,4 +183,62 @@ enum RuleType {
   max
   pattern
   custom
+}
+
+model Comments {
+  id      String   @id @default(cuid())
+  userId  String
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment String
+  by      String
+  for     Domain
+  time    DateTime @default(now())
+}
+
+model Meet {
+  id             String   @id @default(cuid())
+  title          String
+  roundId        String   @unique
+  round          Round    @relation(fields: [roundId], references: [id], onDelete: Cascade)
+  meetLink       String
+  schedulingLink String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  Slot           Slot[]
+}
+
+model Task {
+  id          String    @id @default(cuid())
+  roundUser   RoundUser @relation(fields: [roundUserId], references: [id], onDelete: Cascade)
+  roundUserId String    @unique
+  text        String
+  deadline    DateTime
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Meet_User {
+  id          String    @id @default(cuid())
+  roundUserId String    @unique
+  roundUser   RoundUser @relation(fields: [roundUserId], references: [id], onDelete: Cascade)
+  slot        Slot      @relation(fields: [slotId], references: [id], onDelete: Cascade)
+  slotId      String
+}
+
+model TaskSubmission {
+  id          String    @id @default(cuid())
+  roundUserId String    @unique
+  roundUser   RoundUser @relation(fields: [roundUserId], references: [id], onDelete: Cascade)
+  text        String
+  submittedAt DateTime  @default(now())
+}
+
+model Slot {
+  id        String      @id @default(cuid())
+  meet      Meet        @relation(fields: [meetId], references: [id], onDelete: Cascade)
+  meetId    String
+  from      DateTime
+  to        DateTime
+  capacity  Int
+  scheduled Meet_User[]
 }

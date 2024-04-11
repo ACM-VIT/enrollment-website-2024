@@ -38,20 +38,20 @@ export default function Landing() {
             }}
         >
             <div className="h-3/4 flex flex-col md:h-30 pt-8 items-center justify-evenly ">
-                <Image src={ACMLogo} alt="logo" style={{ height: "18vmin" }} />
+                <Image src={ACMLogo} alt="logo" style={{ height: "18vmin", maxWidth: "100%" }} />
                 <span className="font-medium text-3xl py-4 text-center">
                     ACM Organizing Committee Selections
                 </span>
                 {pending ? (
                     <button
-                        className="border border-button font-medium text-2xl p-4 w-auto hover:bg-button "
+                        className="border border-button font-medium text-2xl p-4 w-auto text-[#ffffff] bg-[#ffffff00]"
                         disabled
                     >
                         LOADING...
                     </button>
                 ) : (
                     <button
-                        className="border border-button font-medium text-2xl p-4 w-auto hover:bg-button "
+                        className="border border-button font-medium text-2xl p-4 w-auto text-[#ffffff] bg-[#ffffff00] hover:bg-button cursor-pointer"
                         onClick={() => startAuth(() => signInAction())}
                     >
                         REGISTER NOW

@@ -6,6 +6,8 @@ import { useTheme } from "@mui/material/styles";
 import { Box } from "@mui/system";
 import { VscMarkdown } from "react-icons/vsc";
 import { FaPython } from "react-icons/fa";
+import { VscJson } from "react-icons/vsc";
+import { CiTextAlignLeft } from "react-icons/ci";
 
 interface Page {
     index: number;
@@ -40,6 +42,15 @@ export default function BreadCrumbs({ currentPage }: { currentPage: Page }) {
                     <Box sx={{ color: "#6997d5", mt: "1px", mr: 0.4 }}>
                         {currentPage.type === "md" && <VscMarkdown />}
                         {currentPage.type === "py" && <FaPython />}
+                        {currentPage.type === "json" && (
+                            <VscJson color="yellow" />
+                        )}
+                        {currentPage.type === "txt" && (
+                            <CiTextAlignLeft
+                                color="#808080
+"
+                            />
+                        )}
                     </Box>
                     <Link
                         underline="none"

@@ -240,7 +240,7 @@ export function Form({
                         if (validator.ruleType === RuleType.required) {
                             if (
                                 question.type === Type.stq &&
-                                !data[i].response?.length
+                                (!(data[i].response as string | null)?.trim().length)
                             ) {
                                 data[i].error = {
                                     message: validator.helpText,
@@ -250,7 +250,7 @@ export function Form({
                             }
                             if (
                                 question.type === Type.ltq &&
-                                !data[i].response?.length
+                                (!(data[i].response as string | null)?.trim().length)
                             ) {
                                 data[i].error = {
                                     message: validator.helpText,
@@ -274,7 +274,7 @@ export function Form({
                             }
                             if (
                                 question.type === Type.scq &&
-                                !data[i].response
+                                !data[i].response?.length
                             ) {
                                 data[i].error = {
                                     message: validator.helpText,
@@ -293,11 +293,11 @@ export function Form({
                                     data[deps.question].response as {
                                         [key: string]: boolean;
                                     }
-                                )[deps.selected]
+                                )[deps.selected + deps.question]
                             ) {
                                 if (
                                     question.type === Type.stq &&
-                                    !data[i].response
+                                    (!(data[i].response as string | null)?.trim().length)
                                 ) {
                                     data[i].error = {
                                         message: validator.helpText,
@@ -307,7 +307,7 @@ export function Form({
                                 }
                                 if (
                                     question.type === Type.ltq &&
-                                    !data[i].response
+                                    (!(data[i].response as string | null)?.trim().length)
                                 ) {
                                     data[i].error = {
                                         message: validator.helpText,
@@ -331,7 +331,7 @@ export function Form({
                                 }
                                 if (
                                     question.type === Type.scq &&
-                                    !data[i].response
+                                    !data[i].response?.length
                                 ) {
                                     data[i].error = {
                                         message: validator.helpText,

@@ -5,6 +5,9 @@ import {useRouter} from 'next/navigation';
 function NotFound() {
     const router = useRouter();
 
+    React.useEffect(() => {
+        router.push('/');
+    }, [router]);
 
     return (
         <></>

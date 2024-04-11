@@ -49,8 +49,7 @@ _And yes, we are the Web Domain's worst nightmare :)_
 Design visually appealing graphics, themes, and branding materials that capture the essence of our events including captivating logos, website, and app.
 
 - \`Motion Graphics 🚀\` <br>
-Establish a cohesive visual identity that reflects the event's through animation, videos and 3D graphics.
-
+Establish a cohesive visual identity that reflects the event's idea through animation, videos and 3D graphics.
 - \`Social Media 📝\` <br>
 Craft aesthetic posts with engaging content for day-to-day updates on our social media platforms about club and events.
 
@@ -107,7 +106,7 @@ From sleek registration forms to dynamic event schedules and live updates, we cr
 _Nobody enjoys squinting at tiny text on their phone :)_
 
 - \`Contribute to Open Source 🤝\` <br>
-Whether it's tweaking existing websites or adding new features during our 'Forktober' event, there's always something exciting happening in the Web!
+Whether it's tweaking existing websites or adding new features during our 'Forktober' event, there's always something exciting happening in the Web domain!
 
 - \`Facilitate Coding Contests 💻\` <br>
 We work behind the scenes to ensure all event platforms run smoothly, making it a breeze for contestants to submit their solutions.
@@ -123,25 +122,26 @@ From managing budgets to endless marketing that make these events possible, we'r
 
 In essence, we are the unsung heroes behind the scenes, ensuring that every ACM event is not just successful but unforgettable.
 
-_Of course, a Management dude write this :)_
+_Of course, a Management dude wrote this :)_
 
 ## WHAT WE DO 🛠️
 
 - \`Classy Marketing 🚨\` <br>
 For every event we host, we are in charge of making it aesthetic and appealing _(yeah yeah design too)_. We strategize and communicate to other students why this event is the banger of their lives.
 
+
 - \`Managing Finances 📠\` <br>
-Every event, from graVITas to Yantra and other internal occasions, requires funding to ensure their success and memorability, focusing on meticulous planning and efficient resource management.
+Every event, from graVITas to Yantra, requires funding to ensure their success and memorability. Meticulous planning and efficient resource management is key .
 
 - \`Arranging logistics 🚘\` <br>
-From booking auditoriums and arranging extentions to getting required permissions from authorities to run the event smoothly, we ensure that the only thing participants need to focus on is participating!
+From booking auditoriums and arranging extensions to getting the required permissions from authorities to run the event smoothly, we ensure that the only thing participants need to focus on is participating!
 
 - \`Content Writing & Curation ✒️\` <br>
 From designing PR calendars and deciding what goes up on our social media sites to managing blog posts, anything that deals with content is our headache.<br>
 _No points for creativity :(_
 
 - \`Networking & Connections 👔\` <br>
-We regularly reach out to speakers and working professional for multiple companies to establish connections and collaboration opportunities to enrich events in terms of knowledge and logistical capabilities.
+We regularly reach out to speakers and working professionals from various companies to establish connections and collaboration opportunities inorder to further enrich our events by delivering a higher standard of knowledge, efficiency and logistic prowess.
 
 `,
         cc: `
@@ -149,7 +149,7 @@ We regularly reach out to speakers and working professional for multiple compani
 
 ## WHO WE ARE 🎅
 
-Welcome to ACM's \`Competitive Coding\` domain, the single place for people committed to pushing their coding boundaries!
+Welcome to ACM's \`Competitive Coding\` domain, the one-stop destination for people committed to pushing their coding boundaries!
 
 If you're a passionate coder intrigued by the nuances of advanced programming, this domain would be the perfect platform for you to compete in a challenging yet supportive environment.
 
@@ -260,7 +260,7 @@ As you can see with our magnificent website, we are a technical chapter. <br>
 And a damn good one. Just kidding, we are humble. <br>
 (_not kidding about the good part - Sorry, I crack lame jokes when I get nervous..._) <br>
 
-Anyways, let's help you figure out **our registration process - step by step...**
+Anyway, let's help you figure out **our registration process - step by step...**
 
 <!--Section ends here -->
 ## 🧑 Personal Info & Configuration
@@ -299,7 +299,7 @@ Now, to the main course...
 <!-- Section ends here -->
 ## 👑 DOMAINS & REGISTRATIONS
 
-ACM-VIT have several domains that may interest you. <br>
+ACM-VIT has several domains that may interest you. <br>
 Before filling out your forms, <b>we highly encourage</b> you to go through each of our domains and what we do. <br>
 On the top-left corner of our website, do the following: <br>
 underneath \`EXPLORER\` -> \`domains\` -> read through all \`.md\` files.
@@ -352,8 +352,6 @@ If you make it through, we will get back to you with updates shortly. <br>
 To review your progress and check the status of your onboarding, <br>
 click on the second icon on the top-left corner of the website. <br>
 
-Depending on your submissions and status, it could look something like this:
-![Alt text]()
 
 > **DISCLAIMER** <br>
 Due to the high quantity of incoming forms, it won't be possible for us to give individual feedback for every individual and form.
@@ -362,5 +360,8 @@ Due to the high quantity of incoming forms, it won't be possible for us to give 
 `,
     },
 };
+
+// Depending on your submissions and status, it could look something like this:
+// ![Alt text]()
 
 export default content;
